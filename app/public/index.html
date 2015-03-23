@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <title> Collnet </title>
+    <meta charset="utf-8"/>
+    <base href="/~divjotsingh/collnet/app/public/" target="_blank">
+
+    <!-- styles -->
+    <link href="assets/css/main.css" rel="stylesheet"/>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  </head>  
+  <body ng-app="collnet">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#/">
+            Collnet
+          </a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="#search">Search</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- views -->
+    <div ng-view=""></div>
+
+    <!-- scripts -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <script src="assets/js/main.js"></script>
+
+
+  </body> 
+</html>
