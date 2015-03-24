@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="form-group">
+    <input class="form-control" type="text" placeholder="search" ng-model="searchCollege"/>
+  </div>
+
+  <div class="panel panel-default" ng-repeat="i in items | filter : { 'title' : searchCollege }">
+    <div class="panel-heading">
+      <h3> {{i.title}} <small>{{i.rating}}</small></h3>
+    </div>
+    <div class="panel-body">
+      {{i.description}}
+    </div>
+  </div>
+</div>

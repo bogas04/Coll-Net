@@ -10,11 +10,23 @@ angular.module('collnet', [
 .config(function ($locationProvider, $routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'a.html',
+      templateUrl: 'views/main.html',
       controller: 'MainCtrl'
     })
+  .when('/login', {
+    templateUrl: 'views/login.html',
+    controller: 'MainCtrl'
+  })
+  .when('/register', {
+    templateUrl: 'views/register.html',
+    controller: 'MainCtrl'
+  })
+  .when('/contact-us', {
+    templateUrl: 'views/contact-us.html',
+    controller: 'MainCtrl'
+  })
   .when('/search', {
-    templateUrl: 'search.html',
+    templateUrl: 'views/search.html',
     controller: 'MainCtrl'
   });
   //$locationProvider.html5Mode(true);
