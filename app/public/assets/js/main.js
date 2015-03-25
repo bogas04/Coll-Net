@@ -17,10 +17,6 @@ angular.module('collnet', [
     templateUrl: 'views/login.html',
     controller: 'MainCtrl'
   })
-  .when('/register', {
-    templateUrl: 'views/register.html',
-    controller: 'MainCtrl'
-  })
   .when('/contact-us', {
     templateUrl: 'views/contact-us.html',
     controller: 'MainCtrl'
@@ -28,18 +24,32 @@ angular.module('collnet', [
   .when('/search', {
     templateUrl: 'views/search.html',
     controller: 'MainCtrl'
+  })
+  .when('/profile/college/:collegeid', {
+    templateUrl: 'views/college-profile.html',
+    controller: 'MainCtrl'
+  })
+  .when('/profile/user/:userid', {
+    templateUrl: 'views/user-profile.html',
+    controller: 'MainCtrl'
+  })
+  .when('/group/:collegeid', {
+    templateUrl: 'views/college-group.html',
+    controller: 'MainCtrl'
   });
   //$locationProvider.html5Mode(true);
 })
 .controller('MainCtrl', function ($scope) {
   $scope.message = "successful? I guess!";
   $scope.items = [{
-    title: 'NSIT',
+    name: 'NSIT',
     rating: 4.5,
+    image: "assets/img/1.jpg",
     description: 'Best college ever. Our college is the best college, we have no place for studies.'
   }, {
-    title: 'DTU',
-    rating: 4.49,
+    name: 'DTU',
+    rating: 2.49,
+    image: "assets/img/2.jpg",
     description: 'Best engineering kaalege only after NSIT!'
   }];
 });

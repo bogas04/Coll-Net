@@ -1,14 +1,33 @@
 <div class="container">
-  <div class="form-group">
-    <input class="form-control" type="text" placeholder="search" ng-model="searchCollege"/>
+  <form>
+  <input type="text" placeholder="search college" ng-model="collegeToSearch">
+  <button>submit</button>
+</form>
+</div>
+<div class="container-fluid">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="#">sort by</a>
+        <ul>
+          <li><a href="#">location</a></li>
+          <li><a href="#">popularity</a></li>
+        </ul>
+      </li>
+     </ul>
   </div>
+</nav>
+</div>
 
-  <div class="panel panel-default" ng-repeat="i in items | filter : { 'title' : searchCollege }">
+<div class="container">
+  <div class="search-item panel panel-default" ng-repeat="i in items | filter: { 'name': collegeToSearch }">
     <div class="panel-heading">
-      <h3> {{i.title}} <small>{{i.rating}}</small></h3>
+      <h3>{{i.name}}</h3>
     </div>
     <div class="panel-body">
-      {{i.description}}
+    <div> {{i.rating}} </div>
+    <img src="{{i.image}}" alt="{{i.name}}'s image"/>
+    {{i.description}}
     </div>
   </div>
 </div>

@@ -1,0 +1,30 @@
+.banner {
+  margin-top: -20px;
+  box-shadow: 0px 0px 200px 75px black inset;
+}
+.banner-main {
+  background: url('../img/banner.jpg') 50% / 100%;
+  background-size: cover;
+  color: grey;
+  height: 94vh;
+  text-shadow: 0px 0px 10px white ;
+}
+.banner-college {
+  background-size: cover;
+  color: grey;
+  height: 34vh;
+  text-shadow: 0px 0px 10px white ;
+}
+.banner-main .banner-body {
+  padding-top: 30vh;
+}
+
+.banner-college .banner-body {
+  padding-top: 7vh;
+}
+.search-item img{
+  width: 50px;
+  height: 50px;
+  border: 1px solid maroon;
+  border-radius: 50%;
+}
