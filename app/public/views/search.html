@@ -1,21 +1,35 @@
-<div class="container">
-  <form>
-  <input type="text" placeholder="search college" ng-model="collegeToSearch">
-  <button>submit</button>
-</form>
-</div>
 <div class="container-fluid">
-<nav class="navbar navbar-default">
+ <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <ul class="nav navbar-nav">
-      <li><a href="#">sort by</a>
-        <ul>
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sort By <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
           <li><a href="#">location</a></li>
           <li><a href="#">popularity</a></li>
-        </ul>
-      </li>
-     </ul>
-  </div>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search college" ng-model="collegeToSearch">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
 </div>
 
