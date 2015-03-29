@@ -1,0 +1,64 @@
+<?php
+	class User extends Model
+	{
+		var $name = "";
+		var $dob = "";
+		var $gender = "";
+		var $email = "";
+		var $username = "";
+		var $password = "";
+		var $phone_no = "";
+		var $address = array("location" => "", "city" => "", "country" => "");	
+
+		public function check_existence()
+		{
+			//if exists return false
+		}
+
+		public function create_user($document)
+		{
+			$user = $dbname->user;
+			$user => insert(
+					$name = $document->$usr_name;
+					$dob = $document->$usr_dob;
+					$gender = $document->$usr_gender;
+					$email = $document->$usr_email;
+					$username = $document->$usr_username;
+					$password = $document->$usr_password;
+					$phone_no = $document->$usr_phone_no;
+					$address = array("location" => $document->$usr_address->$usr_location, 
+							 "city" => $document->$usr_address->$usr_city,
+							 "country" => $document->$usr_address->$usr_country);	
+					);
+		}
+
+		public function retrieve_user($document)
+		{
+			$user = $db->user;
+			return db.auth($document->$usr_usernamee, $document->$usr_password);
+		}
+
+		public function update_user()
+		{
+			$user = $db->user;
+			$user->insert()	
+		}
+
+		ublic function delete_user()
+		{
+			$user = $db->user;
+			$user->insert()	
+		}		
+
+
+		$document = array(
+		  "roll_no" => 
+		  "phone_no" =>
+		  "address" => array
+		);
+		$user->insert($document);
+		echo "Values inserted";
+		
+	} 
+
+?>

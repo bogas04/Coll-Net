@@ -1,0 +1,19 @@
+<?php
+class Model
+{
+	function __construct()
+	{
+		$m = new MongoClient();
+		echo "Connection to database successful";
+		$dbname = $m->selectDB('collnet');
+		//$user = $dbname->users;
+		//$user->insert(array(name => "divjot"));
+		//print_r($user->find());
+		//echo "Database created";
+		//$collection = $db->createCollection($collect) do it after files are created
+
+	}
+}
+
+$o =  new Model();
+?>
