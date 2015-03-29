@@ -1,1 +1,36 @@
+<div class="container-fluid">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="#">name</a></li>
+      <li><a href="#">profile</a></li>
+      <li><a href="#">?</a></li>
+      <li><a href="#">logout</a></li>
+    </ul>
+  </div>
+</nav>
+</div>
 
+<div class="container-fluid text-center banner banner-college"
+     style="
+  background: url({{currentGroup.img || 'assets/img/1.jpg'}}) 50% / 100%;">
+  <div class="banner-body">
+    <h1>{{currentCollege.name}} && {{currentGroup.name}}</h1>
+  </div>
+</div>
+
+<div class="container">  
+ <div class="col-md-8">
+  <div class="search-item panel panel-default" ng-repeat="i in students">
+    <div class="panel-heading">
+      <h3>{{i.name}}</h3>
+    </div>
+    <div class="panel-body">
+    <img src="{{i.image}}" alt="{{i.name}}'s image"/>
+    {{i.description}}
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h1>yahan kya aega? :p</h1>
+  </div>
+</div>
