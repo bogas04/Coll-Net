@@ -52,4 +52,18 @@ angular.module('collnet', [
     image: "assets/img/2.jpg",
     description: 'Best engineering kaalege only after NSIT!'
   }];
+   $scope.students= [{
+    name: 'AKANSHI',
+    image: "assets/img/1.jpg",
+    description: 'I AM SEXY AND I KNOW IT'
+  }, {
+    name: 'AYUSH'
+    image: "assets/img/2.jpg",
+    description: 'ALLAH K NAAM PE SONE DE'
+  },
+  {
+    name: 'CHITRA'
+    image: "assets/img/3.jpg",
+    description: 'BABAJI KI BUTTI'
+  }];
 });
