@@ -1,64 +1,85 @@
 <?php
-	class User extends Model
-	{
-		var $name = "";
-		var $dob = "";
-		var $gender = "";
-		var $email = "";
-		var $username = "";
-		var $password = "";
-		var $phone_no = "";
-		var $address = array("location" => "", "city" => "", "country" => "");	
 
-		public function check_existence()
-		{
-			//if exists return false
-		}
+class UserModel extends Model
+{
+  private $userCollection;
+  function __construct()
+  {
+//	try
+//	{
+	  $userCollection = new MongoCollection($db, 'users');
+	  if(!$userCollection)
+		throw new Exception(messsage);
+//	}
+//	catch(MongoConnectionException $e)
+//	{
+//	  die('Error connecting to MongoDB server');
+//	}
+//	catch(MongoConnectionException $e)
+//	{
+//	  die('Error: '.$e->getMessage());
+//	}
+  }
 
-		public function create_user($document)
-		{
-			$user = $dbname->user;
-			$user => insert(
-					$name = $document->$usr_name;
-					$dob = $document->$usr_dob;
-					$gender = $document->$usr_gender;
-					$email = $document->$usr_email;
-					$username = $document->$usr_username;
-					$password = $document->$usr_password;
-					$phone_no = $document->$usr_phone_no;
-					$address = array("location" => $document->$usr_address->$usr_location, 
-							 "city" => $document->$usr_address->$usr_city,
-							 "country" => $document->$usr_address->$usr_country);	
-					);
-		}
+  public function existence($username)
+  {
+	//returns the cursor to the document that matches the query else EOF  return	
+	$doc = $userCollection->find(['username' => $username]); 
+	if($doc->count() === 0)
+		return false;
+	else
+		return true;
+  }
+  private function _existence($username)
+{
+	$doc = $userCollection->findOne(['username' => $username]); 
+	if($doc->empty())
+		throw new Exception(message);
+	else
+		return $doc;
+ 		
+}
+  public function authenticate($username,$password)
+{
+	$doc = $this->_existence($username);
+	if(hash($password) === $doc['password'])
+		return true;
+	else
+		return false;
+	
+}
 
-		public function retrieve_user($document)
-		{
-			$user = $db->user;
-			return db.auth($document->$usr_usernamee, $document->$usr_password);
-		}
+  public function create_user($document)
+  {
+	//$document['password'] = hash($document['password']);
+    	return $userCollection->insert($document);
+    	//returns number of documents inserted
+  }
 
-		public function update_user()
-		{
-			$user = $db->user;
-			$user->insert()	
-		}
+  public function retrieve_user($document)
+  {
+    $userCollection->findOne(['username' => $document->$usr_username], function(err, result) {
+      if (result)
+        return result;
+      else
+        return null;
+    });
+    //returns the document asked for else returns null........refer stackoverflow
 
-		ublic function delete_user()
-		{
-			$user = $db->user;
-			$user->insert()	
-		}		
+  }
 
+  public function update_user($document)
+  {
+    return $userCollection->findAndModify(['username' => $document->$usr_username],);
+    //returns pre-modified data after updation else null if required updation is not made
 
-		$document = array(
-		  "roll_no" => 
-		  "phone_no" =>
-		  "address" => array
-		);
-		$user->insert($document);
-		echo "Values inserted";
-		
-	} 
+    }
+
+    public function delete_user($document)
+    {
+      return db.collection.remove({username : $document->$usr_username});
+      //returns object WriteResult.hasWriteError
+    }
+  }	
 
 ?>

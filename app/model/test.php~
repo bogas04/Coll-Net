@@ -24,7 +24,7 @@ var_dump ($doc2);
 $doc3 = $userCollection->remove(['name' => 'chitra'], ['justOne' => true]);
 
 $doc4 = $userCollection->findOne(['name' => 'chitra'], ['gender' => 0]);
-echo $doc4 === Null ? "NOPE\n" : "TRUE";
+var_dump ($doc4);
 //foreach($userCollection->find() as $doc) {
   //echo "The name is ". $doc['name'] . "\n";
   //if(in_array('age', array_keys($doc)))echo "  The age is ". $doc['age'] . "\n";

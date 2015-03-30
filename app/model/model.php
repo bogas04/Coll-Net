@@ -1,14 +1,23 @@
 <?php
 class Model
 {
-  // TODO: Create a property db
+	private $db;
 	function __construct()
 	{
-		$m = new MongoClient();
-		echo "Connection to database successful"; // TODO : Use exceptions
-		$dbname = $m->selectDB('collnet');
-    // TODO: Set this as a property in this class
-    
+	//	try
+	//	{
+		  $m = new MongoClient("mongodb://127.0.0.1:27017");
+		  $db = $m->selectDB('collnet');
+		  //$m->close();
+	//	}
+	//	catch(MongoConnectionException $e)
+	//	{
+	//	  die('Error connecting to MongoDB server');
+	//	}
+	//	catch(MongoException $e)
+	//	{
+	//	  die('Error: '.$e->getMessage());
+	//	}
 	}
 }
 ?>
