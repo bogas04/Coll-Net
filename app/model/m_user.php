@@ -1,53 +1,109 @@
 <?php
 
-class M_User extends Model
-  // Name it as UserModel
+class UserModel extends Model
 {
-  // Create a property user_collection
-  function _construct() // TODO:  construct has two underscores
+  private $userCollection;
+
+  function __construct()
   {
-    $user = $db->user; // put in try catch
-    // TODO: Add error checking reading 
-    // Throw exceptions
+//    try
+//    {
+      $userCollection = new MongoCollection($db, 'users');
+      if(!$userCollection)
+        throw new Exception(messsage);
+//    }
+//    catch(MongoConnectionException $e)
+//    {
+//      die('Error connecting to MongoDB server');
+//    }
+//    catch(MongoConnectionException $e)
+//    {
+//      die('Error: '.$e->getMessage());
+//    }
   }
 
-  public function m_check_existence($username, $password)
-    // Rename as check_existence
+  public function existence($username)
   {
-    return db.collection.find({username : $username, password : $password});
-    //returns the cursor to the document that matches the query else EOF
+    //returns the cursor to the document that matches the query else EOF  return    
+    $doc = $userCollection->find(['username' => $username]);
+    if($doc->count() === 0)
+        return false;
+    else
+        return true;
   }
 
-  public function m_create_user($document)
+  private function _existence($username)
   {
-    return db.collection.insert($document);
-    //returns number of documents inserted
+    $doc = $userCollection->findOne(['username' => $username]);
+    if($doc === Null)
+        return Null;    //or throw new Exception(message);
+    else
+        return $doc;
+         
   }
 
-  public function m_retrieve_user($document)
+  public function authenticate($username,$password)
   {
-    db.collection.findOne({username : $document->$usr_username}, function(err, result) {
-      if (err)
-        return null;
-      else
-        return result;
-    }
-    //returns the document asked for else returns null
-
-  }
-
-  public function m_update_user($document)
-  {
-    return db.collection.findAndModify({username : $document->$usr_username);
-    //returns pre-modified data after updation else null if required updation is not made
-
-    }
-
-    public function m_delete_user($document)
+    $doc = $this->_existence($username);
+    if($doc !== Null)
     {
-      return db.collection.remove({username : $document->$usr_username});
+          if(verify_password($password,$doc[‘password’])
+            return true;
+          else
+            return false;
+    }
+    else
+	throw new Exception(message);  
+  }
+
+  public function create_user($document)
+  {
+       $document['password'] = hash_password($document['password']);
+        return $userCollection->insert($document);
+        //returns number of documents inserted
+  }
+
+  public function retrieve_user($document)
+  {
+    $userCollection->findOne(['username' => $document[‘username’]], [’password’ => 0]);
+      //returns the document asked for else returns null
+  }
+
+  public function update_user($document)
+  {
+    return $userCollection->findAndModify(['username' => $document[‘username]],
+					  [‘$set’=>[‘dob’  =>$document[‘dob’],
+						    ‘gender’  =>$document[‘gender’],
+						    ‘email’ =>$document[‘email’],
+						    ‘phone_no’ =>$document[‘phone_no’],
+						    ‘password’ => $document[‘password’],
+						    ‘address’ => array(‘location’ => $document[‘location’],
+       						    			‘city’ => $document[‘city’],
+        					    			‘country’ => $document[‘country’]
+								      )
+						    ]
+					  ]
+					 );
+	//returns pre-modified data after updation else null if required updation is not made
+
+    }
+
+    public function delete_user($username)
+    {
+      return $userCollection->remove([‘username’ => $document[‘username’]], [‘justOne’ => true]);
       //returns object WriteResult.hasWriteError
     }
-  }	
+
+    private function hash_password ($input, $rounds = 10)
+    {
+      return password_hash($input, PASSWORD_BCRYPT, ['cost' => $rounds]);
+    }
+
+    private function verify_password($input, $saved)
+    {
+      return password_verify($input, $saved);
+    }
+
+  }    
 
 ?>
