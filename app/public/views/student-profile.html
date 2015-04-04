@@ -1,0 +1,44 @@
+<div class="container-fluid">
+ <div class="col-md-3">
+    <img src="{{i.image}}" alt="{{i.name}}'s image"/>
+ </div>
+ <div class="col-md-9">
+    <h2>{{student.name || "AKANSHI GUPTA"}}</h2>
+	COLLEGES ATTENDED :
+	<div ng-repeat="i in students.collegesAttended">
+	{{i.collegesAttended[i]}},
+    </div>
+	CURRENTLY : if students.employers[0]==null, studying at collegesAttended[0];else students.employers[0]
+ </div>
+ </div>
+ <div class="container-fluid text-center">
+ <div class="col-md-4">
+ <h3>WORK PROFILE</h3>
+ <div class="search-item panel panel-default" ng-repeat="i in students">
+    <div class="panel-heading">
+      <h3>{{i.employers.name}}</h3>
+    </div>
+    <div class="panel-body">
+    {{i.employers.work}}
+    </div>
+  </div>
+  </div>
+ 
+ <div class="col-md-4">
+ <h3>EDUCATION</h3>
+  <div class="search-item panel panel-default" ng-repeat="i in students">
+    <div class="panel-heading">
+      <h3>{{i.collegesAttended.name}}</h3>
+    </div>
+    <div class="panel-body">
+    {{i.collegesAttended.span}}
+    </div>
+  </div> 
+ </div>
+ 
+ <div class="col-md-4">
+ <h3>SOCIAL PROFILES</h3>
+ 
+ </div>
+ </div>
+ 
