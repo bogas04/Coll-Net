@@ -57,11 +57,12 @@ angular.module('collnet', [
  description: 'Best engineering kaalege only after NSIT!'
  }];
  $scope.students= [{
- name: 'AKANSHI',
+ name : "Akanshi Mangla", 
+ dob: new Date((new Date().getTime())-1000*60*60*24*365*20),
  image: "assets/img/1.jpg",
  description: 'I AM SEXY AND I KNOW IT',
- collegesAttended: [{name:"NSIT",span:"2012-2016"}],
- employers: [{name:"Google",work:"blah"}]
+ educationHistory: [{name:"NSIT", from : new Date(new Date().getTime() - 1000*60*60*24*365*3), to : new Date(), degree : "B.E", discipline : "Computer Engineering"}],
+ workHistory: [{company:"Google", title : "Software Developer Engineer Intern", from : new Date(), to : null, description : "Worked really hard as a peon. Known in the campus for great tea serving skills."}]
  }, {
  name: 'AYUSH',
  image: "assets/img/2.jpg",
@@ -83,4 +84,5 @@ angular.module('collnet', [
  CollegesAttended: [{name:"NSIT",span:"2012-2016"}],
  employers: [{name:"MICROSOFT",work:"blah"}]
  }];
+ $scope.currentStudent = $scope.students[0];
 });
