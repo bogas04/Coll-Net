@@ -1,4 +1,5 @@
 <?php
+require('model.php');
 
 class UserModel extends Model {
   private $collection;
@@ -24,7 +25,7 @@ class UserModel extends Model {
     if (method_exists($this,$f='__construct'.$i)) {
       call_user_func_array(array($this,$f),$a); 
     }
-    $collection = new MongoCollection($db, 'users');
+    $collection = new MongoCollection($this->db, 'users');
   }
 
   public function __construct0($d) {  
@@ -154,4 +155,4 @@ class UserModel extends Model {
     if($hashed_password === null || $password === null) { throw new Exception('Password not set'); }
     return password_verify($password, $hashed_password);
   }
-}
+}
