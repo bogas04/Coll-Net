@@ -78,7 +78,7 @@
       <div ng-if="i.comments.length != 0">
         <div class="search-item panel panel-default" ng-repeat="c in i.comments">
           <div class="panel-heading">
-            {{c.name}}
+            {{c.cid}}
           </div>
           <div class="panel-body">
 	    {{c.comdesc}}
