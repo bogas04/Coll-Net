@@ -67,7 +67,7 @@ controller: 'MainCtrl'
 	$scope.students= [{
 		name : "Akanshi Mangla", 
 	sid : 2,
-	image: "assets/img/1.jpg",
+	image: "assets/img/akanshi.jpg",
 	location: {country:'us',state:'mountain view',zip:'110034'},
 	description: 'I AM SEXY AND I KNOW IT',
 	dob: new Date((new Date().getTime())-1000*60*60*24*365*20),
@@ -76,7 +76,7 @@ controller: 'MainCtrl'
 	}, 
 		{
 			name: 'AYUSH',
-			image: "assets/img/2.jpg",
+			image: "assets/img/ayush.jpg",
 			sid : 5,
 			description: 'ALLAH K NAAM PE SONE DE',
 			location: {country:'england',state:'london',zip:'110034'},
@@ -87,7 +87,7 @@ controller: 'MainCtrl'
 		{
 			name: 'CHITRA',
 			sid : 7,
-			image: "assets/img/3.jpg",
+			image: "assets/img/chitra.jpg",
 			description: 'BABAJI KI BUTTI',
 			location: {country:'england',state:'delhi',zip:'110034'},
 			educationHistory: [{name:"DTU", from : new Date(new Date().getTime() - 1000*60*60*24*365*3), to : new Date(), degree : "B.E", discipline : "Computer Engineering"}],
@@ -96,7 +96,7 @@ controller: 'MainCtrl'
 		{
 			name: 'DIVJOT',
 			sid : 8,
-			image: "assets/img/4.jpg",
+			image: "assets/img/divjot.jpg",
 			description: 'SUCKER',
 			location: {country:'india',state:'chandigarh',zip:'352014'},
 			dob: new Date((new Date().getTime())-1000*60*60*24*365*100),
@@ -112,7 +112,7 @@ controller: 'MainCtrl'
 			upvotes:20,
 			downvotes:2,
 			commentCount: 10,
-			comments: [{cid:1,comdesc:"hi akanshi", name : "Aman" },{cid:1,comdesc:"you are sexy", name : "Rahul"},{cid:2,comdesc:"divjot sucks", name : "Astha" }]
+			comments: [{cid:1,comdesc:"hi akanshi", name : "Aman" },{cid:1,comdesc:"you are sexy", name : "blaah"},{cid:2,comdesc:"divjot sucks", name : "Astha" }]
 	},
 		{
 			name : "Chitrasoma Singh",

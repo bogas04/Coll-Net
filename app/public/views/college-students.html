@@ -59,10 +59,9 @@
  <div class="col-md-8">
   <div class="search-item panel panel-default" ng-repeat="i in students">
     <div class="panel-heading">
-      <h3><a href="#profile/student/{{i.sid}}">{{i.name}}</a></h3>
+      <h3>   <img src="{{i.image}}" alt="{{i.name}}'s image"/><a href="#profile/student/{{i.sid}}">{{i.name}}</a></h3>
     </div>
     <div class="panel-body">
-    <img src="{{i.image}}" alt="{{i.name}}'s image"/>
     {{i.description}}
     </div>
   </div>
