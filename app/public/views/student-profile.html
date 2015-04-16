@@ -18,6 +18,7 @@
  <div class="container-fluid text-center">
  <div class="col-md-4">
  <h3>WORK PROFILE</h3>
+ <div class="panel panel-info">
  <div class="search-item panel panel-default" ng-repeat="i in students[0].workHistory">
     <div class="panel-heading">
       <h5>{{i.title}} , {{i.company}} ( {{i.from.getDate() + " / " + (i.from.getMonth()+1) + " / " + i.from.getFullYear()}}  - {{i.to || "present"}})</h5>
@@ -25,6 +26,7 @@
     <div class="panel-body">
     {{i.description}}
     </div>
+  </div>
   </div>
   </div>
  

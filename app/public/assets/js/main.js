@@ -103,6 +103,43 @@ angular.module('collnet', [
   educationHistory: [{name:"NSIT", from : new Date(new Date().getTime() - 1000*60*60*24*365*3), to : new Date(), degree : "B.E", discipline : "Computer Engineering"}],
  workHistory: [{company:"MICROSOFT", title : "Software Developer Engineer Intern", from : new Date(), to : null, description : "Worked really hard as a peon. Known in the campus for great tea serving skills."}]
  }];
+ 
+ $scope.groupPosts=[{
+content:"this post is made by akanshi",
+pid: 1,
+sid:2,
+upvotes:20,
+downvotes:2,
+commentCount: 10,
+comments: [{cid:1,comdesc:"hi akanshi"},{cid:1,comdesc:"you are sexy"},{cid:2,comdesc:"divjot sucks"}]
+ },
+ {
+content:"this post is made by chitra",
+pid: 2,
+sid:7,
+upvotes:16,
+downvotes:1,
+commentCount: 0,
+comments: []	 
+ },
+ {
+content:"this post is made by divjot",
+pid: 3,
+sid:8,
+upvotes:10,
+downvotes:9,
+commentCount: 5,
+comments: [{cid:3,comdesc:"hi akanshi"},{cid:1,comdesc:"you are sexy"},{cid:10,comdesc:"divjot sucks"},{cid:4,comdesc:"YES I KNW DIVJOT IS A SUCKER"}]
+ },
+  {
+content:"this post is made by ayush",
+pid: 4,
+sid:5,
+upvotes:10,
+downvotes:0,
+commentCount: 1,
+comments: [{cid:6,comdesc:"ayush"},{cid:1,comdesc:"mehrauli"},{cid:7,comdesc:"chandigarh"}]	 
+ }]
  $scope.searchColleges = function () {
 	 
 	 $location.path("search");

@@ -69,17 +69,23 @@
 </div>
 
 <div class="container">  
- <div class="col-md-8">
-  <div class="search-item panel panel-default" ng-repeat="i in students()">
+  <div class="search-item panel panel-default" ng-repeat="i in groupPosts()">
     <div class="panel-heading">
-      <h3>{{i.name}}</h3>
+      <h3>{{i.sid}</h3>
     </div>
     <div class="panel-body">
     <img src="{{i.image}}" alt="{{i.name}}'s image"/>
-    {{i.description}}
+    {{i.content}}
+	<div ng-if="comments.length != 0">
+	<div class="search-item panel panel-default" ng-repeat="i in groupPosts()">
+    <div class="panel-heading">
+	   <img src="{{i.image}}" alt="{{i.name}}'s image"/>
+      <h3>{{i.comments.cid || "abs"}}</h3>
+    </div>
+    <div class="panel-body">
+    {{i.comdesc}}
     </div>
   </div>
-  <div class="col-md-4">
-    <h1>yahan kya aega? :p</h1>
   </div>
-</div>
+    </div>
+  </div>
