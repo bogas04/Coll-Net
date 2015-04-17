@@ -72,9 +72,14 @@
   <div class="search-item panel panel-default" ng-repeat="i in groupPosts">
     <div class="panel-heading">
 	    <img src="{{i.image}}" alt="{{i.name}}'s image"/> {{i.name}} 
-  ^ {{i.upvotes}} V {{i.downvotes}}   </div>
+   </div>
     <div class="panel-body">
       {{i.content}} 
+	  <ul class="nav nav-pills" role="tablist">
+  <li role="presentation"><a href="#">Upvotes <span class="badge">{{i.upvotes}}</span></a></li>
+  <li role="presentation"><a href="#">Downvotes <span class="badge">{{i.downvotes}}</span></a></li>
+  <li role="presentation"><a href="#">Comments<span class="badge">{{i.commentCount}}</span></a></li>
+</ul>
       <div ng-if="i.comments.length != 0">
         <div class="search-item panel panel-default" ng-repeat="c in i.comments">
           <div class="panel-heading">
