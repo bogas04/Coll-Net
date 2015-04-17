@@ -1,7 +1,7 @@
 <div class="container-fluid">
- <nav class="navbar navbar-default">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
-     <!-- Brand and toggle get grouped for better mobile display -->
+    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
@@ -17,8 +17,8 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sort By <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-          <li><a href="#">location</a></li>
-          <li><a href="#">popularity</a></li>
+            <li><a href="#">location</a></li>
+            <li><a href="#">popularity</a></li>
           </ul>
         </li>
       </ul>
@@ -36,14 +36,16 @@
 <div class="container">
   <div class="search-item panel panel-default" ng-repeat="i in items | filter: { 'name': collegeToSearch }">
     <div class="panel-heading">
-      <h3><img src="{{i.image}}" alt="{{i.name}}'s image"/><a href="#profile/college/{{i.cid}}">{{i.name}}</a></h3>
-	  <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{i.rating}}
-</button>
+      <h3><img src="{{i.image}}" alt="{{i.name}}'s image"/><a href="#profile/college/{{i.cid}}">{{i.name}}</a>
+
+        <button type="button" class="btn btn-default btn-lg pull-right">
+          <span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{i.rating}}
+        </button>
+      </h3>
     </div>
-	
+
     <div class="panel-body">
-    {{i.description}}
+      {{i.description}}
     </div>
   </div>
 </div>
