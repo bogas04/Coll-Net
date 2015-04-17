@@ -26,12 +26,12 @@ try {
     'country' => 'india'
   ];
   $u->update();
-  
+
   echo "\nUPDATE: Testing new UserModel(username, password)\n";
   echo "\n=================================================\n";
   print_r($u->to_array());  
 
-    
+
   $u = new UserModel('divjot94', 'hallo');
   echo "\nDELETE: Testing new UserModel(username, password)\n";
   echo "\n=================================================\n";

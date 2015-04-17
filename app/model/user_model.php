@@ -55,7 +55,7 @@ class UserModel extends Model {
     if(!isset($d['username']) || !isset($d['password']) || !isset($d['email'])) { 
       throw new Exception('username, password & email are required fields'); 
     }
-    if(isset($d['hashed_password']) || $this->exists()) {
+    if(isset($d['hashed_password'])) {
       throw new Exception('invalid usage of API');   
     }
     $this->set($d);
