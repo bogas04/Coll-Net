@@ -1,0 +1,6 @@
+Options +FollowSymlinks
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !index
+RewriteRule ^(.*) http://127.0.0.1/~divjotsingh/collnet/app/public/index.html 

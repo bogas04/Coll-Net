@@ -3,13 +3,15 @@ require('model.php');
 
 class UserModel extends Model {
   private $collection;
-
-  public $username = null;
   private $password = null;
   private $hashed_password = null;
+
+  private $username = null;
+  public $name = null;
   public $email = null;
   public $dob = null; 
   public $location = null;
+  public $image = null;
   public $education_history = null;
   public $work_history = null;
   public $about_me = null;
@@ -20,20 +22,17 @@ class UserModel extends Model {
    */
 
   public function __construct() {  
+    parent::__construct();
     $a = func_get_args();
     $i = func_num_args();
     if (method_exists($this,$f='__construct'.$i)) {
       call_user_func_array(array($this,$f),$a); 
     }
-    $collection = new MongoCollection($this->db, 'users');
+    $this->collection = new MongoCollection($this->db, 'users');
   }
 
-  public function __construct0($d) {  
-    $this->set($d);
-    if($username === null || $password === null || $email === null) {
-      throw new Exception('username, password & email are required fields'); 
-    } 
-    $this->create(); 
+  public function __construct0() {  
+    
   }
   public function __construct1($username) { 
     $this->username = $username;
@@ -43,7 +42,7 @@ class UserModel extends Model {
   public function __construct2($username, $password) {
     $this->username = $username;
     $this->password = $password;
-    $this->autheticate();
+    $this->authenticate();
   }
 
 
@@ -52,44 +51,60 @@ class UserModel extends Model {
    */
 
   // Crud
-  private function create() {
+  public function create($d) {
+    if(!isset($d['username']) || !isset($d['password']) || !isset($d['email'])) { 
+      throw new Exception('username, password & email are required fields'); 
+    }
+    if(isset($d['hashed_password']) || $this->exists()) {
+      throw new Exception('invalid usage of API');   
+    }
+    $this->set($d);
+    if($this->username === null || $this->password === null || $this->email === null) {
+      throw new Exception('username, password & email are required fields'); 
+    } 
     // TODO: Think of potential risks 
     if($this->exists()) {
       throw new Exception('username is in use');
     }
-    $hashed_password = $this->hash_password($password);
+    $hashed_password = $this->hash_password($this->password);
     // TODO: Read API to see if create returns what it has added
-    $collection->create($this->to_array()); 
-    $collection->retrieve(true);
+    $this->collection->insert($this->to_array()); 
+    $this->retrieve(true);
   }
-  // cRud
+  // cRud - use to_array or to_json 
   private function retrieve($force = false) {
     if($this->hashed_password !== null || $force === true) { // need to get from db
-      $d = $collection->find(['username' => $username]);
+      $d = $this->collection->find(['username' => $this->username]);
       if($d->count() !== 1) { // not found
-        throw new Exception('username `'. $username .'` not found');  
+        throw new Exception('username `'. $this->username .'` not found');  
       } else { // found
-        $this->set($d);    
+        foreach($d as $doc) {
+          $this->set($doc);
+          break;
+        }
       }
     }  
   }
   // crUd
   public function update() {
-    if($hashed_password === null) { throw new Exception('Illegal operation'); }
+    if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
+    $this->hashed_password = $this->hash_password();
     // TODO: Think of potential risks
     // TODO: If nothing modified, throw exception
     // TODO: Read API to see if modify returns what it has added
-    $collection->findAndModify(['username' => $username], $this->to_array()); 
-    $collection->retrieve(true);
+    $this->collection->findAndModify(['username' => $this->username], $this->to_array()); 
+    $this->retrieve(true);
   }
   // cruD
   public function delete() {
-    if($hashed_password === null) { throw new Exception('Illegal operation'); }
+    if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
     // TODO: Very risky function
-    $collection->remove(['username' => $username], ['justOne' => true]);
+    $this->collection->remove(['username' => $this->username], ['justOne' => true]);
+    $this->unsetAll();
   }
-  private function exists() {
-    return $collection->find(['username' => $username])->count !== 0;
+  public function exists() {
+    if($this->username === null) { throw new Exception('Username is not set'); }
+    return $this->collection->find(['username' => $this->username])->count() !== 0;
   }
 
   /*
@@ -106,17 +121,32 @@ class UserModel extends Model {
    * Setting the object
    */
   private function set($d) {
-    $username = isset($d['username'])? $d['username'] : null; 
-    $password = isset($d['password'])? $d['password'] : null; 
-    $hashed_password = isset($d['hashed_password'])? $d['hashed_password'] : null; 
-    $dob = isset($d['dob'])? $d['dob'] : null; 
-    $location = isset($d['location'])? $d['location'] : null; 
-    $image = isset($d['image'])? $d['image'] : null; 
-    $name = isset($d['name'])? $d['name'] : null; 
-    $about_me = isset($d['about_me'])? $d['about_me'] : null; 
-    $education_history = isset($d['education_history'])? $d['education_history'] : null; 
-    $work_history = isset($d['work_history'])? $d['work_history'] : null; 
-    $social = isset($d['social'])? $d['social'] : null; 
+    $this->username = isset($d['username'])? $d['username'] : null; 
+    $this->password = isset($d['password'])? $d['password'] : null; 
+    $this->email = isset($d['email'])? $d['email'] : null; 
+    $this->hashed_password = isset($d['hashed_password'])? $d['hashed_password'] : null; 
+    $this->dob = isset($d['dob'])? $d['dob'] : null; 
+    $this->location = isset($d['location'])? $d['location'] : null; 
+    $this->image = isset($d['image'])? $d['image'] : null; 
+    $this->name = isset($d['name'])? $d['name'] : null; 
+    $this->about_me = isset($d['about_me'])? $d['about_me'] : null; 
+    $this->education_history = isset($d['education_history'])? $d['education_history'] : null; 
+    $this->work_history = isset($d['work_history'])? $d['work_history'] : null; 
+    $this->social = isset($d['social'])? $d['social'] : null; 
+  }
+  private function unsetAll() {
+    $this->username = null; 
+    $this->password = null; 
+    $this->email = null; 
+    $this->hashed_password = null; 
+    $this->dob = null; 
+    $this->location = null; 
+    $this->image = null; 
+    $this->name = null; 
+    $this->about_me = null; 
+    $this->education_history = null; 
+    $this->work_history = null; 
+    $this->social = null; 
   }
 
   /*
@@ -124,35 +154,40 @@ class UserModel extends Model {
    */
   public function to_array($internal = true) {
     $data = [
-      'username' => $username,
-      'dob' => $dob,
-      'location' => $location,
-      'image' => $image,
-      'name' => $name,
-      'about_me' => $about_me,
-      'education_history' => $education_history,
-      'work_history' => $work_history,
-      'social' => $social
+      'username' => $this->username,
+      'email' => $this->email,
+      'dob' => $this->dob,
+      'location' => $this->location,
+      'image' => $this->image,
+      'name' => $this->name,
+      'about_me' => $this->about_me,
+      'education_history' => $this->education_history,
+      'work_history' => $this->work_history,
+      'social' => $this->social
     ]; 
     if($internal) {
-      $data['hashed_password'] = $hashed_password;
+      $data['hashed_password'] = $this->hashed_password;
     }
     return $data;
   }
   public function to_json() {
     return json_encode($this->to_array());
   }
+  public function get_username() {
+    return $this->username;
+  }
 
   /*
    * Password Functions
    */
-  private function hash_password($rounds = 10) {
-    if($password === null) { throw new Exception('Password not set'); }
-    return password_hash($password, PASSWORD_BCRYPT, ['cost' => $rounds]);
+  private function hash_password() {
+    if($this->password === null) { throw new Exception('Password not set'); }
+    return password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 10]);
   }
 
   private function verify_password() {
-    if($hashed_password === null || $password === null) { throw new Exception('Password not set'); }
-    return password_verify($password, $hashed_password);
+    if($this->password === null) { throw new Exception('Password not set'); }
+    if($this->hashed_password === null) { $this->hashed_password = $this->hash_password(); }
+    return password_verify($this->password, $this->hashed_password);
   }
 }

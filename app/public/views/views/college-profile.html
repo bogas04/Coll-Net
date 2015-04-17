@@ -1,0 +1,78 @@
+<div class="container-fluid text-center banner banner-college"
+     style="
+  background: url({{currentGroup.img || 'assets/img/1.jpg'}}) 50% / 100%;">
+  <div class="banner-body">
+    <h1>{{currentCollege.name}} && {{currentGroup.name}}</h1>
+  </div>
+</div>
+
+<div class="container-fluid">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">About<span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Students</a></li>
+		<li><a href="#">Enroll</a></li>
+		<li><a href="#">Share</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Groups</a></li>
+		<li><a href="#">Societies</a></li>
+		<li><a href="#">Alumni</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+</div>
+
+<div class="container">  
+ <div class="col-md-8">
+  <div class="search-item panel panel-default" ng-repeat="i in students">
+    <div class="panel-heading">
+      <h3>{{i.name}}</h3>
+    </div>
+    <div class="panel-body">
+    <img src="{{i.image}}" alt="{{i.name}}'s image"/>
+    {{i.description}}
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+     <div class="btn-group-vertical" role="group" aria-label="...">
+       <div class="btn-group" role="group" aria-label="...">
+         <button type="button" class="btn btn-default">B.E</button>
+         <button type="button" class="btn btn-default">M.TECH</button>
+       </div>
+     </div>
+	</div>
+</div>
