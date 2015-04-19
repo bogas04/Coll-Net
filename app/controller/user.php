@@ -2,7 +2,7 @@
 require_once ('controller.php');
 require_once ('../model/model.php');
 
-class UserController {
+class UserController extends Controller{
 
   public function login($username, $password) {
     try {
