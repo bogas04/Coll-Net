@@ -25,10 +25,10 @@ class UserModel extends Model {
     parent::__construct();
     $a = func_get_args();
     $i = func_num_args();
+    $this->collection = new MongoCollection($this->db, 'users');
     if (method_exists($this,$f='__construct'.$i)) {
       call_user_func_array(array($this,$f),$a); 
     }
-    $this->collection = new MongoCollection($this->db, 'users');
   }
 
   public function __construct0() {  
@@ -36,7 +36,7 @@ class UserModel extends Model {
   }
   public function __construct1($username) { 
     $this->username = $username;
-    $this->retrieve();
+    $this->retrieve(true);
     $this->hashed_password = null; // read only object
   }
   public function __construct2($username, $password) {
