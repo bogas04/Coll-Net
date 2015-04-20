@@ -13,67 +13,46 @@
         </button>
       </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#/profile/college/{{items[0].cid}}/">About<span class="sr-only">(current)</span></a></li>
-          <li><a href="#profile/college/{{items[0].cid}}/students">Students</a></li>
-          <li><a href="#">Enroll</a></li>
-          <li><a href="#">Share</a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#profile/college/{{items[0].cid}}/group">Groups<span class="sr-only">(current)</span></a></li>
-          <li><a href="#">Societies</a></li>
-          <li><a href="#">Alumni</a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-</div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#/profile/college/{{items[0].cid}}/">About</a></li>
+        <li><a href="#profile/college/{{items[0].cid}}/students">Students</a></li>
+		<li><a href="#">Enroll</a></li>
+		 <li class="active"><a href="#profile/college/{{items[0].cid}}/group">Groups<span class="sr-only">(current)</span></a></li>
+		<li><a href="#">Societies</a></li>
+		<li><a href="#">Alumni</a></li>
+		<li><a href="#">Share</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
 <div class="container-fluid text-center banner banner-college"
      style="
-     background: url({{currentGroup.img || 'assets/img/1.jpg'}}) 50% / 100%;">
+     background: url({{currentGroup.img || 'assets/img/nsitgroup.png'}}) 50% / 100%;">
   <div class="banner-body">
-    <h1>{{currentCollege.name}} && {{currentGroup.name}}</h1>
+    <h1>{{currentCollege.name && currentGroup.name}}</h1>
   </div>
 </div>
 
-<div class="container">  
+<div class="container-fluid">  
   <textarea class="form-control" placeholder="Enter a post to share with group"></textarea>
   <div class="search-item panel panel-default" ng-repeat="i in groupPosts">
     <div class="panel-heading">
-      <img src="{{i.image}}" alt="{{i.name}}'s image"/> {{i.name}} 
+      <h2><img src="{{i.image}}" alt="{{i.name}}'s image"/> {{i.name}} </h2>
     </div>
     <div class="panel-body">
       {{i.content}} 
       <ul class="nav nav-pills" role="tablist">
         <li role="presentation"><button ng-click="upvote(i.pid, user.id)" class="btn btn-link">Upvotes <span class="badge">{{i.upvotes}}</span></button></li>
-        <li role="presentation"><button class="btn btn-link">Downvotes <span class="badge">{{i.downvotes}}</span></button></li>
+        <li role="presentation"><button ng-click="downvote(i.pid, user.id)" class="btn btn-link">Downvotes <span class="badge">{{i.downvotes}}</span></button></li>
         <li role="presentation">Comments<span class="badge">{{i.comments.length}}</span></li>
       </ul>
       <div ng-if="i.comments.length != 0">
         <div class="search-item panel panel-default" ng-repeat="c in i.comments">
           <div class="panel-heading">
-            {{c.name}}
+           <h3> {{c.name}}</h3>
           </div>
           <div class="panel-body">
             {{c.comdesc}}

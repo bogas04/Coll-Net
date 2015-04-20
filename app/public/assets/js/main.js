@@ -44,6 +44,10 @@ angular.module('collnet', [
   .when('/profile/college/:collegeid/group', {
     templateUrl: 'views/college-group.html',
     controller: 'MainCtrl'
+  })
+  .when('/profile/college/:collegeid/group/:courseid/students', {
+    templateUrl: 'views/students.html',
+    controller: 'MainCtrl'
   });
   // $locationProvider.html5Mode(true);
 })
@@ -55,16 +59,18 @@ angular.module('collnet', [
     cid:1,
     location: {country:'india',state:'delhi',zip:'110034'},
     image: "assets/img/1.jpg",
-    banner: "assets/img/1.jpg",
-    description: 'Best college ever. Our college is the best college, we have no place for studies.'
+    description: 'Best college ever. Our college is the best college, we have no place for studies.',
+	courses:[{csid:1,name:'B.TECH',pic:'/assets/img/btechnsit.jpg',content:"nsit btech it is"},{csid:2,name:'M.TECH',image:'/assets/img/mtechnsit.jpg',content:"nsit mtech it is"}],
+	groups:[{name:'coe 2016',banner:'/assets/img/coe2016.jpg',about:'this is coe 2016 batch personal group',members:5},{name:'bootcamp',banner:'/assets/img/bootcamp/.jpg',about:'world final team for acm icpc',members:10}]
   }, {
     name: 'DTU',
     rating: 2.49,
     cid:2,
     location: {country:'india',state:'delhi',zip:'110034'},
-    banner: "assets/img/2.jpg",
     image: "assets/img/2.jpg",
-    description: 'Best engineering kaalege only after NSIT!'
+    description: 'Best engineering kaalege only after NSIT!',
+	courses:[{csid:1,name:'B.TECH',pic:'/assets/img/btechdtu.jpg',content:"dtu btech it is"},{csid:2,name:'M.TECH',image:'/assets/img/mtechdtu.jpg',content:"dtu mtech it is"},{csid:3,name:'MSC',image:'/assets/img/mscdtu.jpg',content:"dtu msc it is"},{csid:4,name:'BSC',image:'/assets/img/bscdtu.jpg',content:"dtu bsc it is"}],
+	groups:[{name:'dtu ieee',banner:'/assets/img/dtuieee.jpg',about:'welcome to dtu useless ieee stuff',members:4}]
   }];
   $scope.students= [{
     name : "Akanshi Mangla", 
@@ -105,7 +111,7 @@ angular.module('collnet', [
       educationHistory: [{name:"NSIT", from : new Date(new Date().getTime() - 1000*60*60*24*365*3), to : new Date(), degree : "B.E", discipline : "Computer Engineering"}],
       workHistory: [{company:"MICROSOFT", title : "Software Developer Engineer Intern", from : new Date(), to : null, description : "Worked really hard as a peon. Known in the campus for great tea serving skills."}]
     }];
-
+	
   $scope.groupPosts=[{
     content:"oye what's up fellas, i am your  akanshi",
     pid: 1,
@@ -163,6 +169,14 @@ angular.module('collnet', [
     for(var i = 0; i < $scope.groupPosts.length; i++) {
       if($scope.groupPosts[i].pid === pid) {
         $scope.groupPosts[i].upvotes++;
+      }
+    }
+  };
+  $scope.downvote = function(pid, uid) {
+    // $http.post('...');
+    for(var i = 0; i < $scope.groupPosts.length; i++) {
+      if($scope.groupPosts[i].pid === pid) {
+        $scope.groupPosts[i].downvotes--;
       }
     }
   };
