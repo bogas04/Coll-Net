@@ -57,7 +57,7 @@ class CompanyModel extends Model {
       throw new Exception('Company Name, Branch & Headquarter are required fields'); 
     } 
     // TODO: Think of potential risks 
-    if(($this->exists()) {
+    if($this->exists()) {
       throw new Exception('This Company Name already exists');
     }
     // TODO: Read API to see if create returns what it has added
