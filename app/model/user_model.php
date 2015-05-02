@@ -5,7 +5,6 @@ class UserModel extends Model {
   private $collection;
   private $password = null;
   private $hashed_password = null;
-
   private $username = null;
   public $name = null;
   public $email = null;
@@ -16,6 +15,7 @@ class UserModel extends Model {
   public $work_history = null;
   public $about_me = null;
   public $social = null;
+  private $is_admin = false; 
 
   /*
    * Constructors
@@ -68,7 +68,7 @@ class UserModel extends Model {
     }
     $hashed_password = $this->hash_password($this->password);
     // TODO: Read API to see if create returns what it has added
-    $this->collection->insert($this->to_array()); 
+    $this->collection->insert($this->to_array2()); 
     $this->retrieve(true);
   }
   // cRud - use to_array or to_json 
@@ -92,7 +92,7 @@ class UserModel extends Model {
     // TODO: Think of potential risks
     // TODO: If nothing modified, throw exception
     // TODO: Read API to see if modify returns what it has added
-    $this->collection->findAndModify(['username' => $this->username], $this->to_array()); 
+    $this->collection->findAndModify(['username' => $this->username], $this->to_array2()); 
     $this->retrieve(true);
   }
   // cruD
@@ -152,7 +152,23 @@ class UserModel extends Model {
   /*
    * Return data functions
    */
-  public function to_array($internal = true) {
+  private function to_array2() {
+    $data = [
+      'username' => $this->username,
+      'hashed_password' = $this->hashed_password,
+      'email' => $this->email,
+      'dob' => $this->dob,
+      'location' => $this->location,
+      'image' => $this->image,
+      'name' => $this->name,
+      'about_me' => $this->about_me,
+      'education_history' => $this->education_history,
+      'work_history' => $this->work_history,
+      'social' => $this->social
+    ]; 
+    return $data;
+  }
+  public function to_array1() {
     $data = [
       'username' => $this->username,
       'email' => $this->email,
@@ -165,16 +181,16 @@ class UserModel extends Model {
       'work_history' => $this->work_history,
       'social' => $this->social
     ]; 
-    if($internal) {
-      $data['hashed_password'] = $this->hashed_password;
-    }
     return $data;
   }
   public function to_json() {
-    return json_encode($this->to_array());
+    return json_encode($this->to_array2());
   }
   public function get_username() {
     return $this->username;
+  }
+   private function get_is_admin() {
+    return $this->is_admin;
   }
 
   /*
