@@ -4,13 +4,12 @@
     <title> Collnet - Home </title>
     <meta charset="utf-8"/>
     <base href="" target="_blank">
-
     <!-- styles -->
     <link href="assets/css/main.css" rel="stylesheet"/>
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
   </head>
   <body ng-app="collnet">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="#/">
@@ -23,10 +22,11 @@
           <li><a href="#contact-us">Contact Us</a></li>
         </ul>
       </div>
+      <div> Welcome {{name}} </div>
     </nav>
 
     <!-- views -->
-    <div ng-view=""></div>
+    <div ng-view="" ></div>
 
     <!-- scripts -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>

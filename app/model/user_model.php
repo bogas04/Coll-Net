@@ -155,7 +155,7 @@ class UserModel extends Model {
   private function to_array2() {
     $data = [
       'username' => $this->username,
-      'hashed_password' = $this->hashed_password,
+      'hashed_password' => $this->hashed_password,
       'email' => $this->email,
       'dob' => $this->dob,
       'location' => $this->location,

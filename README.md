@@ -6,21 +6,20 @@ This is going to be fun!
 Todo
 ===
 * Complete all models
-  - User 
-  - Post
-  - College
-  - Company
+  - [x] User 
+  - [x] Institute 
+  - [x] Company
   - Group
+  - Post
+  - Comment
 * Complete all controllers with API functions
-  - CRUD user
-  - CRUD post
-    - CRUD comment
-    - From college
-    - From group
-  - Enroll College/Group
-  - Join Company
+  - User 
+  - Post 
+  - Comment
+  - Company (Join)
+  - Institute (Enroll)
   - Search Companies, Colleges, Members, Students
-* Build a router
-* Connect angular app with router
-* Complete all views
+* Build an API router
+* [x] Connect angular app with router
+* [x] Complete all views
 
