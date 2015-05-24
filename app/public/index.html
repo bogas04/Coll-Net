@@ -4,29 +4,29 @@
     <title> Collnet - Home </title>
     <meta charset="utf-8"/>
     <base href="" target="_blank">
+
     <!-- styles -->
-    <link href="assets/css/main.css" rel="stylesheet"/>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="assets/css/main.css" rel="stylesheet"/>
+
   </head>
   <body ng-app="collnet">
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav ng-controller="MainCtrl" class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#/">
-            Collnet
-          </a>
+          <a class="navbar-brand" href="#/"> Collnet </a>
         </div>
         <ul class="nav navbar-nav">
           <li><a href="#search">Search</a></li>
-          <li><a href="#login">Login/Register</a></li>
+          <li ng-if="!isLoggedIn"><a href="#login">Login/Register</a></li>
+          <li ng-if="isLoggedIn"><a href="#profile/self">Profile</a></li>
           <li><a href="#contact-us">Contact Us</a></li>
         </ul>
       </div>
-      <div> Welcome {{name}} </div>
     </nav>
 
     <!-- views -->
-    <div ng-view="" ></div>
+    <div ng-view="" id="ng-view-wrapper"></div>
 
     <!-- scripts -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -37,6 +37,14 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
-    <script src="assets/js/main.js"></script>
+    <!-- app -->
+    <script src="js/app.js"></script>
+    <script src="js/config.js"></script>
+
+    <!-- factories -->
+    <script src="js/factoryAuth.js"></script>
+
+    <!-- controllers -->
+    <script src="js/main.js"></script>
   </body>
 </html>

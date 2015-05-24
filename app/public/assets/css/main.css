@@ -1,24 +1,32 @@
+#ng-view-wrapper {
+  margin-top: 55px;
+  padding-top: 10px;
+}
 .banner {
   box-shadow: 0px 0px 200px 75px black inset;
 }
 .banner-main {
   background: url('../img/banner.jpg') 50% / 100%;
   background-size: cover;
-  margin-top: 50px;
-  color: #0a0a0a;
-  height: 94vh;
-  text-shadow: 0px 0px 10px white ;
+  margin-top: -11px;
+  height: 93vh;
 }
 .banner-college {
   background-size: cover;
-  color: black;
   height: 34vh;
-  text-shadow: 0px 0px 10px white;
 }
 .banner-main .banner-body {
-  margin: 30vh 0px 30vh 0px;
-  padding: 20px 0px 20px 0px;
-  background-color: rgba(0, 0, 0, 0.3);
+  margin: 30vh -15px;
+  padding: 20px 0px;
+  background-color: rgba(60, 60, 60, 0.6);
+}
+.banner-main .banner-body h1 {
+  color: white;
+  text-shadow: 0px 0px 2px black ;
+}
+.banner-college .banner-body h1 {
+  color: black;
+  text-shadow: 0px 0px 10px white;
 }
 .banner-college .banner-body {
   padding-top: 7vh;
@@ -28,4 +36,7 @@
   height: 50px;
   border: 1px solid maroon;
   border-radius: 50%;
+}
+.profile-image {
+  height: 300px;
 }

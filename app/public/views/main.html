@@ -1,6 +1,6 @@
 <div class="container-fluid text-center banner banner-main">
   <div class="banner-body">
-    <h1>Welcome, random student!</h1>
+    <h1>Welcome, {{ currentUser.name || "random student" }}!</h1>
     <form ng-submit="searchColleges()">
       <div class="form-group form-inline">
         <input class="form-control" type="text" placeholder="Search college" ng-model="collegeToSearch" name="college-name"/>
