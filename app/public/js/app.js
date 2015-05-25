@@ -7,12 +7,5 @@ var collnetApp = angular.module('collnet', [
     ,'ngRoute'
     ,'ui.bootstrap'
 ])
-.run(function ($rootScope, $location, Auth) {
-  //$rootScope.$on("$routeChangeStart", function (event, next, current) {
-    //Auth.isLoggedIn().then(function (results) {
-      //if(!results.error) {
-
-      //}
-    //});
-  //});
+.run(function ($rootScope, $location, Auth, Institute) {
 });

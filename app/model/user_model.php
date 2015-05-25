@@ -1,5 +1,5 @@
 <?php
-require('model.php');
+require_once('model.php');
 
 class UserModel extends Model {
   private $collection;

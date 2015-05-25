@@ -10,6 +10,10 @@
         <label>Password</label>
         <input class="form-control" type="password" name="password" ng-model="loginThisUser.password" placeholder="Enter your password" required/>
       </div>
+      <div class="alert {{loginMessageType}} alert-dismissible message" role="alert" ng-if="loginMessage">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{loginMessage}}
+      </div>
       <button class="btn btn-primary">Log in</button>
     </form>
   </div>
@@ -39,6 +43,10 @@
       <div class="form-group">
         <label>Password</label>
         <input class="form-control" type="password" name="password" ng-model="addThisUser.password" placeholder="Enter your password" required/>
+      </div>
+      <div class="alert {{registerMessageType}} alert-dismissible message" role="alert" ng-if="registerMessage">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{registerMessage}}
       </div>
       <button class="btn btn-primary">Register</button>
     </form>

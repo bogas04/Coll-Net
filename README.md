@@ -5,21 +5,15 @@ This is going to be fun!
 
 Todo
 ===
-* Complete all models
-  - [x] User 
-  - [x] Institute 
-  - [x] Company
-  - Group
-  - Post
-  - Comment
-* Complete all controllers with API functions
-  - User 
-  - Post 
-  - Comment
-  - Company (Join)
-  - Institute (Enroll)
-  - Search Companies, Colleges, Members, Students
-* [x] Build an API router
-* [x] Connect angular app with router
-* [x] Complete all views
-
+* Edit Profile
+* Delete Profile
+* Search Institutes
+* Institute profile pages
+* Enroll/Unenroll institute
+* Join/Leave institute group
+* Show posts
+* Create posts
+* Delete/edit post
+* Create/Delete/Edit comments
+* Images
+* Social integration

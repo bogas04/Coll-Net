@@ -1,9 +1,19 @@
 'use strict';
 
-collnetApp.controller('MainCtrl', function ($scope, $location, $rootScope, Auth) {
+collnetApp.controller('MainCtrl', function ($scope, $location, $rootScope, Auth, Institute) {
   $scope.placeholder = {
-    profileImage : 'assets/img/placeholder.jpg'
+    profileImage : 'assets/img/user.jpg',
+    collegeImage : 'assets/img/college.jpg'
   };
+
+  // Search Related
+  if($location.path().indexOf('search') > -1) {
+    Institute.getAll().then(function(results) {
+      $scope.institutes = results.data;
+    });
+  }
+
+  // User Related
   $scope.addThisUser = {
     name: '',
     email: '',
@@ -11,7 +21,6 @@ collnetApp.controller('MainCtrl', function ($scope, $location, $rootScope, Auth)
     sex: (new Array('m', 'f', 'o'))[parseInt((Math.random()*10)%3)],
     password: ''
   };
-
   Auth.isLoggedIn().then(function(result) {
     $scope.isLoggedIn = !result.error;
     $scope.currentUser = result.data || null;
@@ -19,6 +28,8 @@ collnetApp.controller('MainCtrl', function ($scope, $location, $rootScope, Auth)
   });
   $scope.login = function(details) {
     Auth.login(details).then(function(result) {
+      $scope.loginMessageType = result.error?'alert-danger':'alert-success'; 
+      $scope.loginMessage = result.message;
       $scope.isLoggedIn = !result.error;
       $scope.currentUser = result.data || null;
       $scope.redirectNicely();
@@ -28,11 +39,15 @@ collnetApp.controller('MainCtrl', function ($scope, $location, $rootScope, Auth)
     Auth.logout().then(function(result) {
       $scope.isLoggedIn = false;
       $scope.currentUser = null;
-      $scope.redirectNicely();
+      $location.path('/');
     });
   };
   $scope.register = function(details) {
-    Auth.signup(details);
+    Auth.signup(details).then(function(result) {
+      details.showMessage = true;
+      $scope.registerMessageType = result.error?'alert-danger':'alert-success'; 
+      $scope.registerMessage = result.message;
+    });
   };
   $scope.redirectNicely = function() {
     if($location.path().indexOf('profile/self') > -1) {
@@ -46,6 +61,7 @@ collnetApp.controller('MainCtrl', function ($scope, $location, $rootScope, Auth)
       }
     }
   };
+
   $scope.upvote = function(pid, uid) {
     // $http.post('...');
     for(var i = 0; i < $scope.groupPosts.length; i++) {

@@ -1,5 +1,5 @@
 <?php
-require('model.php');
+require_once('model.php');
 
 class InstituteModel extends Model {
   private $collection;
@@ -26,13 +26,13 @@ class InstituteModel extends Model {
   }
 
   public function __construct0() {  
-    
+
   }
   public function __construct1($emailid) { //hat can be the unique key to accesss a particular institute
     $this->emailid = $emailid;
     $this->retrieve();
   }
-  
+
 
 
   /*
@@ -46,31 +46,31 @@ class InstituteModel extends Model {
     }
     if(isset($d['_id'])) {
       throw new Exception('invalid usage of API'); 
-    $this->set($d);
-    if($this->name === null || $this->email === null || $this->location === null) {
-      throw new Exception('name of the institute, password & emailid are required fields'); 
-    } 
-    // TODO: Think of potential risks 
-    if($this->exists()) {
-      throw new Exception('emailid  is in use');// what should be done here as primary key is mongo id
+      $this->set($d);
+      if($this->name === null || $this->email === null || $this->location === null) {
+        throw new Exception('name of the institute, password & emailid are required fields'); 
+      } 
+      // TODO: Think of potential risks 
+      if($this->exists()) {
+        throw new Exception('emailid  is in use');// what should be done here as primary key is mongo id
+      }
+      $this->collection->insert($this->to_array()); 
+      $this->retrieve();
     }
-    $this->collection->insert($this->to_array()); 
-    $this->retrieve();
-    }
-   }
+  }
   // cRud - use to_array or to_json 
   private function retrieve() {
-      // need to get from db
-      $d = $this->collection->find(['emailid' => $this->emailid]);//find using what????
-      if($d->count() !== 1) { // not found
-        throw new Exception(name. $this->name .'or'.location.$this->location 'not found');  
-      } else { // found
-        foreach($d as $doc) {
-          $this->set($doc);
-          break;
-        }
+    // need to get from db
+    $d = $this->collection->find(['emailid' => $this->emailid]);//find using what????
+    if($d->count() !== 1) { // not found
+      throw new Exception('name'. $this->name .'or location : '.$this->location .' not found');  
+    } else { // found
+      foreach($d as $doc) {
+        $this->set($doc);
+        break;
       }
-      
+    }
+
   }
   // crUd
   public function update() {
@@ -89,24 +89,26 @@ class InstituteModel extends Model {
     $this->unsetAll();
   }
   public function exists() {
-    if($this->emailid === null || $this->name === null || $this->location === null) { throw new Exception('Email id,name of institute or location of institute is not present'); }//use what in place if username?
+    if($this->emailid === null || $this->name === null || $this->location === null) { 
+      throw new Exception('Email id,name of institute or location of institute is not present'); 
+    }//use what in place if username?
     return $this->collection->find(['name' => $this->name],['location' => $this->location],['emailid'=> $this->eamilid]);
   }
 
   /*
    * Setting the object
    */
-  
+
   private function set($d)
   {
 
-  $this->email = isset($d['email'])? $d['email'] : null;
-  $this->yoe = isset($d['yoe'])? $d['yoe'] : null;  
-  $this->location = isset($d['location'])? $d['location'] : null;
-  $this->image = isset($d['image'])? $d['image'] : null; //
-  $this->name = isset($d['name'])? $d['name'] : null; 
-  $this->about_institute = isset($d['about_institute'])? $d['about_institute'] : null; 
-  $this->social = isset($d['social'])? $d['social'] : null; 
+    $this->email = isset($d['email'])? $d['email'] : null;
+    $this->yoe = isset($d['yoe'])? $d['yoe'] : null;  
+    $this->location = isset($d['location'])? $d['location'] : null;
+    $this->image = isset($d['image'])? $d['image'] : null; //
+    $this->name = isset($d['name'])? $d['name'] : null; 
+    $this->about_institute = isset($d['about_institute'])? $d['about_institute'] : null; 
+    $this->social = isset($d['social'])? $d['social'] : null; 
   }
   private function unsetAll() {
     $this->email = null;  
