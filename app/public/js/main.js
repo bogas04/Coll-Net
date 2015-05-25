@@ -61,7 +61,13 @@ collnetApp.controller('MainCtrl', function ($scope, $location, $rootScope, Auth,
       }
     }
   };
+  $scope.editProfile = function(details) {
+    Auth.update(details).then(function(result) {
+      console.log(result);
+    });
+  };
 
+  // Post Related
   $scope.upvote = function(pid, uid) {
     // $http.post('...');
     for(var i = 0; i < $scope.groupPosts.length; i++) {

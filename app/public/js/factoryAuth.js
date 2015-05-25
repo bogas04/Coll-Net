@@ -27,7 +27,11 @@ collnetApp.factory("Auth", ['$http', function ($http) {
       });
     },
     update: function (details) {
-      return $http.post(serviceBase + "?action=updateUser" , details).then(function (results) {
+      return $http.post(serviceBase + "?action=updateUser" , { 
+        username: details.username, 
+        password: details.password, 
+        newDetails: details
+      }).then(function (results) {
         return results.data;
       });
     },

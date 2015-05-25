@@ -1,0 +1,46 @@
+<div class="container-fluid">
+<form class="form" ng-submit="editProfile(currentUser)">
+  <div class="form-group">
+    <label>Name</label>
+    <input class="form-control" name="name" type="text" ng-model="currentUser.name"/>
+  </div>
+  <!--<div class="form-group">-->
+    <!--<label>Password</label>-->
+    <!--<input class="form-control" name="password" type="password" ng-model="currentUser.password"/>-->
+  <!--</div>-->
+  <div class="form-group">
+    <label>Date of Birth</label>
+    <input class="form-control" name="dob" type="text "ng-model="currentUser.dob"/>
+  </div>
+  <div class="form-group">
+    <label>Location</label>
+    <input class="form-control" name="location" type="text" ng-model="currentUser.location"/>
+  </div>
+  <div class="form-group">
+    <label>Image</label>
+    <input class="form-control" name="image" type="text" ng-model="currentUser.image"/>
+  </div>
+  <div class="form-group">
+    <label>About Me</label>
+    <input class="form-control" name="about_me" type="text" ng-model="currentUser.about_me"/>
+  </div>
+  <div class="form-group">
+    <label>Social - Facebook URL</label>
+    <input class="form-control" name="social.facebook" type="text" ng-model="currentUser.social.facebook"/>
+  </div>
+  <div class="form-group">
+    <label>Social - YouTube URL</label>
+    <input class="form-control" name="social.youtube" type="text" ng-model="currentUser.social.youtube"/>
+  </div>
+  <div class="form-group">
+    <label>Social - Twitter URL</label>
+    <input class="form-control" name="social.twitter" type="text" ng-model="currentUser.social.twitter"/>
+  </div>
+  <div class="form-group">
+    <label>Enter your password to make the changes</label>
+    <input class="form-control" name="password" type="password" ng-model="currentUser.password"/>
+  </div>
+  <button class="btn btn-info">Update</button>
+</form>
+</div>
+

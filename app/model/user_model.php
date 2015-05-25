@@ -131,16 +131,16 @@ class UserModel extends Model {
   private function set($d) {
     $this->username = isset($d['username'])? $d['username'] : $this->username; 
     $this->password = isset($d['password'])? $d['password'] : $this->password; 
-    $this->email = isset($d['email'])? $d['email'] : null; 
-    $this->hashed_password = isset($d['hashed_password'])? $d['hashed_password'] : null; 
-    $this->dob = isset($d['dob'])? $d['dob'] : null; 
-    $this->location = isset($d['location'])? $d['location'] : null; 
-    $this->image = isset($d['image'])? $d['image'] : null; 
-    $this->name = isset($d['name'])? $d['name'] : null; 
-    $this->about_me = isset($d['about_me'])? $d['about_me'] : null; 
-    $this->education_history = isset($d['education_history'])? $d['education_history'] : null; 
-    $this->work_history = isset($d['work_history'])? $d['work_history'] : null; 
-    $this->social = isset($d['social'])? $d['social'] : null; 
+    $this->email = isset($d['email'])? $d['email'] : $this->email; 
+    $this->hashed_password = isset($d['hashed_password'])? $d['hashed_password'] : $this->hashed_password; 
+    $this->dob = isset($d['dob'])? $d['dob'] : $this->dob; 
+    $this->location = isset($d['location'])? $d['location'] : $this->location; 
+    $this->image = isset($d['image'])? $d['image'] : $this->image; 
+    $this->name = isset($d['name'])? $d['name'] : $this->name; 
+    $this->about_me = isset($d['about_me'])? $d['about_me'] : $this->about_me; 
+    $this->education_history = isset($d['education_history'])? $d['education_history'] : $this->education_history; 
+    $this->work_history = isset($d['work_history'])? $d['work_history'] : $this->work_history; 
+    $this->social = isset($d['social'])? $d['social'] : $this->social; 
   }
   private function unsetAll() {
     $this->username = null; 

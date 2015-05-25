@@ -46,6 +46,30 @@ class UserController extends Controller{
       $this->respond(true, 'No user logged in');
     }
   }
+  public function getProfile($username) {
+    try {
+      $this->respond(false, 'successfully got the data', (new UserModel($username))->to_array());
+    } catch (Exception $e) {
+      $this->respond(true, $e->getMessage);
+    }
+  }
+  public function update($username, $password, $newDetails) {
+    try {
+      if($this->isLoggedIn()) {
+        $u = new UserModel($username, $password);
+        foreach($newDetails as $key => $value) {
+          if(!in_array($key, ['username', 'password', 'hashed_password', 'email'])) {
+            $u->$key = $value;
+          }
+        }
+        $u->update();
+        $_SESSION['user'] = $u->to_array();
+        $this->respond(false, 'Successfully updated!', $_SESSION['user']);
+      }
+    } catch (Exception $e) {
+      $this->respond(true, $e->getMessage());
+    }
+  }
   public function changePassword($username, $old_password, $new_password) {
     // TODO :
     // 1) Check if logged in, if not, destroy session and unset everything
@@ -54,13 +78,5 @@ class UserController extends Controller{
     // 4) Finally accept the new password and make changes to database (using only the model functions)
 
   }
-  public function getProfile($username) {
-    try {
-      $this->respond(false, 'successfully got the data', (new UserModel($username))->to_array());
-    } catch (Exception $e) {
-      $this->respond(true, $e->getMessage);
-    }
-  }
-  // create similar API functions to retrieve stuff 
 }
 

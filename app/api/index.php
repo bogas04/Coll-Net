@@ -88,7 +88,7 @@ function updateUser($details) {
   if(!isset($details['username'])) {
     $userCtrl->respond(true, 'Invalid username');
   }
-  $userCtrl->update($details['username'], $details['updated']);
+  $userCtrl->update($details['username'], $details['password'], $details['newDetails']);
 }
 function deleteUser($details) {
   return json_encode([

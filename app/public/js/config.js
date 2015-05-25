@@ -30,6 +30,10 @@ collnetApp.config(function ($locationProvider, $routeProvider) {
     templateUrl: 'views/profile-self.html',
     controller: 'MainCtrl'
   })
+  .when('/profile/edit', {
+    templateUrl: 'views/edit-profile.html',
+    controller: 'MainCtrl'
+  })
   .when('/profile/user/:userid', {
     templateUrl: 'views/student-profile.html',
     controller: 'MainCtrl'
