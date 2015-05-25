@@ -9,39 +9,56 @@ class UserController extends Controller{
       $u = new UserModel($username, $password);
       session_start();
       $_SESSION['user'] = $u->to_array();
+      $this->respond(false, 'Logged in', $_SESSION['user']);
     } catch (Exception $e) {
-      respond(true, $e->getMessage());
+      $this->respond(true, $e->getMessage());
     }
   } 
-  public function logout($username) {
+  public function signup($details) {
+    try {
+      $u = new UserModel();
+      $u->create($details);
+      $this->respond(false, 'Signed up successfully!', $u->to_array());
+    } catch (Exception $e) {
+      $this->respond(true, $e->getMessage());
+    }
+  } 
+  public function logout() {
     try {
       session_start();
       unset($_SESSION['user']);
       session_destroy();
+      $this->respond(false, 'Logged out successfully');
     } catch (Exception $e) {
-      respond(true, $e->getMessage);
+      $this->respond(true, $e->getMessage);
     }
   }
-  public function isLoggedIn($username) {
-    return $_SESSION 
-      && isset($_SESSION['user'])
+  public function isLoggedIn() {
+    session_start();
+    return isset($_SESSION['user'])
       && isset($_SESSION['user']['username'])
-      && isset($_SESSION['user']['hashed_password'])
-      && $_SESSION['user']['username'] === $username;
+      && isset($_SESSION['user']['email']);
+  }
+  public function getLoginStatus() {
+    if($this->isLoggedIn()) {
+      $this->respond(false, 'User is logged in', $_SESSION['user']);
+    } else {
+      $this->respond(true, 'No user logged in');
+    }
   }
   public function changePassword($username, $old_password, $new_password) {
     // TODO :
     // 1) Check if logged in, if not, destroy session and unset everything
-    // 2) Check if old === new, if yes then respond(true, 'choose a different password')
+    // 2) Check if old === new, if yes then $this->respond(true, 'choose a different password')
     // 3) Check if username exists [being in session doesn't necessarily mean that user is in DB]
     // 4) Finally accept the new password and make changes to database (using only the model functions)
 
   }
-  public function profile($username) {
+  public function getProfile($username) {
     try {
-      respond(false, 'successfully got the data', (new UserModel($username))->to_array());
+      $this->respond(false, 'successfully got the data', (new UserModel($username))->to_array());
     } catch (Exception $e) {
-      respond(true, $e->getMessage);
+      $this->respond(true, $e->getMessage);
     }
   }
   // create similar API functions to retrieve stuff 

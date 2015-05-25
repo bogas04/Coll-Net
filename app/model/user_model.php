@@ -30,16 +30,21 @@ class UserModel extends Model {
       call_user_func_array(array($this,$f),$a); 
     }
   }
-
   public function __construct0() {  
     
   }
   public function __construct1($username) { 
+    if($username === null) {
+      throw new Exception('Invalid username');
+    }
     $this->username = $username;
     $this->retrieve(true);
     $this->hashed_password = null; // read only object
   }
   public function __construct2($username, $password) {
+    if($username === null || $password === null) {
+      throw new Exception('Invalid username or password');
+    }
     $this->username = $username;
     $this->password = $password;
     $this->authenticate();
@@ -66,14 +71,17 @@ class UserModel extends Model {
     if($this->exists()) {
       throw new Exception('username is in use');
     }
-    $hashed_password = $this->hash_password($this->password);
+    $this->hashed_password = $this->hash_password($this->password);
     // TODO: Read API to see if create returns what it has added
     $this->collection->insert($this->to_array2()); 
     $this->retrieve(true);
   }
   // cRud - use to_array or to_json 
   private function retrieve($force = false) {
-    if($this->hashed_password !== null || $force === true) { // need to get from db
+    if($this->username === null || $this->password === null) {
+      throw new Exception('Invalid username or password');  
+    }
+    if($this->hashed_password === null || $force === true) { // need to get from db
       $d = $this->collection->find(['username' => $this->username]);
       if($d->count() !== 1) { // not found
         throw new Exception('username `'. $this->username .'` not found');  
@@ -121,8 +129,8 @@ class UserModel extends Model {
    * Setting the object
    */
   private function set($d) {
-    $this->username = isset($d['username'])? $d['username'] : null; 
-    $this->password = isset($d['password'])? $d['password'] : null; 
+    $this->username = isset($d['username'])? $d['username'] : $this->username; 
+    $this->password = isset($d['password'])? $d['password'] : $this->password; 
     $this->email = isset($d['email'])? $d['email'] : null; 
     $this->hashed_password = isset($d['hashed_password'])? $d['hashed_password'] : null; 
     $this->dob = isset($d['dob'])? $d['dob'] : null; 
@@ -168,7 +176,7 @@ class UserModel extends Model {
     ]; 
     return $data;
   }
-  public function to_array1() {
+  public function to_array() {
     $data = [
       'username' => $this->username,
       'email' => $this->email,
@@ -197,12 +205,11 @@ class UserModel extends Model {
    * Password Functions
    */
   private function hash_password() {
-    if($this->password === null) { throw new Exception('Password not set'); }
+    if($this->password === null) { throw new Exception('Password not set '. $this->password); }
     return password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 10]);
   }
 
   private function verify_password() {
-    if($this->password === null) { throw new Exception('Password not set'); }
     if($this->hashed_password === null) { $this->hashed_password = $this->hash_password(); }
     return password_verify($this->password, $this->hashed_password);
   }

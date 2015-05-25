@@ -1,28 +1,38 @@
 collnetApp.factory("Auth", ['$http', function ($http) {
   var serviceBase = '../api/';
   return {
-    isLoggedIn : function() {
+    isLoggedIn: function() {
       return $http.get(serviceBase + "?action=loginStatus").then(function (results) {
         return results.data;
       });
     },
-    get: function (q) {
-      return $http.get(serviceBase + "?action=" + q).then(function (results) {
+    login: function(details) {
+      return $http.post(serviceBase + "?action=login" , details).then(function (results) {
         return results.data;
       });
     },
-    post: function (q, object) {
-      return $http.post(serviceBase + "?action=" + q, object).then(function (results) {
+    logout: function() {
+      return $http.get(serviceBase + "?action=logout").then(function (results) {
         return results.data;
       });
     },
-    put: function (q, object) {
-      return $http.post(serviceBase + "?action=" + q, object).then(function (results) {
+    signup: function(details) {
+      return $http.post(serviceBase + "?action=signup" , details).then(function (results) {
         return results.data;
       });
     },
-    delete:  function (q) {
-      return $http.post(serviceBase + "?action=" + q).then(function (results) {
+    profile: function(details) {
+      return $http.post(serviceBase + "?action=getUser" , details).then(function (results) {
+        return results.data;
+      });
+    },
+    update: function (details) {
+      return $http.post(serviceBase + "?action=updateUser" , details).then(function (results) {
+        return results.data;
+      });
+    },
+    delete:  function (details) {
+      return $http.post(serviceBase + "?action=deleteUser" , details).then(function (results) {
         return results.data;
       });
     } 

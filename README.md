@@ -19,7 +19,7 @@ Todo
   - Company (Join)
   - Institute (Enroll)
   - Search Companies, Colleges, Members, Students
-* Build an API router
+* [x] Build an API router
 * [x] Connect angular app with router
 * [x] Complete all views
 

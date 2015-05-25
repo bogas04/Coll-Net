@@ -1,12 +1,14 @@
 <div class="container-fluid">
   <div class="col-md-3">
-    <img class="profile-image" src="{{currentUser.image}}" alt="{{currentUser.name}}'s image"/>
+    <img class="profile-image" src="{{currentUser.image || placeholder.profileImage}}" alt="{{currentUser.name}}'s image"/>
   </div>
   <div class="col-md-9">
     <h2>{{currentUser.name}}</h2>
     <div>
       <a class="btn btn-info" href="#edit-profile">Edit Profile</a>
-      <a class="btn btn-warning" href="#logout">Logout</a>
+      <form class="form inline" ng-submit="logout()">
+        <button class="btn btn-warning">Logout</button>
+      </form>
     </div>
   </div>
 </div>
