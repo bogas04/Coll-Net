@@ -5,7 +5,7 @@ This is going to be fun!
 
 Todo
 ===
-* Edit Profile
+* [x] Edit Profile
 * Delete Profile
 * Search Institutes
 * Institute profile pages
