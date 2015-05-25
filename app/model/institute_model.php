@@ -74,6 +74,9 @@ class InstituteModel extends Model {
   }
   // cRud - use to_array or to_json 
   private function retrieve() {
+    if($this->_id === null) {
+      throw new Exception('Invalid _id passed');
+    }
     // need to get from db
     $d = $this->collection->findOne(['_id' => new MongoId($this->_id)]);
     if(!$d) { // not found

@@ -9,8 +9,8 @@ Todo
 * Delete Profile
 * [x] Search Institutes
 * [x] Institute profile pages
-* Search Companies
-* Company profile pages
+* [x] Search Companies
+* [x] Company profile pages
 * Enroll/Unenroll institute
 * Join/Leave institute group
 * Show posts

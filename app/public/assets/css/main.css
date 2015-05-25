@@ -23,16 +23,18 @@
   color: white;
   text-shadow: 0px 0px 2px black ;
 }
-.banner-institute {
+.banner-profile {
   background-size: cover;
   height: 60vh;
 }
-.banner-institute .banner-body h1 {
+.banner-profile .banner-body h1 {
   color: black;
   text-shadow: 0px 0px 10px white;
 }
-.banner-institute .banner-body {
-  padding-top: 15vh;
+.banner-profile .banner-body {
+  margin: 20vh -15px;
+  padding: 20px 0px;
+  background-color: rgba(255, 255, 255, 0.6);
 }
 .search-item img{
   width: 50px;

@@ -1,10 +1,19 @@
 'use strict';
 
-collnetApp.controller('MainCtrl', function ($scope, $routeParams, $location, $rootScope, Auth, Institute) {
+collnetApp.controller('MainCtrl', function (
+      $scope 
+      ,$routeParams
+      ,$location
+      ,$rootScope
+      ,Auth
+      ,Institute
+      ,Company) {
   $scope.placeholder = {
     profileImage : 'assets/img/user.jpg',
     instituteImage : 'assets/img/institute.jpg',
-    instituteBanner : 'assets/img/instituteBanner.jpg'
+    instituteBanner : 'assets/img/instituteBanner.jpg',
+    companyImage : 'assets/img/company.jpg',
+    companyBanner : 'assets/img/companyBanner.jpg'
   };
 
   // Search Related
@@ -12,11 +21,20 @@ collnetApp.controller('MainCtrl', function ($scope, $routeParams, $location, $ro
     Institute.getAll().then(function(results) {
       $scope.institutes = results.data;
     });
+    Company.getAll().then(function(results) {
+      $scope.companies = results.data;
+    });
   }
   // Institute Related 
   if($location.path().indexOf('profile/institute') > -1) {
     Institute.get($routeParams.instituteId).then(function(results) {
       $scope.currentInstitute = results.data;
+    });
+  }
+  // Company Related
+  if($location.path().indexOf('profile/company') > -1) {
+    Company.get($routeParams.companyId).then(function(results) {
+      $scope.currentCompany = results.data;
     });
   }
 

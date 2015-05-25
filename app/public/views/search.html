@@ -25,8 +25,12 @@
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search institute" ng-model="instituteToSearch">
+          <div class="form-group">
+            <label>
+              <input type="checkbox" ng-model="includeCompanies"/> Include companies?
+            </label>
+          </div>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
       </form>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -34,18 +38,34 @@
 </div>
 
 <div class="container">
-  <div class="search-item panel panel-default" ng-repeat="i in institutes | filter: { 'name': instituteToSearch }">
-    <div class="panel-heading">
-      <h3><img src="{{i.image || placeholder.instituteImage}}" alt="{{i.name}}'s image"/><a href="#profile/institute/{{i._id}}">{{i.name}}</a>
-
-        <button type="button" class="btn btn-default btn-lg pull-right">
-          <span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{i.rating}}
-        </button>
-      </h3>
+  <div ng-class="{true: 'col-md-6', false: 'col-md-12'}[includeCompanies]">
+    <h3> Institutes </h3>
+    <div class="search-item panel panel-default" ng-repeat="i in institutes | filter: { 'name': instituteToSearch }">
+      <div class="panel-heading">
+        <h3><img src="{{i.image || placeholder.instituteImage}}"/><a href="#profile/institute/{{i._id}}">{{i.name}}</a>
+          <button type="button" class="btn btn-default btn-lg pull-right">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{i.rating}}
+          </button>
+        </h3>
+      </div>
+      <div class="panel-body">
+        {{i.about}}
+      </div>
     </div>
-
-    <div class="panel-body">
-      {{i.about}}
+  </div>
+  <div class="col-md-6" ng-if="includeCompanies">
+    <h3> Companies </h3>
+    <div class="search-item panel panel-default" ng-repeat="i in companies | filter: { 'name': companyToSearch }">
+      <div class="panel-heading">
+        <h3><img src="{{i.image || placeholder.companyImage}}"/><a href="#profile/company/{{i._id}}">{{i.name}}</a>
+          <button type="button" class="btn btn-default btn-lg pull-right">
+            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{i.rating}}
+          </button>
+        </h3>
+      </div>
+      <div class="panel-body">
+        {{i.about}}
+      </div>
     </div>
   </div>
 </div>

@@ -14,7 +14,7 @@ if(file_get_contents('php://input')) {
 
 require_once('../controller/user.php');
 require_once('../controller/institute.php');
-//require_once('../controller/company.php');
+require_once('../controller/company.php');
 //require_once('../controller/post.php');
 //require_once('../controller/comment.php');
 
@@ -33,6 +33,12 @@ case 'getUser':     getUser($_GET);     break;
 case 'updateUser':  updateUser($_POST); break;
 case 'deleteUser':  deleteUser($_GET);  break;
 
+case 'getInstitute':     getInstitute($_GET);     break;
+case 'getAllInstitutes': getAllInstitutes($_GET); break;
+
+case 'getCompany':      getCompany($_GET);      break;
+case 'getAllCompanies': getAllCompanies($_GET); break;
+
 case 'createPost': createPost($_POST); break;
 case 'getPost':    getPost($_GET);     break;
 case 'updatePost': updatePost($_POST); break;
@@ -42,11 +48,6 @@ case 'createComment': createComment($_POST); break;
 case 'getComment':    getComment($_GET);     break;
 case 'updateComment': updateComment($_POST); break;
 case 'deleteComment': deleteComment($_GET);  break;
-
-case 'getInstitute':     getInstitute($_GET); break;
-case 'getAllInstitutes': getAllInstitutes($_GET); break;
-
-case 'getCompany': getCompany($_GET); break;
 }
 
 /*
@@ -98,6 +99,41 @@ function deleteUser($details) {
   ]);
 }
 /*
+=================
+  INSTITUTE API  
+=================
+*/
+function getInstitute($details) {
+  $instituteCtrl = new InstituteController();
+  if(!isset($details['_id'])) {
+    $instituteCtrl->respond(true, 'Please set a valid institute _id');
+  } else {
+    $instituteCtrl->retrieve($details['_id']);
+  }
+}
+function getAllInstitutes($filters) {
+  $instituteCtrl = new InstituteController();
+  $instituteCtrl->retrieveAll($filters);
+}
+/*
+===============
+  COMPANY API  
+===============
+*/
+function getCompany($details) {
+  $companyCtrl = new CompanyController();
+  if(!isset($details['_id'])) {
+    $companyCtrl->respond(true, 'Please set a valid college _id');
+  } else {
+    $companyCtrl->retrieve($details['_id']);
+  }
+}
+function getAllCompanies($filters) {
+  $companyCtrl = new CompanyController();
+  $companyCtrl->retrieveAll($filters);
+}
+
+/*
 ============
   POST API  
 ============
@@ -130,21 +166,4 @@ function updateComment($details) {
 }
 function deleteComment($details) {
 
-}
-/*
-=================
-  INSTITUTE API  
-=================
-*/
-function getInstitute($details) {
-  $instituteCtrl = new InstituteController();
-  if(!isset($details['_id'])) {
-    $instituteCtrl->respond(true, 'Please set a valid college _id');
-  } else {
-    $instituteCtrl->retrieve($details['_id']);
-  }
-}
-function getAllInstitutes($filters) {
-  $instituteCtrl = new InstituteController();
-  $instituteCtrl->retrieveAll($filters);
 }
