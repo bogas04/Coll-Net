@@ -6,9 +6,10 @@ class InstituteModel extends Model {
   private $name = null;
   private $email = null;
   private $yoe = null; //year of establishment or 
+  private $website = null;
   private $location = null;
   private $image = null;
-  private $about_institute = null;
+  private $about = null;
   private $social = null;//fb page linked in pa
   private $_id=null;//recieved from controller
   /*
@@ -19,7 +20,7 @@ class InstituteModel extends Model {
     parent::__construct();
     $a = func_get_args();
     $i = func_num_args();
-    $this->collection = new MongoCollection($this->db, 'users');
+    $this->collection = new MongoCollection($this->db, 'institutes');
     if (method_exists($this,$f='__construct'.$i)) {
       call_user_func_array(array($this,$f),$a); 
     }
@@ -28,8 +29,8 @@ class InstituteModel extends Model {
   public function __construct0() {  
 
   }
-  public function __construct1($emailid) { //hat can be the unique key to accesss a particular institute
-    $this->emailid = $emailid;
+  public function __construct1($_id) { // This can be the unique key to accesss a particular institute
+    $this->_id = $_id;
     $this->retrieve();
   }
 
@@ -58,17 +59,27 @@ class InstituteModel extends Model {
       $this->retrieve();
     }
   }
+  public function retrieveAll($filters) {
+    $d = $this->collection->find();
+    $institutes = [];
+    if($d->count() > 0) {
+      $i = 0;
+      foreach($d as $doc) {
+        $temp = new InstituteModel();
+        $temp->set($doc);
+        $institutes[$i++] = $temp->to_array();
+      }
+    }
+    return $institutes;
+  }
   // cRud - use to_array or to_json 
   private function retrieve() {
     // need to get from db
-    $d = $this->collection->find(['emailid' => $this->emailid]);//find using what????
-    if($d->count() !== 1) { // not found
-      throw new Exception('name'. $this->name .'or location : '.$this->location .' not found');  
+    $d = $this->collection->findOne(['_id' => new MongoId($this->_id)]);
+    if(!$d) { // not found
+      throw new Exception('Not found ' . $d->count());  
     } else { // found
-      foreach($d as $doc) {
-        $this->set($doc);
-        break;
-      }
+      $this->set($d);
     }
 
   }
@@ -78,7 +89,7 @@ class InstituteModel extends Model {
     // TODO: Think of potential risks
     // TODO: If nothing modified, throw exception
     // TODO: Read API to see if modify returns what it has added
-    $this->collection->findAndModify(['emailid' => $this->emailid], $this->to_array()); 
+    $this->collection->findAndModify(['_id' => $this->_id], $this->to_array()); 
     $this->retrieve();
   }
   // cruD
@@ -99,24 +110,25 @@ class InstituteModel extends Model {
    * Setting the object
    */
 
-  private function set($d)
-  {
-
-    $this->email = isset($d['email'])? $d['email'] : null;
-    $this->yoe = isset($d['yoe'])? $d['yoe'] : null;  
-    $this->location = isset($d['location'])? $d['location'] : null;
-    $this->image = isset($d['image'])? $d['image'] : null; //
-    $this->name = isset($d['name'])? $d['name'] : null; 
-    $this->about_institute = isset($d['about_institute'])? $d['about_institute'] : null; 
-    $this->social = isset($d['social'])? $d['social'] : null; 
+  public function set($d) {
+    $this->email = isset($d['email'])? $d['email'] : $this->email;
+    $this->yoe = isset($d['yoe'])? $d['yoe'] : $this->yoe;  
+    $this->location = isset($d['location'])? $d['location'] : $this->location;
+    $this->image = isset($d['image'])? $d['image'] : $this->image;
+    $this->name = isset($d['name'])? $d['name'] : $this->name; 
+    $this->website = isset($d['website'])? $d['website'] : $this->website; 
+    $this->about = isset($d['about'])? $d['about'] : $this->about;
+    $this->social = isset($d['social'])? $d['social'] : $this->social; 
+    $this->_id = isset($d['_id'])? $d['_id']->{'$id'} : $this->_id;
   }
   private function unsetAll() {
     $this->email = null;  
     $this->yoe = null; 
     $this->location = null; 
     $this->image = null; 
+    $this->website = null;
     $this->name = null; 
-    $this->about_institute = null;
+    $this->about = null;
     $this->social = null; 
   }
 
@@ -130,14 +142,14 @@ class InstituteModel extends Model {
       'location' => $this->location,
       'image' => $this->image,
       'name' => $this->name,
-      'about_institute' => $this->about_institute,
+      'website' => $this->website,
+      'about' => $this->about,
       'social' => $this->social,
-      '_id' => $this->id
+      '_id' => $this->_id
     ]; 
     return $data;
   }
   public function to_json() {
     return json_encode($this->to_array());
   }
-
 }

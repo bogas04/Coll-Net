@@ -137,20 +137,14 @@ function deleteComment($details) {
 =================
 */
 function getInstitute($details) {
-  
+  $instituteCtrl = new InstituteController();
+  if(!isset($details['_id'])) {
+    $instituteCtrl->respond(true, 'Please set a valid college _id');
+  } else {
+    $instituteCtrl->retrieve($details['_id']);
+  }
 }
-function getAllInstitutes() {
-  $userCtrl = new UserController();
-  $userCtrl->respond(false, '3 colleges', [
-    [
-      'id' => 13,
-      'name' => 'NSIT',
-      'about' => 'An Autonomous Institution under Govt. of NCT of Delhi and affiliated to University of Delhi, Netaji Subhas Institute of Technology is a seat of higher technical education in India. It was established in year 1983 as Delhi Institute of Technology with the objective to meet the growing demands of manpower in the emerging fields of engineering and technology with a close social and industrial interface. Over a period of time the Institute has carved a niche for itself, both nationally and internationally, for excellence in technical education and research.'
-    ],
-    [
-      'id' => 23,
-      'name' => 'DTU',
-      'about' => 'DTU to be a leading world class technology university playing its role as a key node in national and global knowledge network thus empowering india with the wings of knowledge and power of innovations' 
-    ]
-  ]);
+function getAllInstitutes($filters) {
+  $instituteCtrl = new InstituteController();
+  $instituteCtrl->retrieveAll($filters);
 }

@@ -7,8 +7,10 @@ Todo
 ===
 * [x] Edit Profile
 * Delete Profile
-* Search Institutes
-* Institute profile pages
+* [x] Search Institutes
+* [x] Institute profile pages
+* Search Companies
+* Company profile pages
 * Enroll/Unenroll institute
 * Join/Leave institute group
 * Show posts

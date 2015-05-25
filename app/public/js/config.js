@@ -18,12 +18,12 @@ collnetApp.config(function ($locationProvider, $routeProvider) {
     templateUrl: 'views/search.html',
     controller: 'MainCtrl'
   })
-  .when('/profile/college/:collegeid', {
-    templateUrl: 'views/college-profile.html',
+  .when('/profile/institute/:instituteId', {
+    templateUrl: 'views/institute-profile.html',
     controller: 'MainCtrl'
   })
-  .when('/profile/college/:collegeid/students', {
-    templateUrl: 'views/college-students.html',
+  .when('/profile/institute/:instituteId/students', {
+    templateUrl: 'views/institute-students.html',
     controller: 'MainCtrl'
   })
   .when('/profile/self', {
@@ -34,19 +34,19 @@ collnetApp.config(function ($locationProvider, $routeProvider) {
     templateUrl: 'views/edit-profile.html',
     controller: 'MainCtrl'
   })
-  .when('/profile/user/:userid', {
+  .when('/profile/user/:userId', {
     templateUrl: 'views/student-profile.html',
     controller: 'MainCtrl'
   })
-  .when('/profile/student/:studentid', {
+  .when('/profile/student/:studentId', {
     templateUrl: 'views/student-profile.html',
     controller: 'MainCtrl'
   })
-  .when('/profile/college/:collegeid/group', {
-    templateUrl: 'views/college-group.html',
+  .when('/profile/institute/:instituteId/group', {
+    templateUrl: 'views/institute-group.html',
     controller: 'MainCtrl'
   })
-  .when('/profile/college/:collegeid/group/:courseid/students', {
+  .when('/profile/institute/:instituteId/group/:courseId/students', {
     templateUrl: 'views/students.html',
     controller: 'MainCtrl'
   });

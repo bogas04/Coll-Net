@@ -1,9 +1,9 @@
 <div class="container-fluid text-center banner banner-main">
   <div class="banner-body">
     <h1>Welcome, {{ currentUser.name || "random student" }}!</h1>
-    <form ng-submit="searchColleges()">
+    <form ng-submit="searchInstitutes()">
       <div class="form-group form-inline">
-        <input class="form-control" type="text" placeholder="Search college" ng-model="collegeToSearch" name="college-name"/>
+        <input class="form-control" type="text" placeholder="Search institute" ng-model="instituteToSearch" name="institute-name"/>
         <button class="btn btn-primary" name="submit">Search</button>
       </div>
     </form>

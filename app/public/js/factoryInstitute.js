@@ -2,7 +2,7 @@ collnetApp.factory("Institute", ['$http', function($http) {
   var serviceBase = '../api/';
   return {
     get: function (q) {
-      return $http.get(serviceBase + "?action=getInstitute&id=" + q).then(function (results) {
+      return $http.get(serviceBase + "?action=getInstitute&_id=" + q).then(function (results) {
         return results.data;
       });
     },

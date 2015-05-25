@@ -1,0 +1,55 @@
+<div class="container-fluid text-center banner banner-college"
+     style="
+  background: url({{currentGroup.img || 'assets/img/1.jpg'}}) 50% / 100%;">
+  <div class="banner-body">
+    <h1>{{currentCollege.name && currentGroup.name}}</h1>
+  </div>
+</div>
+
+<div class="container-fluid">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="#/profile/college/{{items[0].cid}}/">About</a></li>
+        <li class="active"><a href="#profile/college/{{items[0].cid}}/students">Students<span class="sr-only">(current)</span></a></li>
+		<li><a href="#">Enroll</a></li>
+		 <li><a href="#profile/college/{{items[0].cid}}/group">Groups</a></li>
+		<li><a href="#">Societies</a></li>
+		<li><a href="#">Alumni</a></li>
+		<li><a href="#">Share</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="thumbnail" ng-repeat="i in items[0].courses">
+      <img src="assets/img/btech.jpg" alt="...">
+      <div class="caption">
+        <h3>{{i.name}}</h3>
+        <p>{{i.content}}</p>
+        <p><a href="#/profile/college/{{items[0].cid}}/group/i.csid/students" class="btn btn-primary" role="button">Go</a></p>
+      </div>
+    </div>
+  </div>
+      <img src="assets/img/mtech.jpg" alt="...">
+      <div class="caption">
+        <h3>{{i.name}}</h3>
+        <p>{{i.content}}</p>
+        <p><a href="#/profile/college/{{items[0].cid}}/group/{{items[0].courses.csid}}/students" class="btn btn-primary" role="button">Go</a></p>
+      </div>
+ </div>
