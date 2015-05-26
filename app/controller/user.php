@@ -1,6 +1,7 @@
 <?php
 require_once ('controller.php');
 require_once ('../model/user_model.php');
+require_once ('../model/post_model.php');
 
 class UserController extends Controller{
 
@@ -75,6 +76,18 @@ class UserController extends Controller{
         $u->addCompany($newDetails);
         $_SESSION['user'] = $u->to_array();
         $this->respond(false, 'Successfully updated!', $_SESSION['user']);
+      }
+    } catch (Exception $e) {
+      $this->respond(true, $e->getMessage(), $e);
+    }
+  }
+  public function addPost($postDetails) {
+    try {
+      if($this->isLoggedIn()) {
+        $post = new PostModel();
+        $postDetails['postBy'] = $_SESSION['user']['_id'];
+        $post->create($postDetails);
+        $this->respond(false, 'Post made!', $post->to_array());
       }
     } catch (Exception $e) {
       $this->respond(true, $e->getMessage(), $e);

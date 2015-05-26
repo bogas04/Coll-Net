@@ -15,7 +15,7 @@ if(file_get_contents('php://input')) {
 require_once('../controller/user.php');
 require_once('../controller/institute.php');
 require_once('../controller/company.php');
-//require_once('../controller/post.php');
+require_once('../controller/post.php');
 //require_once('../controller/comment.php');
 
 
@@ -43,8 +43,9 @@ case 'getCompany':       getCompany($_GET);       break;
 case 'getAllCompanies':  getAllCompanies($_GET);  break;
 case 'employeesOf':      getEmployeesOf($_GET);   break;
 
-case 'createPost':       createPost($_POST);      break;
+case 'addPost':          addPost($_POST);         break;
 case 'getPost':          getPost($_GET);          break;
+case 'getPostsOf':       getPostsOf($_GET);       break;
 case 'updatePost':       updatePost($_POST);      break;
 case 'deletePost':       deletePost($_GET);       break;
 
@@ -176,14 +177,27 @@ function getEmployeesOf($details) {
   POST API  
 ============
  */
-function createPost($details) {
-
+function addPost($details) {
+  $userCtrl = new UserController();
+  if(isset($details['postBy'])) {
+    $userCtrl->respond(true, 'Invalid usage of API');
+  }
+  if(!isset($details['text'])) {
+    $userCtrl->respond(true, 'Please fill details of the post');
+  }
+  $userCtrl->addPost($details);
 }
 function getPost($details) {
-
+  $postCtrl = new PostController();
+  if(!isset($details['_id'])) {
+    $postCtrl->respond(true, 'Please set a valid college _id');
+  } else {
+    $postCtrl->retrieve($details['_id']);
+  }
 }
-function updatePost($details) {
-
+function getPostsOf($filters) {
+  $postCtrl = new PostController();
+  $postCtrl->retrieveAll($filters);
 }
 function deletePost($details) {
 

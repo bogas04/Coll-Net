@@ -1,9 +1,6 @@
-<div class="container-fluid text-center banner banner-profile"
-style="
+<div class="container-fluid text-center banner banner-profile" style="
 background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}}) 50% / 100%;">
-  <div class="banner-body">
-    <h1>{{currentInstitute.name}}</h1>
-  </div>
+  <div class="banner-body"> <h1>{{currentInstitute.name}}</h1> </div>
 </div>
 
 <div class="container-fluid">
@@ -22,9 +19,9 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#profile/institute/{{currentInstitute._id}}/">About<span class="sr-only">(current)</span></a></li>
+          <li><a href="#profile/institute/{{currentInstitute._id}}/">About<span class="sr-only">(current)</span></a></li>
           <li><a href="#profile/institute/{{currentInstitute._id}}/students">Students</a></li>
-          <li><a href="#profile/institute/{{currentInstitute._id}}/posts">Posts</a></li>
+          <li class="active"><a href="#profile/institute/{{currentInstitute._id}}/posts">Posts</a></li>
           <li><a href="#">Societies</a></li>
           <li><a href="#">Alumni</a></li>
           <li><a href="#">Share</a></li>
@@ -35,8 +32,21 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
 
   <div class="container profile-body">
     <div class="col-md-9">
-      <h3> Welcome to {{currentInstitute.name}} </h3>
-      <p class="about">{{currentInstitute.about}}</p>
+      <div class="row" style="margin-bottom:20px"> <button class="btn btn-primary" data-target="#addPostModal" data-toggle="modal">Add Post</button> </div>
+      <div class="row">
+        <div class="panel panel-default list-item" ng-repeat="post in currentInstitute.posts">
+          <div class="panel-heading">
+            <h5> 
+              <a href="#/profile/user/{{post.postBy.username}}">
+                <img class="profile-image" src="{{post.postBy.image || placeholder.profileImage}}"/> 
+                {{post.postBy.name}}
+              </a> 
+            </h5>
+            <h5> <small> {{stringifyDate(toDate(post.timestamp))}} </small> </h5>
+          </div>
+          <div class="panel-body"> {{post.text}} </div>
+        </div>
+      </div>
     </div>
     <div class="col-md-3">
       <div ng-if="isLoggedIn && !studiedHere(currentInstitute._id)">
@@ -114,24 +124,32 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
       </div>
     </div>
   </div>
-  <!-- <div class="container">  
-    <div class="col-md-8">
-    <div class="search-item panel panel-default" ng-repeat="i in retrieveStudents()>
-    <div class="panel-heading">
-    <h5>{{i.name}}</h5>
+  <div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addPostModalLabel">Add new post</h4>
+        </div>
+        <form class="form" ng-submit="addPost(addThisPost)">
+          <div class="modal-body">
+            <div class="form-group">
+              <label> Add a new post </label>
+              <textarea class="form-control" ng-model="addThisPost.text" placeholder="Enter post contents"></textarea>
+            </div>
+            <div class="alert {{addPostMessageType}} alert-dismissible message" role="alert" ng-if="addPostMessage">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{addPostMessage}}
+            </div>
+            <button class="btn btn-primary">Post</button>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-default" data-dismiss="modal">Close</a>
+            <button class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="panel-body">
-    <img src="{{i.image}}" alt="{{i.name}}'s image"/>
-    {{i.description}}
-    </div>
-    </div>
+  </div>
+</div>
 
-    <div class="col-md-4">
-    <div class="btn-group-vertical" role="group" aria-label="...">
-    <div class="btn-group" role="group" aria-label="...">
-    <button type="button" class="btn btn-default">B.E</button>
-    <button type="button" class="btn btn-default">M.TECH</button>
-    </div>
-    </div>
-    </div>
-  --></div>

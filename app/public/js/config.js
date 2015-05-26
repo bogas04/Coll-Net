@@ -26,6 +26,10 @@ collnetApp.config(function ($locationProvider, $routeProvider) {
     templateUrl: 'views/institute-students.html',
     controller: 'MainCtrl'
   })
+  .when('/profile/institute/:instituteId/posts', {
+    templateUrl: 'views/institute-posts.html',
+    controller: 'MainCtrl'
+  })
   .when('/profile/company/:companyId', {
     templateUrl: 'views/company-profile.html',
     controller: 'MainCtrl'

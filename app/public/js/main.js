@@ -5,9 +5,10 @@ collnetApp.controller('MainCtrl', function (
       ,$routeParams
       ,$location
       ,$rootScope
-      ,Auth
+      ,User
       ,Institute
-      ,Company) {
+      ,Company
+      ,Post) {
   $scope.includeCompanies = true;
   $scope.placeholder = {
     profileImage : 'assets/img/user.jpg',
@@ -60,6 +61,11 @@ collnetApp.controller('MainCtrl', function (
           $scope.currentInstitute.students = results.data || [];
         });
       }
+      if($location.path().indexOf('posts') > -1) {
+        Post.getPostsOf({ instituteId : $routeParams.instituteId }).then(function(results) {
+          $scope.currentInstitute.posts = results.data || [];
+        });
+      }
     });
   }
   $scope.studiedHere = function(instituteId) {
@@ -85,7 +91,7 @@ collnetApp.controller('MainCtrl', function (
     details.fromDate = details.fromDate ? $scope.formatDate(details.fromDate) : "";
     details.toDate = details.toDate ? $scope.formatDate(details.toDate) : null;
     console.log(details);
-    Auth.addInstitute(details).then(function(result) {
+    User.addInstitute(details).then(function(result) {
       $scope.updateProfileMessageType = result.error?'alert-danger':'alert-success'; 
       $scope.updateProfileMessage = result.message;
     });
@@ -125,7 +131,7 @@ collnetApp.controller('MainCtrl', function (
     details.fromDate = details.fromDate ? $scope.formatDate(details.fromDate) : "";
     details.toDate = details.toDate ? $scope.formatDate(details.toDate) : null;
     console.log(details);
-    Auth.addCompany(details).then(function(result) {
+    User.addCompany(details).then(function(result) {
       $scope.updateProfileMessageType = result.error?'alert-danger':'alert-success'; 
       $scope.updateProfileMessage = result.message;
     });
@@ -133,19 +139,19 @@ collnetApp.controller('MainCtrl', function (
 
   // User Related
   if($location.path().indexOf('profile/user') > -1) {
-    Auth.getProfile($routeParams.username).then(function(results) {
+    User.getProfile($routeParams.username).then(function(results) {
       $scope.selectedUser = results.data;
       $scope.fillDurations($scope.selectedUser);
     });
   }
-  Auth.isLoggedIn().then(function(result) {
+  User.isLoggedIn().then(function(result) {
     $scope.isLoggedIn = !result.error;
     $scope.currentUser = result.data || null;
     $scope.fillDurations($scope.currentUser);
     $scope.redirectNicely();
   });
   $scope.login = function(details) {
-    Auth.login(details).then(function(result) {
+    User.login(details).then(function(result) {
       $scope.loginMessageType = result.error?'alert-danger':'alert-success'; 
       $scope.loginMessage = result.message;
       $scope.isLoggedIn = !result.error;
@@ -155,14 +161,14 @@ collnetApp.controller('MainCtrl', function (
     });
   };
   $scope.logout = function() {
-    Auth.logout().then(function(result) {
+    User.logout().then(function(result) {
       $scope.isLoggedIn = false;
       $scope.currentUser = null;
       $location.path('/');
     });
   };
   $scope.register = function(details) {
-    Auth.signup(details).then(function(result) {
+    User.signup(details).then(function(result) {
       details.showMessage = true;
       $scope.registerMessageType = result.error?'alert-danger':'alert-success'; 
       $scope.registerMessage = result.message;
@@ -181,13 +187,21 @@ collnetApp.controller('MainCtrl', function (
     }
   };
   $scope.editProfile = function(details) {
-    Auth.update(details).then(function(result) {
+    User.update(details).then(function(result) {
       $scope.updateProfileMessageType = result.error?'alert-danger':'alert-success'; 
       $scope.updateProfileMessage = result.message;
     });
   };
 
   // Post Related
+  $scope.addPost = function(postDetails) {
+    postDetails.timestamp = new Date();
+    User.addPost(postDetails).then(function(result) {
+      $scope.addPostMessageType = result.error?'alert-danger':'alert-success'; 
+      $scope.addPostMessage = result.message;
+      postDetails = null;
+    });
+  }
   $scope.upvote = function(pid, uid) {
     // $http.post('...');
     for(var i = 0; i < $scope.groupPosts.length; i++) {
@@ -271,6 +285,10 @@ collnetApp.controller('MainCtrl', function (
     var months = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'Decemeber'];
     return (dateObj && dateObj instanceof Date) ? dateObj.getDate() + ', ' + months[dateObj.getMonth()] + ' ' + dateObj.getFullYear() : dateObj;
   };
+  $scope.toDate = function(dateString) {
+    // converts dateString into dateObj
+    return new Date(dateString); 
+  }
   $scope.formatDate = function(dateString) {
     // Assumes format : DD-MM-YYYY
     dateString = dateString.split('-').map(function(i) { return parseInt(i); });

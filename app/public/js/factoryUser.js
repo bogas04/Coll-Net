@@ -1,4 +1,4 @@
-collnetApp.factory("Auth", ['$http', function ($http) {
+collnetApp.factory("User", ['$http', function ($http) {
   var serviceBase = '../api/';
   return {
     isLoggedIn: function() {
@@ -23,6 +23,11 @@ collnetApp.factory("Auth", ['$http', function ($http) {
     },
     getProfile: function(q) {
       return $http.post(serviceBase + "?action=getUser&username=" + q).then(function (results) {
+        return results.data;
+      });
+    },
+    addPost: function (details) {
+      return $http.post(serviceBase + "?action=addPost" , details).then(function (results) {
         return results.data;
       });
     },

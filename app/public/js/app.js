@@ -7,5 +7,4 @@ var collnetApp = angular.module('collnet', [
     ,'ngRoute'
     ,'ui.bootstrap'
 ])
-.run(function ($rootScope, $location, Auth, Institute) {
-});
+.run(function ($rootScope, $location, User, Institute, Company) { });

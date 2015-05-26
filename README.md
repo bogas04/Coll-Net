@@ -14,8 +14,9 @@ Todo
 * [x] Students of :institute
 * [x] Employees of :company
 * Search for employees/students/institutes/companies etc
-* Show posts
-* Create posts
+* [x] Show posts
+* [x] Create posts
+* Groups/Filters of posts
 * Delete/edit post
 * Create/Delete/Edit comments
 * Delete Profile
