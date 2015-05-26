@@ -57,6 +57,7 @@ class PostModel extends Model {
   }
   public function retrieveAll($filters) {
     $d = $this->collection->find();
+    $d->sort([ 'timestamp' => -1]);
     $posts = [];
     if($d->count() > 0) {
       $i = 0;
