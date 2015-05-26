@@ -57,3 +57,9 @@
 .profile-body {
   margin-bottom: 40px;
 }
+.social-links {
+  margin-bottom: 5px;
+}
+.social {
+  text-transform: capitalize;
+}

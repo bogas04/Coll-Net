@@ -113,7 +113,8 @@ collnetApp.controller('MainCtrl', function (
   };
   $scope.editProfile = function(details) {
     Auth.update(details).then(function(result) {
-      console.log(result);
+      $scope.updateProfileMessageType = result.error?'alert-danger':'alert-success'; 
+      $scope.updateProfileMessage = result.message;
     });
   };
 

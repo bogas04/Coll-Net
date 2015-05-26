@@ -87,7 +87,10 @@ function profile($details) {
 function updateUser($details) {
   $userCtrl = new UserController();
   if(!isset($details['username'])) {
-    $userCtrl->respond(true, 'Invalid username');
+    $userCtrl->respond(true, 'Internal API error');
+  }
+  if(!isset($details['password'])) {
+    $userCtrl->respond(true, 'Please enter password to update your profile');
   }
   $userCtrl->update($details['username'], $details['password'], $details['newDetails']);
 }
@@ -102,7 +105,7 @@ function deleteUser($details) {
 =================
   INSTITUTE API  
 =================
-*/
+ */
 function getInstitute($details) {
   $instituteCtrl = new InstituteController();
   if(!isset($details['_id'])) {
@@ -119,7 +122,7 @@ function getAllInstitutes($filters) {
 ===============
   COMPANY API  
 ===============
-*/
+ */
 function getCompany($details) {
   $companyCtrl = new CompanyController();
   if(!isset($details['_id'])) {

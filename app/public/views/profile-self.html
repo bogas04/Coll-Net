@@ -1,23 +1,32 @@
 <div class="container-fluid">
-  <div class="col-md-3">
-    <img class="profile-image" src="{{currentUser.image || placeholder.profileImage}}" alt="{{currentUser.name}}'s image"/>
+<div class="col-md-3">
+  <img class="profile-image" src="{{currentUser.image || placeholder.profileImage}}" alt="{{currentUser.name}}'s image"/>
+</div>
+<div class="col-md-9">
+  <h2>{{currentUser.name}} 
+    <small>
+      {{
+      (currentUser.location.state && currentUser.location.country)?
+      (currentUser.location.state + ", " + currentUser.location.country) 
+      :
+      (currentUser.location.country)? (currentUser.location.country) : ""
+      }}
+    </small>
+  </h2>
+  <div> {{currentUser.about_me}} </div>
+  <div>
+    <a class="btn btn-info" href="#profile/edit">Edit Profile</a>
+    <form class="form inline" ng-submit="logout()">
+      <button class="btn btn-warning">Logout</button>
+    </form>
   </div>
-  <div class="col-md-9">
-    <h2>{{currentUser.name}}</h2>
-    <div> {{currentUser.about_me}} </div>
-    <div>
-      <a class="btn btn-info" href="#profile/edit">Edit Profile</a>
-      <form class="form inline" ng-submit="logout()">
-        <button class="btn btn-warning">Logout</button>
-      </form>
-    </div>
-  </div>
+</div>
 </div>
 
 <div class="container-fluid text-center">
   <div class="col-md-4">
 
-    <h3>WORK PROFILE</h3>
+    <h3>Work History</h3>
 
     <div class="panel panel-default" ng-repeat="work in currentUser.workHistory">
       <div class="panel-heading">
@@ -30,7 +39,7 @@
   </div>
 
   <div class="col-md-4">
-    <h3>EDUCATION</h3>
+    <h3>Education History</h3>
     <div class="panel panel-default" ng-repeat="institute in currentUser.educationHistory">
       <div class="panel-heading">
         <h3>{{institute.name}}</h3>
@@ -42,10 +51,27 @@
   </div>
 
   <div class="col-md-4">
-    <h3>SOCIAL PROFILES</h3>
-    <div ng-if="currentUser.social.facebook"><a href="{{currentUser.social.facebook}}" class="social social-facebook">Facebook</a></div>
-    <div ng-if="currentUser.social.twitter"><a href="{{currentUser.social.twitter}}" class="social social-twitteritter">Twitter</a></div>
-    <div ng-if="currentUser.social.youtube"><a href="{{currentUser.social.youtube}}" class="social social-youtube">YouTube</a></div>
+    <h3>Social Profiles</h3>
+    <div class="panel social-links" ng-if="currentUser.social.facebook">
+      <div class="panel-heading">
+        <a href="{{currentUser.social.facebook}}" class="social social-facebook">Facebook</a>
+      </div>
+    </div>
+    <div class="panel social-links" ng-if="currentUser.social.twitter">
+      <div class="panel-heading">
+        <a href="{{currentUser.social.twitter}}" class="social social-twitter">Twitter</a>
+      </div>
+    </div>
+    <div class="panel social-links" ng-if="currentUser.social.youtube">
+      <div class="panel-heading">
+        <a href="{{currentUser.social.youtube}}" class="social social-youtube">YouTube</a>
+      </div>
+    </div>
+    <div class="panel social-links" ng-if="currentUser.social.linkedin">
+      <div class="panel-heading">
+        <a href="{{currentUser.social.linkedin}}" class="social social-linkedin">LinkedIn</a>
+      </div>
+    </div>
   </div>
 </div>
 
