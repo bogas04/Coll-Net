@@ -25,13 +25,15 @@ require_once('../controller/company.php');
 ===========
  */
 switch($_REQUEST['action']) {
-case 'login':       login($_POST);      break;
-case 'logout':      logout();           break;
-case 'loginStatus': loginStatus();      break;
-case 'signup':      signup($_POST);     break;
-case 'getUser':     getUser($_GET);     break;
-case 'updateUser':  updateUser($_POST); break;
-case 'deleteUser':  deleteUser($_GET);  break;
+case 'login':        login($_POST);        break;
+case 'logout':       logout();             break;
+case 'loginStatus':  loginStatus();        break;
+case 'signup':       signup($_POST);       break;
+case 'getUser':      getUser($_GET);       break;
+case 'updateUser':   updateUser($_POST);   break;
+case 'deleteUser':   deleteUser($_GET);    break;
+case 'addInstitute': addInstitute($_POST); break;
+case 'addCompany':   addCompany($_POST);   break;
 
 case 'getInstitute':     getInstitute($_GET);     break;
 case 'getAllInstitutes': getAllInstitutes($_GET); break;
@@ -93,6 +95,26 @@ function updateUser($details) {
     $userCtrl->respond(true, 'Please enter password to update your profile');
   }
   $userCtrl->update($details['username'], $details['password'], $details['newDetails']);
+}
+function addCompany($details) {
+  $userCtrl = new UserController();
+  if(!isset($details['username'])) {
+    $userCtrl->respond(true, 'Internal API error');
+  }
+  if(!isset($details['password'])) {
+    $userCtrl->respond(true, 'Please enter password to add company to your profile');
+  }
+  $userCtrl->addCompany($details['username'], $details['password'], $details['newDetails']);
+}
+function addInstitute($details) {
+  $userCtrl = new UserController();
+  if(!isset($details['username'])) {
+    $userCtrl->respond(true, 'Internal API error');
+  }
+  if(!isset($details['password'])) {
+    $userCtrl->respond(true, 'Please enter password to add institute to your profile');
+  }
+  $userCtrl->addInstitute($details['username'], $details['password'], $details['newDetails']);
 }
 function deleteUser($details) {
   return json_encode([

@@ -41,7 +41,8 @@ class UserController extends Controller{
   }
   public function getLoginStatus() {
     if($this->isLoggedIn()) {
-      $this->respond(false, 'User is logged in', $_SESSION['user']);
+      //$this->respond(false, 'User is logged in', $_SESSION['user']);
+      $this->respond(false, 'User is logged in', (new UserModel($_SESSION['user']['username']))->to_array());
     } else {
       $this->respond(true, 'No user logged in');
     }
@@ -51,6 +52,30 @@ class UserController extends Controller{
       $this->respond(false, 'successfully got the data', (new UserModel($username))->to_array());
     } catch (Exception $e) {
       $this->respond(true, $e->getMessage);
+    }
+  }
+  public function addCompany($username, $password, $newDetails) {
+    try {
+      if($this->isLoggedIn()) {
+        $u = new UserModel($username, $password);
+        $u->addCompany($newDetails);
+        $_SESSION['user'] = $u->to_array();
+        $this->respond(false, 'Successfully updated!', $_SESSION['user']);
+      }
+    } catch (Exception $e) {
+      $this->respond(true, $e->getMessage(), $e);
+    }
+  }
+  public function addInstitute($username, $password, $newDetails) {
+    try {
+      if($this->isLoggedIn()) {
+        $u = new UserModel($username, $password);
+        $u->addInstitute($newDetails);
+        $_SESSION['user'] = $u->to_array();
+        $this->respond(false, 'Successfully updated!', $_SESSION['user']);
+      }
+    } catch (Exception $e) {
+      $this->respond(true, $e->getMessage(), $e);
     }
   }
   public function update($username, $password, $newDetails) {
@@ -67,7 +92,7 @@ class UserController extends Controller{
         $this->respond(false, 'Successfully updated!', $_SESSION['user']);
       }
     } catch (Exception $e) {
-      $this->respond(true, $e->getMessage());
+      $this->respond(true, $e->getMessage(), $e);
     }
   }
   public function changePassword($username, $old_password, $new_password) {

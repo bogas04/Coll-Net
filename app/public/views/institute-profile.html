@@ -39,9 +39,9 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
       <p class="about">{{currentInstitute.about}}</p>
     </div>
     <div class="col-md-3">
-      <div ng-if="!studiedHere(currentInstitute._id)">
+      <div ng-if="isLoggedIn && !studiedHere(currentInstitute._id)">
         <h5> Studied here before? </h5>
-        <button class="btn btn-primary">Add to profile</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addInstituteToProfile">Add to profile</button>
       </div>
       <div>
         <h5> Location </h5>
@@ -56,6 +56,63 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
         <a target="_blank" href="{{currentInstitute.website}}"> {{currentInstitute.website}}</a>
       </div>
     </div> 
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="addInstituteToProfile" tabindex="-1" role="dialog" aria-labelledby="addInstituteToProfileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addInstituteToProfileLabel">Add {{currentInstitute.name}} to your profile</h4>
+        </div>
+        <form class="form" ng-submit="addInstituteToProfile(addInstitute)">
+          <div class="modal-body">
+            <input type="text" ng-model="addInstitute._id" hidden/>
+            <h5> Course details </h5>
+            <div class="form-group form-inline">
+              <label>Discipline of Degree</label>
+              <select class="form-control" ng-model="addInstitute.discipline" 
+                                           ng-options="option.value as option.name for option in select.disciplines" required>
+                <option value="" ng-if="false"></option>
+              </select>
+              <label>Degree Type</label>
+              <select class="form-control" ng-model="addInstitute.degree" 
+                                           ng-options="opt.value as opt.name for opt in select.degrees" required>
+                <option value="" ng-if="false"></option>
+              </select> 
+            </div> 
+            <h5> Batch Details </h5>
+            <div class="form-group form-inline">
+              <label>Section</label>
+              <input class="form-control" type="text" ng-model="addInstitute.section" placeholder="Eg. 1, A, I etc" required/> 
+              <label>Joining Date</label>
+              <input class="form-control" type="text" ng-model="addInstitute.fromDate" placeholder="Joining date" required/>
+              <label>Leaving Date</label>
+              <input class="form-control" type="text" ng-model="addInstitute.toDate" placeholder="Leaving date"/>
+              <div class="help-block">Leave leaving date blank if you are still studying here.</div>
+              <div class="help-block"> Leave section blank if it is not applicable</div>
+            </div>
+            <h5> Description, extra comments </h5>
+            <div class="form-group">
+              <label>Description of your academics </label>
+              <textarea rows="5" class="form-control" ng-model="addInstitute.description" placeholder="Academic description"></textarea>
+            </div>
+            <div class="form-group has-warning has-feedback">
+              <label class="control-label" for="passwordRequired">Enter your password to make the changes</label>
+              <input class="form-control" id="passwordRequired" name="password" type="password" ng-model="addInstitute.password" required/>
+            </div>
+            <div class="alert {{updateProfileMessageType}} alert-dismissible message" role="alert" ng-if="updateProfileMessage">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{updateProfileMessage}}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-default" data-dismiss="modal">Close</a>
+            <button class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
   <!-- <div class="container">  
     <div class="col-md-8">

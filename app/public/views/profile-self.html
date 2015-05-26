@@ -25,53 +25,48 @@
 
 <div class="container-fluid text-center">
   <div class="col-md-4">
-
-    <h3>Work History</h3>
-
+    <h3> <span class="glyphicon glyphicon-briefcase"></span> Work History</h3>
     <div class="panel panel-default" ng-repeat="work in currentUser.workHistory">
       <div class="panel-heading">
-        <h4>{{work.name}} , {{work.title}}</h4>
-        <h4><small>{{work.duration}}</small></h4>
+        <h4> <a href="#/profile/company/{{work._id.$id}}" title="{{work.about}}">{{work.name}}</a> , {{work.title}}</h4>
+        <h4><small> {{work.duration}} </small></h4>
+        <small> {{work.location.state + " " + work.location.country}} </small>
       </div>
       <div class="panel-body"> {{work.description}} </div>
     </div>
-
+    <h4 ng-if="!currentUser.workHistory || currentUser.workHistory.length === 0"> <small> :( Nothing to show </small> </h4>
   </div>
 
   <div class="col-md-4">
-    <h3>Education History</h3>
-    <div class="panel panel-default" ng-repeat="institute in currentUser.educationHistory">
-      <div class="panel-heading">
-        <h3>{{institute.name}}</h3>
-      </div>
-      <div class="panel-body">
-        {{institute.duration}}
-      </div>
-    </div> 
-  </div>
-
-  <div class="col-md-4">
-    <h3>Social Profiles</h3>
+    <h3> <span class="glyphicon glyphicon-sunglasses"></span> Social Profiles</h3>
     <div class="panel social-links" ng-if="currentUser.social.facebook">
-      <div class="panel-heading">
-        <a href="{{currentUser.social.facebook}}" class="social social-facebook">Facebook</a>
-      </div>
+      <div class="panel-heading"> <a href="{{currentUser.social.facebook}}" class="social social-facebook">Facebook</a> </div>
     </div>
     <div class="panel social-links" ng-if="currentUser.social.twitter">
-      <div class="panel-heading">
-        <a href="{{currentUser.social.twitter}}" class="social social-twitter">Twitter</a>
-      </div>
+      <div class="panel-heading"> <a href="{{currentUser.social.twitter}}" class="social social-twitter">Twitter</a> </div>
     </div>
     <div class="panel social-links" ng-if="currentUser.social.youtube">
-      <div class="panel-heading">
-        <a href="{{currentUser.social.youtube}}" class="social social-youtube">YouTube</a>
-      </div>
+      <div class="panel-heading"> <a href="{{currentUser.social.youtube}}" class="social social-youtube">YouTube</a> </div>
     </div>
     <div class="panel social-links" ng-if="currentUser.social.linkedin">
-      <div class="panel-heading">
-        <a href="{{currentUser.social.linkedin}}" class="social social-linkedin">LinkedIn</a>
-      </div>
+      <div class="panel-heading"> <a href="{{currentUser.social.linkedin}}" class="social social-linkedin">LinkedIn</a> </div>
     </div>
   </div>
+
+  <div class="col-md-4">
+    <h3> <span class="glyphicon glyphicon-education"></span> Education History</h3>
+    <div class="panel panel-default" ng-repeat="institute in currentUser.educationHistory">
+      <div class="panel-heading">
+        <h4> <a href="#/profile/institute/{{institute._id.$id}}" title="{{institute.about}}">{{institute.name}}</a> </h4>
+        <h4><small> {{institute.duration}} </small></h4>
+      </div>
+      <div class="panel-body"> 
+        <h6> {{institute.degree}} in {{institute.discipline}},  {{institute.location.state + " " + institute.location.country}} </h6>
+        <p> {{institute.description}}</p>
+      </div>
+    </div> 
+    <h4 ng-if="!currentUser.educationHistory || currentUser.educationHistory.length === 0"> <small> :( Nothing to show </small> </h4>
+  </div>
+
 </div>
 

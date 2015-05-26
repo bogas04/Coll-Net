@@ -26,12 +26,39 @@ collnetApp.factory("Auth", ['$http', function ($http) {
         return results.data;
       });
     },
+    addInstitute: function (details) {
+      var obj = {
+        username: details.username,
+        password: details.password
+      };
+      delete details.username;
+      delete details.password;
+      obj.newDetails = details;
+      return $http.post(serviceBase + "?action=addInstitute" , obj).then(function (results) {
+        return results.data;
+      });
+    },
+    addCompany: function (details) {
+      var obj = {
+        username: details.username,
+        password: details.password
+      };
+      delete details.username;
+      delete details.password;
+      obj.newDetails = details;
+      return $http.post(serviceBase + "?action=addCompany" , obj).then(function (results) {
+        return results.data;
+      });
+    },
     update: function (details) {
-      return $http.post(serviceBase + "?action=updateUser" , { 
-        username: details.username, 
-        password: details.password, 
-        newDetails: details
-      }).then(function (results) {
+      var obj = {
+        username: details.username,
+        password: details.password
+      };
+      delete details.username;
+      delete details.password;
+      obj.newDetails = details;
+      return $http.post(serviceBase + "?action=updateUser" , obj).then(function (results) {
         return results.data;
       });
     },

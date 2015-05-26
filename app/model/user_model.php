@@ -3,6 +3,8 @@ require_once('model.php');
 
 class UserModel extends Model {
   private $collection;
+  private $companiesCollection;
+  private $institutesCollection;
   private $password = null;
   private $hashed_password = null;
   private $username = null;
@@ -11,8 +13,8 @@ class UserModel extends Model {
   public $dob = null; 
   public $location = null;
   public $image = null;
-  public $education_history = null;
-  public $work_history = null;
+  public $educationHistory = null;
+  public $workHistory = null;
   public $about_me = null;
   public $social = null;
   private $is_admin = false; 
@@ -26,12 +28,14 @@ class UserModel extends Model {
     $a = func_get_args();
     $i = func_num_args();
     $this->collection = new MongoCollection($this->db, 'users');
+    $this->companiesCollection = new MongoCollection($this->db, 'companies');
+    $this->institutesCollection = new MongoCollection($this->db, 'institutes');
     if (method_exists($this,$f='__construct'.$i)) {
       call_user_func_array(array($this,$f),$a); 
     }
   }
   public function __construct0() {  
-    
+
   }
   public function __construct1($username) { 
     if($username === null) {
@@ -78,25 +82,75 @@ class UserModel extends Model {
   }
   // cRud - use to_array or to_json 
   private function retrieve($force = false) {
-    if($this->username === null || $this->password === null) {
+    if($this->username === null) {
       throw new Exception('Invalid username or password');  
     }
     if($this->hashed_password === null || $force === true) { // need to get from db
-      $d = $this->collection->find(['username' => $this->username]);
-      if($d->count() !== 1) { // not found
+      $d = $this->collection->findOne(['username' => $this->username]);
+      if(!$d) { // not found
         throw new Exception('username `'. $this->username .'` not found');  
       } else { // found
-        foreach($d as $doc) {
-          $this->set($doc);
-          break;
+        $this->set($d);
+        if(is_array($this->workHistory)) {
+          foreach($this->workHistory as $index => $ele) {
+            //var_dump($w['_id']['$id']);
+            //var_dump(MongoDBRef::get($this->db, $w['_id']));
+            //var_dump($this->companiesCollection->findOne([ '_id' => new MongoId($w['_id']['$id'])]));
+            $workInfo =  $this->companiesCollection->findOne(['_id' => new MongoId($ele['_id']['$id'])]);
+            unset($workInfo['_id']);
+            $this->workHistory[$index] = array_merge($ele, $workInfo);
+          }
+        }
+        if(is_array($this->educationHistory)) {
+          foreach($this->educationHistory as $index => $ele) {
+            //var_dump($e['_id']['$id']);
+            //var_dump(MongoDBRef::get($this->db, $e['_id']));
+            //var_dump($this->institutesCollection->findOne([ '_id' => new MongoId($e['_id']['$id'])]));
+            $educationInfo =  $this->institutesCollection->findOne(['_id' => new MongoId($ele['_id']['$id'])]);
+            unset($educationInfo['_id']);
+            $this->educationHistory[$index] = array_merge($ele, $educationInfo);
+          }
         }
       }
     }  
   }
   // crUd
+  public function addCompany($details) {
+    if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
+    $this->hashed_password = $this->hash_password();
+    $details->_id = MongoDBRef::create("companies",  $details->_id);
+    // TODO: Think of potential risks
+    // TODO: If nothing modified, throw exception
+    // TODO: Read API to see if modify returns what it has added
+    $this->collection->findAndModify(['username' => $this->username], ['$push' => [ 'workHistory' => $details]]);
+    $this->retrieve(true);
+  }
+  public function addInstitute($details) {
+    if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
+    $this->hashed_password = $this->hash_password();
+    $details->_id = MongoDBRef::create("institutes",  $details->_id);
+    // TODO: Think of potential risks
+    // TODO: If nothing modified, throw exception
+    // TODO: Read API to see if modify returns what it has added
+    $this->collection->findAndModify(['username' => $this->username], ['$push' => [ 'educationHistory' => $details]]);
+    $this->retrieve(true);
+  }
   public function update() {
     if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
     $this->hashed_password = $this->hash_password();
+    if($this->workHistory) {
+      foreach($this->workHistory as $index => $w) {
+        if(!is_array($w->_id) || !isset($w->_id['$id'])) 
+          $this->workHistory[$index]->_id = MongoDBRef::create("companies",  $w->_id);
+      }
+    }
+    if($this->educationHistory) {
+      foreach($this->educationHistory as $index => $e) {
+        if(!is_array($e->_id) || !isset($e->_id['$id'])) 
+          $this->educationHistory[$index]->_id = MongoDBRef::create("institutes",  $e->_id);
+      }
+    }
+
     // TODO: Think of potential risks
     // TODO: If nothing modified, throw exception
     // TODO: Read API to see if modify returns what it has added
@@ -138,8 +192,8 @@ class UserModel extends Model {
     $this->image = isset($d['image'])? $d['image'] : $this->image; 
     $this->name = isset($d['name'])? $d['name'] : $this->name; 
     $this->about_me = isset($d['about_me'])? $d['about_me'] : $this->about_me; 
-    $this->education_history = isset($d['education_history'])? $d['education_history'] : $this->education_history; 
-    $this->work_history = isset($d['work_history'])? $d['work_history'] : $this->work_history; 
+    $this->educationHistory = isset($d['educationHistory'])? $d['educationHistory'] : $this->educationHistory; 
+    $this->workHistory = isset($d['workHistory'])? $d['workHistory'] : $this->workHistory; 
     $this->social = isset($d['social'])? $d['social'] : $this->social; 
   }
   private function unsetAll() {
@@ -152,8 +206,8 @@ class UserModel extends Model {
     $this->image = null; 
     $this->name = null; 
     $this->about_me = null; 
-    $this->education_history = null; 
-    $this->work_history = null; 
+    $this->educationHistory = null; 
+    $this->workHistory = null; 
     $this->social = null; 
   }
 
@@ -170,8 +224,8 @@ class UserModel extends Model {
       'image' => $this->image,
       'name' => $this->name,
       'about_me' => $this->about_me,
-      'education_history' => $this->education_history,
-      'work_history' => $this->work_history,
+      'educationHistory' => $this->educationHistory,
+      'workHistory' => $this->workHistory,
       'social' => $this->social
     ]; 
     return $data;
@@ -185,8 +239,8 @@ class UserModel extends Model {
       'image' => $this->image,
       'name' => $this->name,
       'about_me' => $this->about_me,
-      'education_history' => $this->education_history,
-      'work_history' => $this->work_history,
+      'educationHistory' => $this->educationHistory,
+      'workHistory' => $this->workHistory,
       'social' => $this->social
     ]; 
     return $data;
@@ -197,7 +251,7 @@ class UserModel extends Model {
   public function get_username() {
     return $this->username;
   }
-   private function get_is_admin() {
+  private function get_is_admin() {
     return $this->is_admin;
   }
 

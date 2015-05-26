@@ -36,7 +36,7 @@ background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50%
       <p class="about">{{currentCompany.about}}</p>
     </div>
     <div class="col-md-3">
-      <div ng-if="!workedHere(currentCompany._id)">
+      <div ng-if="isLoggedIn && !workedHere(currentCompany._id)">
         <h4> Worked here before? </h4>
         <button class="btn btn-primary" data-toggle="modal" data-target="#addCompanyToProfile">Add to profile</button>
       </div>
@@ -64,26 +64,36 @@ background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50%
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" id="addCompanyToProfileLabel">Add {{currentCompany.name}} to your profile</h4>
         </div>
-        <div class="modal-body">
-          <form class="form" ng-submit="addCompanyToProfile(addThisCompanyToProfile)">
-            <input type="text" value="{{currentCompany._Id}}" ng-model="addThisCompanyToProfile._id" hidden/>
+        <form class="form" ng-submit="addCompanyToProfile(addCompany)">
+          <div class="modal-body">
+            <input type="text" ng-model="addCompany._id" hidden/>
             <div class="form-group">
               <label>Title of designation</label>
-              <input class="form-control" type="text" ng-model="addThisCompanyToProfile.title" placeholder="Title of designation"> 
+              <input class="form-control" type="text" ng-model="addCompany.title" placeholder="Title of designation" required/> 
+              <label>Description of your work </label>
+              <textarea rows="5" class="form-control" ng-model="addCompany.description" placeholder="Work description"></textarea>
             </div>
             <div class="form-group form-inline">
               <label>Joining Date</label>
-              <input class="form-control" type="date" ng-model="addThisCompanyToProfile.from" placeholder="Joining date"/>
+              <input class="form-control" type="text" ng-model="addCompany.fromDate" placeholder="Joining date" required/>
               <label>Leaving Date</label>
-              <input class="form-control" type="date" ng-model="addThisCompanyToProfile.to" placeholder="Leaving date"/>
+              <input class="form-control" type="text" ng-model="addCompany.toDate" placeholder="Leaving date"/>
               <div class="help-block">Leave leaving date blank if you are still working here.</div>
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+            <div class="form-group has-warning has-feedback">
+              <label class="control-label" for="passwordRequired">Enter your password to make the changes</label>
+              <input class="form-control" id="passwordRequired" name="password" type="password" ng-model="addCompany.password" required/>
+            </div>
+            <div class="alert {{updateProfileMessageType}} alert-dismissible message" role="alert" ng-if="updateProfileMessage">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{updateProfileMessage}}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-default" data-dismiss="modal">Close</a>
+            <button class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
