@@ -1,40 +1,47 @@
 <div class="container-fluid">
 <form class="form" ng-submit="editProfile(currentUser)">
-  <div class="form-group">
+  <h5> <span class="glyphicon glyphicon-user"></span> Personal</h5>
+  <div class="form-group form-inline">
     <label>Name</label>
     <input class="form-control" name="name" type="text" ng-model="currentUser.name"/>
-  </div>
-  <!--<div class="form-group">-->
-    <!--<label>Password</label>-->
-    <!--<input class="form-control" name="password" type="password" ng-model="currentUser.password"/>-->
-  <!--</div>-->
-  <div class="form-group">
     <label>Date of Birth</label>
-    <input class="form-control" name="dob" type="text "ng-model="currentUser.dob"/>
-  </div>
-  <div class="form-group">
-    <label>Location</label>
-    <input class="form-control" name="location" type="text" ng-model="currentUser.location"/>
-  </div>
-  <div class="form-group">
-    <label>Image</label>
-    <input class="form-control" name="image" type="text" ng-model="currentUser.image"/>
+    <input class="form-control" name="dob" type="date"ng-model="currentUser.dob"/>
   </div>
   <div class="form-group">
     <label>About Me</label>
-    <input class="form-control" name="about_me" type="text" ng-model="currentUser.about_me"/>
+    <textarea class="form-control" name="about_me" type="text" ng-model="currentUser.about_me"></textarea>
   </div>
-  <div class="form-group">
-    <label>Social - Facebook URL</label>
-    <input class="form-control" name="social.facebook" type="text" ng-model="currentUser.social.facebook"/>
+  <h5> <span class="glyphicon glyphicon-record"></span> Location</h5>
+  <div class="form-group form-inline">
+    <label>Country</label>
+    <input class="form-control" name="locationCountry" type="text" ng-model="currentUser.location.country"/>
+    <label>State</label>
+    <input class="form-control" name="locationState" type="text" ng-model="currentUser.location.state"/>
+    <label>Zip Code/Postal Code</label>
+    <input class="form-control" name="locationCode" type="text" ng-model="currentUser.location.zip"/>
   </div>
+  <h5> <span class="glyphicon glyphicon-sunglasses"></span> Social</h5>
   <div class="form-group">
-    <label>Social - YouTube URL</label>
-    <input class="form-control" name="social.youtube" type="text" ng-model="currentUser.social.youtube"/>
-  </div>
-  <div class="form-group">
-    <label>Social - Twitter URL</label>
-    <input class="form-control" name="social.twitter" type="text" ng-model="currentUser.social.twitter"/>
+    <div class="row">
+      <div class="col-md-5">
+        <label>Facebook URL</label>
+        <input class="form-control" name="social.facebook" type="text" ng-model="currentUser.social.facebook"/>
+        <label>YouTube URL</label>
+        <input class="form-control" name="social.youtube" type="text" ng-model="currentUser.social.youtube"/>
+      </div>
+      <div class="col-md-6">
+        <label>Twitter URL</label>
+        <input class="form-control" name="social.twitter" type="text" ng-model="currentUser.social.twitter"/>
+        <label>LinkedIn URL</label>
+        <input class="form-control" name="social.linkedin" type="text" ng-model="currentUser.social.linkedin"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <label>Image</label>
+        <input class="form-control" name="image" type="text" ng-model="currentUser.image"/>
+      </div>
+    </div>
   </div>
   <div class="form-group">
     <label>Enter your password to make the changes</label>

@@ -24,7 +24,6 @@ background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50%
         <ul class="nav navbar-nav">
           <li class="active"><a href="#/profile/company/{{items[0].cid}}/">About<span class="sr-only">(current)</span></a></li>
           <li><a href="#profile/company/{{items[0].cid}}/employees">Employees</a></li>
-          <li><a href="#">Worked here?</a></li>
           <li><a href="#">Share</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -32,26 +31,67 @@ background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50%
   </nav>
 
   <div class="container profile-body">
-    <div class="col-md-10">
-      <h2> Welcome to {{currentCompany.name}} </h2>
+    <div class="col-md-9">
+      <h3> Welcome to {{currentCompany.name}} </h3>
       <p class="about">{{currentCompany.about}}</p>
     </div>
-    <div class="col-md-2">
-      <h3> Location </h3>
-      {{currentCompany.location.state}}, {{currentCompany.location.country}}, {{currentCompany.location.zip}}
+    <div class="col-md-3">
+      <div ng-if="!workedHere(currentCompany._id)">
+        <h4> Worked here before? </h4>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addCompanyToProfile">Add to profile</button>
+      </div>
+      <div>
+        <h4> Location </h4>
+        {{currentCompany.location.state}}, {{currentCompany.location.country}}, {{currentCompany.location.zip}}
+      </div>
 
-      <h3> Contact </h3>
-      <a href="mailto:{{currentCompany.email}}">{{currentCompany.email}}</a>
+      <div>
+        <h4> Contact </h4>
+        <a href="mailto:{{currentCompany.email}}">{{currentCompany.email}}</a>
+      </div>
 
-      <h3> Website </h3>
-      <a target="_blank" href="{{currentCompany.website}}"> {{currentCompany.website}}</a>
+      <div>
+        <h4> Website </h4>
+        <a target="_blank" href="{{currentCompany.website}}"> {{currentCompany.website}}</a>
+      </div>  
     </div> 
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="addCompanyToProfile" tabindex="-1" role="dialog" aria-labelledby="addCompanyToProfileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addCompanyToProfileLabel">Add {{currentCompany.name}} to your profile</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form" ng-submit="addCompanyToProfile(addThisCompanyToProfile)">
+            <input type="text" value="{{currentCompany._Id}}" ng-model="addThisCompanyToProfile._id" hidden/>
+            <div class="form-group">
+              <label>Title of designation</label>
+              <input class="form-control" type="text" ng-model="addThisCompanyToProfile.title" placeholder="Title of designation"> 
+            </div>
+            <div class="form-group form-inline">
+              <label>Joining Date</label>
+              <input class="form-control" type="date" ng-model="addThisCompanyToProfile.from" placeholder="Joining date"/>
+              <label>Leaving Date</label>
+              <input class="form-control" type="date" ng-model="addThisCompanyToProfile.to" placeholder="Leaving date"/>
+              <div class="help-block">Leave leaving date blank if you are still working here.</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- <div class="container">  
     <div class="col-md-8">
     <div class="search-item panel panel-default" ng-repeat="i in retrieveStudents()>
     <div class="panel-heading">
-    <h3>{{i.name}}</h3>
+    <h4>{{i.name}}</h4>
     </div>
     <div class="panel-body">
     <img src="{{i.image}}" alt="{{i.name}}'s image"/>

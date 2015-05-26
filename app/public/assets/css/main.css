@@ -1,5 +1,5 @@
 #ng-view-wrapper {
-  margin-top: 55px;
+  margin-top: 65px;
   padding-top: 10px;
 }
 .inline { 
@@ -26,6 +26,7 @@
 .banner-profile {
   background-size: cover;
   height: 60vh;
+  margin-bottom: 20px;
 }
 .banner-profile .banner-body h1 {
   color: black;

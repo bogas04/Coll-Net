@@ -8,12 +8,20 @@ collnetApp.controller('MainCtrl', function (
       ,Auth
       ,Institute
       ,Company) {
+  $scope.includeCompanies = true;
   $scope.placeholder = {
     profileImage : 'assets/img/user.jpg',
     instituteImage : 'assets/img/institute.jpg',
     instituteBanner : 'assets/img/instituteBanner.jpg',
     companyImage : 'assets/img/company.jpg',
     companyBanner : 'assets/img/companyBanner.jpg'
+  };
+  $scope.addThisUser = {
+    name: '',
+    email: '',
+    username: '',
+    sex: (new Array('m', 'f', 'o'))[parseInt((Math.random()*10)%3)],
+    password: ''
   };
 
   // Search Related
@@ -31,21 +39,38 @@ collnetApp.controller('MainCtrl', function (
       $scope.currentInstitute = results.data;
     });
   }
+  $scope.studiedHere = function(instituteId) {
+    var returnVal = false;
+    if($scope.currentUser && $scope.currentUser.educationHistory) {
+      var found = false;
+      for(var i = 0; !found && i < $scope.currentUser.educationHistory.length; i++) {
+        if($scope.currentUser.educationHistory[i].instituteId === instituteId) {
+          returnVal = found = true;
+        }
+      }
+    }
+    return returnVal;
+  }
   // Company Related
   if($location.path().indexOf('profile/company') > -1) {
     Company.get($routeParams.companyId).then(function(results) {
       $scope.currentCompany = results.data;
     });
   }
+  $scope.workedHere = function(companyId) {
+    var returnVal = false;
+    if($scope.currentUser && $scope.currentUser.workHistory) {
+      var found = false;
+      for(var i = 0; !found && i < $scope.currentUser.workHistory.length; i++) {
+        if($scope.currentUser.workHistory[i].companyId === companyId) {
+          returnVal = found = true;
+        }
+      }
+    }
+    return returnVal;
+  }
 
   // User Related
-  $scope.addThisUser = {
-    name: '',
-    email: '',
-    username: '',
-    sex: (new Array('m', 'f', 'o'))[parseInt((Math.random()*10)%3)],
-    password: ''
-  };
   Auth.isLoggedIn().then(function(result) {
     $scope.isLoggedIn = !result.error;
     $scope.currentUser = result.data || null;

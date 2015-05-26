@@ -24,7 +24,6 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
         <ul class="nav navbar-nav">
           <li class="active"><a href="#/profile/institute/{{items[0].cid}}/">About<span class="sr-only">(current)</span></a></li>
           <li><a href="#profile/institute/{{items[0].cid}}/students">Students</a></li>
-          <li><a href="#">Enroll</a></li>
           <li><a href="#profile/institute/{{items[0].cid}}/group">Groups</a></li>
           <li><a href="#">Societies</a></li>
           <li><a href="#">Alumni</a></li>
@@ -35,26 +34,34 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
   </nav>
 
   <div class="container profile-body">
-    <div class="col-md-10">
-      <h2> Welcome to {{currentInstitute.name}} </h2>
+    <div class="col-md-9">
+      <h3> Welcome to {{currentInstitute.name}} </h3>
       <p class="about">{{currentInstitute.about}}</p>
     </div>
-    <div class="col-md-2">
-      <h3> Location </h3>
-      {{currentInstitute.location.state}}, {{currentInstitute.location.country}}, {{currentInstitute.location.zip}}
-
-      <h3> Contact </h3>
-      <a href="mailto:{{currentInstitute.email}}">{{currentInstitute.email}}</a>
-
-      <h3> Website </h3>
-      <a target="_blank" href="{{currentInstitute.website}}"> {{currentInstitute.website}}</a>
+    <div class="col-md-3">
+      <div ng-if="!studiedHere(currentInstitute._id)">
+        <h5> Studied here before? </h5>
+        <button class="btn btn-primary">Add to profile</button>
+      </div>
+      <div>
+        <h5> Location </h5>
+        {{currentInstitute.location.state}}, {{currentInstitute.location.country}}, {{currentInstitute.location.zip}}
+      </div>
+      <div>
+        <h5> Contact </h5>
+        <a href="mailto:{{currentInstitute.email}}">{{currentInstitute.email}}</a>
+      </div>
+      <div>
+        <h5> Website </h5>
+        <a target="_blank" href="{{currentInstitute.website}}"> {{currentInstitute.website}}</a>
+      </div>
     </div> 
   </div>
   <!-- <div class="container">  
     <div class="col-md-8">
     <div class="search-item panel panel-default" ng-repeat="i in retrieveStudents()>
     <div class="panel-heading">
-    <h3>{{i.name}}</h3>
+    <h5>{{i.name}}</h5>
     </div>
     <div class="panel-body">
     <img src="{{i.image}}" alt="{{i.name}}'s image"/>
