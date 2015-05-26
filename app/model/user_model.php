@@ -61,6 +61,19 @@ class UserModel extends Model {
    * CRUD Functions
    */
 
+  public function retrieveById($_id) {
+    if($_id == null) {
+      throw new Exception('Invalid _id of user');  
+    }
+    $this->_id = $_id;
+    $d = $this->collection->findOne(['_id' => new MongoId($this->_id)]);
+    if(!$d) { // not found
+      throw new Exception('username `'. $this->username .'` not found');  
+    } else { // found
+      $this->set($d);
+    }  
+    $this->hashed_password = null; // read only object
+  }
   // Crud
   public function create($d) {
     if(!isset($d['username']) || !isset($d['password']) || !isset($d['email'])) { 

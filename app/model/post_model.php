@@ -1,8 +1,12 @@
 <?php
 require_once('model.php');
+require_once('user_model.php');
+require_once('institute_model.php');
 
 class PostModel extends Model {
   private $collection;
+  private $userCollection;
+  private $instituteCollection;
   private $_id;
   private $postBy = null;
   private $postFor = []; // ['institute' => :id, 'batchYear' => :year, 'discipline' => :discipline, 'section' => :section ]
@@ -19,6 +23,8 @@ class PostModel extends Model {
     $a = func_get_args();
     $i = func_num_args();
     $this->collection = new MongoCollection($this->db, 'posts');
+    $this->userCollection = new MongoCollection($this->db, 'users');
+    $this->instituteCollection = new MongoCollection($this->db, 'institutes');
     if (method_exists($this,$f='__construct'.$i)) {
       call_user_func_array(array($this,$f),$a); 
     }
@@ -55,8 +61,7 @@ class PostModel extends Model {
     if($d->count() > 0) {
       $i = 0;
       foreach($d as $doc) {
-        $temp = new PostModel();
-        $temp->set($doc);
+        $temp = new PostModel($doc['_id']->{'$id'});
         $posts[$i++] = $temp->to_array();
       }
     }
@@ -71,7 +76,17 @@ class PostModel extends Model {
     if(!$d) { // not found
       throw new Exception('Post  `'. $this->_id.'` not found');  
     } else { // found
+      // Populate Poster
       $this->set($d);
+      $user = new UserModel();
+      $user->retrieveById($this->postBy);
+      $this->postBy = $user->to_array();
+      // Populate Comments
+      foreach($this->comments as $index => $value) {
+        $user = new UserModel();
+        $user->retrieveById($this->postBy);
+        $this->comments[$index]['commentBy'] = $user->to_array();
+      }
     }
   }
   // crUd
