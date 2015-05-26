@@ -135,6 +135,7 @@ collnetApp.controller('MainCtrl', function (
   if($location.path().indexOf('profile/user') > -1) {
     Auth.getProfile($routeParams.username).then(function(results) {
       $scope.selectedUser = results.data;
+      $scope.fillDurations($scope.selectedUser);
     });
   }
   Auth.isLoggedIn().then(function(result) {
