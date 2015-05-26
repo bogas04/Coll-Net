@@ -52,7 +52,7 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
                 {{student.name}}
               </a> 
             </h5>
-            <h5> <small> {{student.location.state + " " + student.location.country}} </small> </h5>
+            <h5> <small> {{student.location.state + ", " + student.location.country}} </small> </h5>
           </div>
           <div class="panel-body"> {{getEducationDescription(student, currentInstitute._id)}} </div>
         </div>

@@ -5,6 +5,7 @@ class UserModel extends Model {
   private $collection;
   private $companiesCollection;
   private $institutesCollection;
+
   private $password = null;
   private $hashed_password = null;
   private $username = null;
@@ -14,8 +15,8 @@ class UserModel extends Model {
   public $dob = null; 
   public $location = null;
   public $image = null;
-  public $educationHistory = null;
-  public $workHistory = null;
+  public $educationHistory = [];
+  public $workHistory = [];
   public $about_me = null;
   public $social = null;
   private $is_admin = false; 
@@ -78,7 +79,7 @@ class UserModel extends Model {
     }
     $this->hashed_password = $this->hash_password($this->password);
     // TODO: Read API to see if create returns what it has added
-    $this->collection->insert($this->to_array2()); 
+    $this->collection->insert($this->to_array2(false)); 
     $this->retrieve(true);
   }
   public function studentsOf($instituteId) {
@@ -120,9 +121,9 @@ class UserModel extends Model {
         $this->set($d);
         if(is_array($this->workHistory)) {
           foreach($this->workHistory as $index => $ele) {
-            //var_dump($w['_id']['$id']);
-            //var_dump(MongoDBRef::get($this->db, $w['_id']));
-            //var_dump($this->companiesCollection->findOne([ '_id' => new MongoId($w['_id']['$id'])]));
+            //var_dump($ele['_id']['$id']);
+            //var_dump(MongoDBRef::get($this->db, $ele['_id']));
+            //var_dump($this->companiesCollection->findOne([ '_id' => new MongoId($ele['_id']['$id'])]));
             $workInfo =  $this->companiesCollection->findOne(['_id' => new MongoId($ele['_id']['$id'])]);
             unset($workInfo['_id']);
             $this->workHistory[$index] = array_merge($ele, $workInfo);
@@ -130,9 +131,9 @@ class UserModel extends Model {
         }
         if(is_array($this->educationHistory)) {
           foreach($this->educationHistory as $index => $ele) {
-            //var_dump($e['_id']['$id']);
-            //var_dump(MongoDBRef::get($this->db, $e['_id']));
-            //var_dump($this->institutesCollection->findOne([ '_id' => new MongoId($e['_id']['$id'])]));
+            //var_dump($ele['_id']['$id']);
+            //var_dump(MongoDBRef::get($this->db, $ele['_id']));
+            //var_dump($this->institutesCollection->findOne([ '_id' => new MongoId($ele['_id']['$id'])]));
             $educationInfo =  $this->institutesCollection->findOne(['_id' => new MongoId($ele['_id']['$id'])]);
             unset($educationInfo['_id']);
             $this->educationHistory[$index] = array_merge($ele, $educationInfo);
@@ -165,19 +166,6 @@ class UserModel extends Model {
   public function update() {
     if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
     $this->hashed_password = $this->hash_password();
-    if($this->workHistory) {
-      foreach($this->workHistory as $index => $w) {
-        if(!is_array($w->_id) || !isset($w->_id['$id'])) 
-          $this->workHistory[$index]->_id = MongoDBRef::create("companies",  $w->_id);
-      }
-    }
-    if($this->educationHistory) {
-      foreach($this->educationHistory as $index => $e) {
-        if(!is_array($e->_id) || !isset($e->_id['$id'])) 
-          $this->educationHistory[$index]->_id = MongoDBRef::create("institutes",  $e->_id);
-      }
-    }
-
     // TODO: Think of potential risks
     // TODO: If nothing modified, throw exception
     // TODO: Read API to see if modify returns what it has added
@@ -243,7 +231,7 @@ class UserModel extends Model {
   /*
    * Return data functions
    */
-  private function to_array2() {
+  private function to_array2($noId = true) {
     $data = [
       'username' => $this->username,
       '_id' => $this->_id,
@@ -258,6 +246,9 @@ class UserModel extends Model {
       'workHistory' => $this->workHistory,
       'social' => $this->social
     ]; 
+    if(!$noId) { 
+      unset($data['_id']);
+    }
     return $data;
   }
   public function to_array() {

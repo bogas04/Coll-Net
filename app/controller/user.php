@@ -97,7 +97,7 @@ class UserController extends Controller{
       if($this->isLoggedIn()) {
         $u = new UserModel($username, $password);
         foreach($newDetails as $key => $value) {
-          if(!in_array($key, ['username', 'password', 'hashed_password', 'email'])) {
+          if(!in_array($key, ['_id', 'username', 'password', 'hashed_password', 'email'])) {
             $u->$key = $value;
           }
         }
