@@ -18,34 +18,28 @@ collnetApp.controller('MainCtrl', function (
   };
   $scope.select = {
     disciplines: [
-    {value: "BT", name : "Biology Technology"},
-    {value: "CE", name : "Civil Engineering"},
-    {value: "COE", name : "Computer Engineering"},
-      {value: "CS", name : "Computer Science"},
-      {value: "CSE", name : "Computer Science and Engineering"},
-        {value: "ECE", name : "Electronics and Communication Engineering"},
-        {value: "EE", name : "Electrical Engineering"},
-          {value: "ICE", name : "Instrumentation and Control Engineering"},
-          {value: "IT", name : "Information and Technology"},
-            {value: "MPAE", name : "Manufacturing Processes and Automation Engineering"},
-            {value: "ME", name : "Mechanical Engineering"},
-              {value: "MAC", name : "Mathematics and Computing"}
+    { value: "BT", name : "Biology Technology" },
+    { value: "CE", name : "Civil Engineering" },
+    { value: "COE", name : "Computer Engineering" },
+      { value: "CS", name : "Computer Science" },
+      { value: "CSE", name : "Computer Science and Engineering" },
+        { value: "ECE", name : "Electronics and Communication Engineering" },
+        { value: "EE", name : "Electrical Engineering" },
+          { value: "ICE", name : "Instrumentation and Control Engineering" },
+          { value: "IT", name : "Information and Technology" },
+            { value: "MPAE", name : "Manufacturing Processes and Automation Engineering" },
+            { value: "ME", name : "Mechanical Engineering" },
+              { value: "MAC", name : "Mathematics and Computing" }
     ],
     degrees : [
-    {value: "BE", name : "Bachelors of Engineering"},
-    {value: "BTech", name : "Bachelors of Technology"},
-    {value: "BS", name : "Bachelors of Science"},
-      {value: "MS", name : "Masters of Engineering"},
-      {value: "MTech", name : "Masters of Technology"},
+    { value: "BE", name : "Bachelors of Engineering" },
+    { value: "BTech", name : "Bachelors of Technology" },
+    { value: "BS", name : "Bachelors of Science" },
+      { value: "MS", name : "Masters of Engineering" },
+      { value: "MTech", name : "Masters of Technology" },
     ]
   };
-  $scope.addThisUser = {
-    name: '',
-    email: '',
-    username: '',
-    sex: (new Array('m', 'f', 'o'))[parseInt((Math.random()*10)%3)],
-    password: ''
-  };
+  $scope.addThisUser = { sex: (new Array('m', 'f', 'o'))[parseInt((Math.random()*10)%3)] };
 
   // Search Related
   if($location.path().indexOf('search') > -1) {
@@ -61,6 +55,11 @@ collnetApp.controller('MainCtrl', function (
     Institute.get($routeParams.instituteId).then(function(results) {
       $scope.currentInstitute = results.data;
       $scope.addInstitute = { _id: $scope.currentInstitute._id, degree: $scope.select.degrees[0].value };
+      if($location.path().indexOf('students') > -1) {
+        Institute.getStudentsOf($routeParams.instituteId).then(function(results) {
+          $scope.currentInstitute.students = results.data || [];
+        });
+      }
     });
   }
   $scope.studiedHere = function(instituteId) {
@@ -96,6 +95,11 @@ collnetApp.controller('MainCtrl', function (
     Company.get($routeParams.companyId).then(function(results) {
       $scope.currentCompany = results.data;
       $scope.addCompany = { _id : $scope.currentCompany._id };
+      if($location.path().indexOf('employees') > -1) {
+        Company.getEmployeesOf($routeParams.companyId).then(function(results) {
+          $scope.currentCompany.employees = results.data || [];
+        });
+      }
     });
   }
   $scope.workedHere = function(companyId) {
@@ -128,6 +132,11 @@ collnetApp.controller('MainCtrl', function (
   };
 
   // User Related
+  if($location.path().indexOf('profile/user') > -1) {
+    Auth.getProfile($routeParams.username).then(function(results) {
+      $scope.selectedUser = results.data;
+    });
+  }
   Auth.isLoggedIn().then(function(result) {
     $scope.isLoggedIn = !result.error;
     $scope.currentUser = result.data || null;
@@ -196,6 +205,46 @@ collnetApp.controller('MainCtrl', function (
   };
 
   // Misc Functions
+  $scope.getEducationHistory = function(user, instituteId) {
+    // returns the object of education from educationHistory of user having same instituteId
+    var obj = {};
+    var found = false;
+    if(instituteId && user && user.educationHistory) {
+      for(var i = 0; !found && i < user.educationHistory.length; i++) {
+        if(user.educationHistory[i]._id.$id === instituteId) {
+          found = true;
+          obj = user.educationHistory[i];
+        }
+      }
+    }
+    return obj;
+  };
+  $scope.getEducationDescription = function(user, instituteId) {
+    // returns title and duration of education
+    $scope.fillDurations(user);
+    var obj = $scope.getEducationHistory(user, instituteId);
+    return obj ? (obj.degree + ' in ' + obj.discipline + ', ' + obj.duration) : "";
+  };
+  $scope.getWorkHistory = function(user, companyId) {
+    // returns the object of work from workHistory of user having same companyId
+    var obj = {};
+    var found = false;
+    if(companyId && user && user.workHistory) {
+      for(var i = 0; !found && i < user.workHistory.length; i++) {
+        if(user.workHistory[i]._id.$id === companyId) {
+          found = true;
+          obj = user.workHistory[i];
+        }
+      }
+    }
+    return obj;
+  };
+  $scope.getWorkDescription = function(user, companyId) {
+    // returns title and duration of work
+    $scope.fillDurations(user);
+    var obj = $scope.getWorkHistory(user, companyId);
+    return obj ? (obj.title + ', ' + obj.duration) : "";
+  };
   $scope.fillDurations = function(obj) {
     // adds new field 'duration' whereever fromDate and toDate exist
     if(obj) {

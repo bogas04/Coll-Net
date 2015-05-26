@@ -22,12 +22,16 @@ collnetApp.config(function ($locationProvider, $routeProvider) {
     templateUrl: 'views/institute-profile.html',
     controller: 'MainCtrl'
   })
+  .when('/profile/institute/:instituteId/students', {
+    templateUrl: 'views/institute-students.html',
+    controller: 'MainCtrl'
+  })
   .when('/profile/company/:companyId', {
     templateUrl: 'views/company-profile.html',
     controller: 'MainCtrl'
   })
-  .when('/profile/institute/:instituteId/students', {
-    templateUrl: 'views/institute-students.html',
+  .when('/profile/company/:companyId/employees', {
+    templateUrl: 'views/company-employees.html',
     controller: 'MainCtrl'
   })
   .when('/profile/self', {
@@ -38,21 +42,9 @@ collnetApp.config(function ($locationProvider, $routeProvider) {
     templateUrl: 'views/edit-profile.html',
     controller: 'MainCtrl'
   })
-  .when('/profile/user/:userId', {
-    templateUrl: 'views/student-profile.html',
+  .when('/profile/user/:username', {
+    templateUrl: 'views/user-profile.html',
     controller: 'MainCtrl'
   })
-  .when('/profile/student/:studentId', {
-    templateUrl: 'views/student-profile.html',
-    controller: 'MainCtrl'
-  })
-  .when('/profile/institute/:instituteId/group', {
-    templateUrl: 'views/institute-group.html',
-    controller: 'MainCtrl'
-  })
-  .when('/profile/institute/:instituteId/group/:courseId/students', {
-    templateUrl: 'views/students.html',
-    controller: 'MainCtrl'
-  });
   // $locationProvider.html5Mode(true);
 })

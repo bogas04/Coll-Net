@@ -22,8 +22,8 @@ background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50%
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#profile/company/{{currentCompany._id}}/">About<span class="sr-only">(current)</span></a></li>
-          <li><a href="#profile/company/{{currentCompany._id}}/employees">Employees</a></li>
+          <li><a href="#profile/company/{{currentCompany._id}}/">About<span class="sr-only">(current)</span></a></li>
+          <li class="active"><a href="#profile/company/{{currentCompany._id}}/employees">Employees</a></li>
           <li><a href="#">Share</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -32,8 +32,28 @@ background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50%
 
   <div class="container profile-body">
     <div class="col-md-9">
-      <h3> Welcome to {{currentCompany.name}} </h3>
-      <p class="about">{{currentCompany.about}}</p>
+      <h3> Employees of {{currentCompany.name}}</h3>
+      <div class="form-group form-inline">
+        <label> Filter results </label>
+        <div class="input-group">
+          <span class="input-group-addon glyphicon glyphicon-search"></span>
+          <input type="text" style="width:300px" class="form-control" placeholder="Search employees" ng-model="searchFilter">
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel panel-default list-item card" ng-repeat="employee in currentCompany.employees | filter : searchFilter">
+          <div class="panel-heading">
+            <h5> 
+              <a href="#/profile/user/{{employee.username}}">
+                <img class="profile-image" src="{{employee.image || placeholder.profileImage}}"/> 
+                {{employee.name}}
+              </a> 
+            </h5>
+            <h5> <small> {{employee.location.state + " " + employee.location.country}} </small> </h5>
+          </div>
+          <div class="panel-body"> {{getWorkDescription(employee, currentCompany._id)}} </div>
+        </div>
+      </div>
     </div>
     <div class="col-md-3">
       <div ng-if="isLoggedIn && !workedHere(currentCompany._id)">
@@ -97,25 +117,4 @@ background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50%
       </div>
     </div>
   </div>
-  <!-- <div class="container">  
-    <div class="col-md-8">
-    <div class="search-item panel panel-default" ng-repeat="i in retrieveStudents()>
-    <div class="panel-heading">
-    <h4>{{i.name}}</h4>
-    </div>
-    <div class="panel-body">
-    <img src="{{i.image}}" alt="{{i.name}}'s image"/>
-    {{i.description}}
-    </div>
-    </div>
-
-    <div class="col-md-4">
-    <div class="btn-group-vertical" role="group" aria-label="...">
-    <div class="btn-group" role="group" aria-label="...">
-    <button type="button" class="btn btn-default">B.E</button>
-    <button type="button" class="btn btn-default">M.TECH</button>
-    </div>
-    </div>
-    </div>
-  --></div>
-
+</div>

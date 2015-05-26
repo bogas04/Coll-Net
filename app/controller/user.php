@@ -30,7 +30,7 @@ class UserController extends Controller{
       session_destroy();
       $this->respond(false, 'Logged out successfully');
     } catch (Exception $e) {
-      $this->respond(true, $e->getMessage);
+      $this->respond(true, $e->getMessage());
     }
   }
   public function isLoggedIn() {
@@ -47,11 +47,25 @@ class UserController extends Controller{
       $this->respond(true, 'No user logged in');
     }
   }
+  public function studentsOf($instituteId) {
+    try {
+      $this->respond(false, 'successfully got the data', (new UserModel())->studentsOf($instituteId));
+    } catch (Exception $e) {
+      $this->respond(true, $e->getMessage());
+    }
+  }
+  public function employeesOf($companyId) {
+    try {
+      $this->respond(false, 'successfully got the data', (new UserModel())->employeesOf($companyId));
+    } catch (Exception $e) {
+      $this->respond(true, $e->getMessage());
+    }
+  }
   public function getProfile($username) {
     try {
       $this->respond(false, 'successfully got the data', (new UserModel($username))->to_array());
     } catch (Exception $e) {
-      $this->respond(true, $e->getMessage);
+      $this->respond(true, $e->getMessage());
     }
   }
   public function addCompany($username, $password, $newDetails) {

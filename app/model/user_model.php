@@ -8,6 +8,7 @@ class UserModel extends Model {
   private $password = null;
   private $hashed_password = null;
   private $username = null;
+  private $_id = null;
   public $name = null;
   public $email = null;
   public $dob = null; 
@@ -79,6 +80,32 @@ class UserModel extends Model {
     // TODO: Read API to see if create returns what it has added
     $this->collection->insert($this->to_array2()); 
     $this->retrieve(true);
+  }
+  public function studentsOf($instituteId) {
+    $d = $this->collection->find([ 'educationHistory._id.$id' => $instituteId ]);
+    $users = [];
+    if($d->count() > 0) {
+      $i = 0;
+      foreach($d as $doc) {
+        $temp = new UserModel();
+        $temp->set($doc);
+        $users[$i++] = $temp->to_array();
+      }
+    }
+    return $users;
+  }
+  public function employeesOf($companyId) {
+    $d = $this->collection->find([ 'workHistory._id.$id' => $companyId ]);
+    $users = [];
+    if($d->count() > 0) {
+      $i = 0;
+      foreach($d as $doc) {
+        $temp = new UserModel();
+        $temp->set($doc);
+        $users[$i++] = $temp->to_array();
+      }
+    }
+    return $users;
   }
   // cRud - use to_array or to_json 
   private function retrieve($force = false) {
@@ -184,6 +211,7 @@ class UserModel extends Model {
    */
   private function set($d) {
     $this->username = isset($d['username'])? $d['username'] : $this->username; 
+    $this->_id = isset($d['_id'])? $d['_id']->{'$id'} : $this->_id; 
     $this->password = isset($d['password'])? $d['password'] : $this->password; 
     $this->email = isset($d['email'])? $d['email'] : $this->email; 
     $this->hashed_password = isset($d['hashed_password'])? $d['hashed_password'] : $this->hashed_password; 
@@ -198,6 +226,7 @@ class UserModel extends Model {
   }
   private function unsetAll() {
     $this->username = null; 
+    $this->_id = null; 
     $this->password = null; 
     $this->email = null; 
     $this->hashed_password = null; 
@@ -217,6 +246,7 @@ class UserModel extends Model {
   private function to_array2() {
     $data = [
       'username' => $this->username,
+      '_id' => $this->_id,
       'hashed_password' => $this->hashed_password,
       'email' => $this->email,
       'dob' => $this->dob,
@@ -233,6 +263,7 @@ class UserModel extends Model {
   public function to_array() {
     $data = [
       'username' => $this->username,
+      '_id' => $this->_id,
       'email' => $this->email,
       'dob' => $this->dob,
       'location' => $this->location,

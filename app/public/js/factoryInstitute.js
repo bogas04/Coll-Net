@@ -11,6 +11,11 @@ collnetApp.factory("Institute", ['$http', function($http) {
         return results.data;
       });
     },
+    getStudentsOf : function(q) {
+      return $http.get(serviceBase + "?action=studentsOf&_id=" + q).then(function (results) {
+        return results.data;
+      });
+    },
     search: function (q) {
       return $http.get(serviceBase + "?action=getInstitute&keyword=" + q).then(function (results) {
         return results.data;

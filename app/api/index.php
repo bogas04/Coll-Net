@@ -25,31 +25,33 @@ require_once('../controller/company.php');
 ===========
  */
 switch($_REQUEST['action']) {
-case 'login':        login($_POST);        break;
-case 'logout':       logout();             break;
-case 'loginStatus':  loginStatus();        break;
-case 'signup':       signup($_POST);       break;
-case 'getUser':      getUser($_GET);       break;
-case 'updateUser':   updateUser($_POST);   break;
-case 'deleteUser':   deleteUser($_GET);    break;
-case 'addInstitute': addInstitute($_POST); break;
-case 'addCompany':   addCompany($_POST);   break;
+case 'login':            login($_POST);           break;
+case 'logout':           logout();                break;
+case 'loginStatus':      loginStatus();           break;
+case 'signup':           signup($_POST);          break;
+case 'getUser':          getUser($_GET);          break;
+case 'updateUser':       updateUser($_POST);      break;
+case 'deleteUser':       deleteUser($_GET);       break;
+case 'addInstitute':     addInstitute($_POST);    break;
+case 'addCompany':       addCompany($_POST);      break;
 
 case 'getInstitute':     getInstitute($_GET);     break;
 case 'getAllInstitutes': getAllInstitutes($_GET); break;
+case 'studentsOf':       getStudentsOf($_GET);    break;
 
-case 'getCompany':      getCompany($_GET);      break;
-case 'getAllCompanies': getAllCompanies($_GET); break;
+case 'getCompany':       getCompany($_GET);       break;
+case 'getAllCompanies':  getAllCompanies($_GET);  break;
+case 'employeesOf':      getEmployeesOf($_GET);   break;
 
-case 'createPost': createPost($_POST); break;
-case 'getPost':    getPost($_GET);     break;
-case 'updatePost': updatePost($_POST); break;
-case 'deletePost': deletePost($_GET);  break;
+case 'createPost':       createPost($_POST);      break;
+case 'getPost':          getPost($_GET);          break;
+case 'updatePost':       updatePost($_POST);      break;
+case 'deletePost':       deletePost($_GET);       break;
 
-case 'createComment': createComment($_POST); break;
-case 'getComment':    getComment($_GET);     break;
-case 'updateComment': updateComment($_POST); break;
-case 'deleteComment': deleteComment($_GET);  break;
+case 'createComment':    createComment($_POST);   break;
+case 'getComment':       getComment($_GET);       break;
+case 'updateComment':    updateComment($_POST);   break;
+case 'deleteComment':    deleteComment($_GET);    break;
 }
 
 /*
@@ -70,6 +72,10 @@ function signup($details) {
     $userCtrl->respond(true, 'Invalid username or password', $_REQUEST);
   }
   $userCtrl->signup($details);
+}
+function getUser($details) {
+  $userCtrl = new UserController();
+  $userCtrl->getProfile($details['username']);
 }
 function logout() {
   $userCtrl = new UserController();
@@ -140,6 +146,10 @@ function getAllInstitutes($filters) {
   $instituteCtrl = new InstituteController();
   $instituteCtrl->retrieveAll($filters);
 }
+function getStudentsOf($details) {
+  $userCtrl = new UserController();
+  $userCtrl->studentsOf($details['_id']);
+}
 /*
 ===============
   COMPANY API  
@@ -157,7 +167,10 @@ function getAllCompanies($filters) {
   $companyCtrl = new CompanyController();
   $companyCtrl->retrieveAll($filters);
 }
-
+function getEmployeesOf($details) {
+  $userCtrl = new UserController();
+  $userCtrl->employeesOf($details['_id']);
+}
 /*
 ============
   POST API  

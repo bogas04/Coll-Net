@@ -21,8 +21,8 @@ collnetApp.factory("Auth", ['$http', function ($http) {
         return results.data;
       });
     },
-    profile: function(details) {
-      return $http.post(serviceBase + "?action=getUser" , details).then(function (results) {
+    getProfile: function(q) {
+      return $http.post(serviceBase + "?action=getUser&username=" + q).then(function (results) {
         return results.data;
       });
     },

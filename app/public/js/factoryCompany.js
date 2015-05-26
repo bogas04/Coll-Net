@@ -11,6 +11,11 @@ collnetApp.factory("Company", ['$http', function($http) {
         return results.data;
       });
     },
+    getEmployeesOf : function(q) {
+      return $http.get(serviceBase + "?action=employeesOf&_id=" + q).then(function (results) {
+        return results.data;
+      });
+    },
     search: function (q) {
       return $http.get(serviceBase + "?action=getCompany&keyword=" + q).then(function (results) {
         return results.data;
