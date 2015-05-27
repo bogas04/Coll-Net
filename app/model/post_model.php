@@ -49,7 +49,8 @@ class PostModel extends Model {
       throw new Exception('Invalid usage of API');   
     }
     if(isset($d['postFor']->instituteId)) {
-      $d['postFor']->instituteId = MongoDBRef::create('institutes', $d['postFor']->instituteId);
+      //$d['postFor']->instituteId = MongoDBRef::create('institutes', $d['postFor']->instituteId);
+      $d['postFor']->instituteId = $d['postFor']->instituteId;
     } else {
       throw new Exception('Invalid usage of API');
     }
@@ -70,8 +71,11 @@ class PostModel extends Model {
     $this->retrieve();
   }
   public function retrieveAll($filters) {
-    $filters = json_decode($filters);
-    $d = $this->collection->find(['postFor.instituteId.$id' => $filters->instituteId ]);
+    $filters = json_decode($filters, true);
+    //$instituteId = $filters['instituteId'];
+    //unset($filters['instituteId']);
+    $d = $this->collection->find(['postFor' => $filters]);
+    //$d = $this->collection->find(['postFor.instituteId.$id' => $instituteId]);
     $d->sort([ 'timestamp' => -1]);
     $posts = [];
     if($d->count() > 0) {

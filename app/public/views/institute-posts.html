@@ -20,6 +20,19 @@ style="background: url({{currentInstitute.bannerImage || placeholder.instituteBa
         <button class="btn btn-primary" data-target="#addPostModal" data-toggle="modal">Add Post</button> 
       </div>
       <div class="row">
+        <form ng-submit="filterPostsBy(filterBy)">
+          <div class="form-group">
+            <label> Show posts for : </label>
+            <select ng-model="filterBy">
+              <option value="i">{{currentInstitute.name}}</option>
+              <option value="d">{{currentEducationHistory.discipline}}</option>
+              <option value="y">{{toDate(currentEducationHistory.fromDate).getFullYear()}}</option>
+              <option value="dy">{{currentEducationHistory.discipline}}, {{toDate(currentEducationHistory.fromDate).getFullYear()}}</option>
+              <option value="dys">{{currentEducationHistory.discipline}} - {{currentEducationHistory.section}}, {{toDate(currentEducationHistory.fromDate).getFullYear()}} </option>
+            </select>
+            <button class="btn btn-info">Filter</button>
+          </div>
+        </form>
         <div class="panel panel-default list-item" ng-repeat="post in currentInstitute.posts">
           <div class="panel-heading">
             <h5> 
@@ -91,5 +104,39 @@ style="background: url({{currentInstitute.bannerImage || placeholder.instituteBa
       </div>
     </div> 
   </div>
-</div>
-
+  <div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addPostModalLabel">Add new post</h4>
+        </div>
+        <form class="form" ng-submit="addPost(currentInstitute._id, addThisPost)">
+          <div class="modal-body">
+            <div class="form-group">
+              <label> The post is for : </label>
+              <select ng-model="addThisPost.postForType" required>
+                <option value="i">{{currentInstitute.name}}</option>
+                <option value="d">{{currentEducationHistory.discipline}}</option>
+                <option value="y">{{toDate(currentEducationHistory.fromDate).getFullYear()}}</option>
+                <option value="dy">{{currentEducationHistory.discipline}}, {{toDate(currentEducationHistory.fromDate).getFullYear()}}</option>
+                <option value="dys">{{currentEducationHistory.discipline}} - {{currentEducationHistory.section}}, {{toDate(currentEducationHistory.fromDate).getFullYear()}} </option>
+              </select>
+              <div class="form-group">
+                <label> Add a new post </label>
+                <textarea class="form-control" ng-model="addThisPost.text" placeholder="Enter post contents"></textarea>
+              </div>
+              <div class="alert {{addPostMessageType}} alert-dismissible message" role="alert" ng-if="addPostMessage">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{addPostMessage}}
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-default" data-dismiss="modal">Close</a>
+              <button class="btn btn-primary">Add Post</button>
+            </div>
+        </form>
+          </div>
+      </div>
+    </div>
+  </div> 

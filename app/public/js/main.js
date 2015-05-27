@@ -10,6 +10,7 @@ collnetApp.controller('MainCtrl', function (
       ,Company
       ,Post) {
   $scope.includeCompanies = true;
+  $scope.filterBy = "i";
   $scope.placeholder = {
     profileImage : 'assets/img/user.jpg',
     instituteImage : 'assets/img/institute.jpg',
@@ -42,6 +43,8 @@ collnetApp.controller('MainCtrl', function (
         if($location.path().indexOf('posts') > -1) {
           Post.getPostsOf({ filters : { instituteId : $routeParams.instituteId }}).then(function(results) {
             $scope.currentInstitute.posts = results.data || [];
+            $scope.addThisPost = { postForType : "dys" };
+            $scope.currentEducationHistory = $scope.getEducationHistory($scope.currentUser, $routeParams.instituteId);
           });
         }
       }
@@ -176,13 +179,43 @@ collnetApp.controller('MainCtrl', function (
   };
 
   // Post Related
-  $scope.addPost = function(instituteId, postDetails) {
-    postDetails.timestamp = new Date();
-    if(postDetails.postFor) {
-      postDetails.postFor.instituteId = instituteId;
-    } else {
-      postDetails.postFor = { instituteId: instituteId };
+  $scope.filterPostsBy = function(filterBy) {
+    if(filterBy) {
+      var filters = { instituteId : $routeParams.instituteId };
+      var educationHistory = $scope.getEducationHistory($scope.currentUser, $scope.currentInstitute._id); 
+      var year = $scope.toDate(educationHistory.fromDate).getFullYear();
+      switch(filterBy) {
+        case "y" : filters.batchYear = year; break;
+        case "d" : filters.discipline = educationHistory.discipline; break;
+        case "dy" : filters.batchYear = year; filters.discipline = educationHistory.discipline; break;
+        case "dys" : filters.batchYear = year; filters.discipline = educationHistory.discipline; filters.section = educationHistory.section; break;
+      }
+      Post.getPostsOf({ filters : filters }).then(function(results) { $scope.currentInstitute.posts = results.data || []; });
     }
+  };
+  $scope.addPost = function(instituteId, postDetails) {
+    var educationHistory = $scope.getEducationHistory($scope.currentUser, $scope.currentInstitute._id); 
+    var year = $scope.toDate(educationHistory.fromDate).getFullYear();
+    postDetails.timestamp = new Date();
+    postDetails.postFor = { instituteId: instituteId };
+    switch(postDetails.postForType) {
+      case "y" : 
+        postDetails.postFor.batchYear = year; 
+        break;
+      case "d" : 
+        postDetails.postFor.discipline = educationHistory.discipline;
+        break;
+      case "dy" : 
+        postDetails.postFor.batchYear = year;
+        postDetails.postFor.discipline = educationHistory.discipline;
+        break;
+      case "dys" : 
+        postDetails.postFor.batchYear = year; 
+        postDetails.postFor.discipline = educationHistory.discipline; 
+        postDetails.postFor.section = educationHistory.section; 
+        break;
+    }
+    delete postDetails.postForType;
     User.addPost(postDetails).then(function(result) {
       $scope.addPostMessageType = result.error?'alert-danger':'alert-success'; 
       $scope.addPostMessage = result.message;
@@ -197,22 +230,6 @@ collnetApp.controller('MainCtrl', function (
       $scope.addCommentMessage = result.message;
       commentDetails = null;
     });
-  };
-  $scope.upvote = function(pid, uid) {
-    // $http.post('...');
-    for(var i = 0; i < $scope.groupPosts.length; i++) {
-      if($scope.groupPosts[i].pid === pid) {
-        $scope.groupPosts[i].upvotes++;
-      }
-    }
-  };
-  $scope.downvote = function(pid, uid) {
-    // $http.post('...');
-    for(var i = 0; i < $scope.groupPosts.length; i++) {
-      if($scope.groupPosts[i].pid === pid) {
-        $scope.groupPosts[i].downvotes--;
-      }
-    }
   };
 
   // Misc Functions
