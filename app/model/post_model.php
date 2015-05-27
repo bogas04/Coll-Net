@@ -48,11 +48,20 @@ class PostModel extends Model {
     if(isset($d['_id'])) {
       throw new Exception('invalid usage of API');   
     }
+    $d['postBy'] = MongoDBRef::create('users', $d['postBy']); 
     $this->set($d);
     $data = $this->to_array();
     unset($data['_id']);
     $this->collection->insert($data); 
     $this->_id = $data['_id'];
+    $this->retrieve();
+  }
+  public function addComment($d) {
+    if(!isset($d['commentBy']) || !isset($d['text']) || $this->timestamp === null) {
+      throw new Exception('Please fill details of the comment');
+    }
+    $d['commentBy'] = MongoDBRef::create('users', $d['commentBy']); 
+    $d = $this->collection->findAndModify(['_id' => new MongoId($this->_id)], [ '$push' => [ 'comments' =>  $d ]]);
     $this->retrieve();
   }
   public function retrieveAll($filters) {
@@ -68,7 +77,6 @@ class PostModel extends Model {
     }
     return $posts;
   }
-  // cRud - use to_array or to_json 
   private function retrieve() {
     if($this->_id === null) {
       throw new Exception('Invalid _id passed');
@@ -80,29 +88,23 @@ class PostModel extends Model {
       // Populate Poster
       $this->set($d);
       $user = new UserModel();
-      $user->retrieveById($this->postBy);
+      $user->retrieveById($this->postBy['$id']);
       $this->postBy = $user->to_array();
       // Populate Comments
       foreach($this->comments as $index => $value) {
         $user = new UserModel();
-        $user->retrieveById($this->postBy);
+        $user->retrieveById($this->comments[$index]['commentBy']['$id']);
         $this->comments[$index]['commentBy'] = $user->to_array();
       }
     }
   }
-  // crUd
   public function update() {
     if($this->_id === null) { throw new Exception('Illegal operation'); }
-    // TODO: Think of potential risks
-    // TODO: If nothing modified, throw exception
-    // TODO: Read API to see if modify returns what it has added
     $d = $this->collection->findAndModify(['_id' => $this->_id], $this->to_array()); 
     $this->retrieve();
   }
-  // cruD
   public function delete() {
     if($this->_id) { throw new Exception('Illegal operation'); }
-    // TODO: Very risky function
     $this->collection->remove(['_id' => $this->_id], ['justOne' => true]);
     $this->unsetAll();
   }

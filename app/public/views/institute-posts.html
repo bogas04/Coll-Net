@@ -32,7 +32,9 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
 
   <div class="container profile-body">
     <div class="col-md-9">
-      <div class="row" style="margin-bottom:20px"> <button class="btn btn-primary" data-target="#addPostModal" data-toggle="modal">Add Post</button> </div>
+      <div class="row" style="margin-bottom:20px"> 
+        <button class="btn btn-primary" data-target="#addPostModal" data-toggle="modal">Add Post</button> 
+      </div>
       <div class="row">
         <div class="panel panel-default list-item" ng-repeat="post in currentInstitute.posts">
           <div class="panel-heading">
@@ -44,7 +46,41 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
             </h5>
             <h5> <small> {{stringifyDate(toDate(post.timestamp))}} </small> </h5>
           </div>
-          <div class="panel-body"> {{post.text}} </div>
+          <div class="panel-body"> 
+            <div class="post-body">
+              <div>{{post.text}}</div>
+              <label class="btn btn-link"> 
+                <input ng-model="post.showComments" class="toggle-checkbox" value="false" type="checkbox"/>
+                {{post.comments.length}} Comments 
+              </label>
+            </div>
+            <div class="comments-wrapper" ng-if="post.showComments">
+              <div class="add-comment">
+                <form ng-submit="addComment(post._id, addThisComment)">
+                  <div class="form-group form-inline">
+                    <textarea class="form-control" placeholder="Add a comment" ng-model="addThisComment.text"></textarea>
+                    <button class="btn btn-info">Add Comment</button>
+                    <div class="alert {{addCommentMessageType}} alert-dismissible message" role="alert" ng-if="addCommentMessage">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      {{addCommentMessage}}
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div ng-repeat="comment in post.comments">
+                <div class="row comment">
+                  <div class="col-md-3 comment-profile">
+                    <a href="#/profile/user/{{comment.commentBy.username}}">
+                      <img class="profile-image" src="{{comment.commentBy.image || placeholder.profileImage}}"/> 
+                      {{comment.commentBy.name}}
+                    </a> 
+                    <h5> <small> {{stringifyDate(toDate(post.timestamp))}} </small> </h5>
+                  </div>
+                  <div class="col-md-9 comment-body">{{comment.text}}</div>
+                </div>
+              </div>
+            </div> 
+          </div>
         </div>
       </div>
     </div>

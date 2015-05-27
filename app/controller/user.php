@@ -81,6 +81,18 @@ class UserController extends Controller{
       $this->respond(true, $e->getMessage(), $e);
     }
   }
+  public function addComment($postId, $commentDetails) {
+    try {
+      if($this->isLoggedIn()) {
+        $post = new PostModel($postId);
+        $commentDetails['commentBy'] = $_SESSION['user']['_id'];
+        $post->addComment($commentDetails);
+        $this->respond(false, 'Comment made!', $post->to_array());
+      }
+    } catch (Exception $e) {
+      $this->respond(true, $e->getMessage(), $e);
+    }
+  }
   public function addPost($postDetails) {
     try {
       if($this->isLoggedIn()) {

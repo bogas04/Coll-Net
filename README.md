@@ -13,16 +13,17 @@ Todo
 * [x] Join Company
 * [x] Students of :institute
 * [x] Employees of :company
-* Search for employees/students/institutes/companies etc
 * [x] Show posts
 * [x] Create posts
+* [x] Create comments
+* Search for employees/students/institutes/companies etc
 * Groups/Filters of posts
+* Use date picker
+* Use select tags to maintain consistency
 * Delete/edit post
-* Create/Delete/Edit comments
+* Delete/Edit comments
 * Delete Profile
 * Edit/Delete institute
 * Edit/Delete company
-* Use date picker
-* Use select tags to maintain consistency
 * Images
 * Social integration

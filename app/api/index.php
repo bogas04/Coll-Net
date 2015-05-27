@@ -16,8 +16,6 @@ require_once('../controller/user.php');
 require_once('../controller/institute.php');
 require_once('../controller/company.php');
 require_once('../controller/post.php');
-//require_once('../controller/comment.php');
-
 
 /*
 ===========
@@ -44,15 +42,11 @@ case 'getAllCompanies':  getAllCompanies($_GET);  break;
 case 'employeesOf':      getEmployeesOf($_GET);   break;
 
 case 'addPost':          addPost($_POST);         break;
+case 'addComment':       addComment($_POST);      break;
 case 'getPost':          getPost($_GET);          break;
 case 'getPostsOf':       getPostsOf($_GET);       break;
 case 'updatePost':       updatePost($_POST);      break;
 case 'deletePost':       deletePost($_GET);       break;
-
-case 'createComment':    createComment($_POST);   break;
-case 'getComment':       getComment($_GET);       break;
-case 'updateComment':    updateComment($_POST);   break;
-case 'deleteComment':    deleteComment($_GET);    break;
 }
 
 /*
@@ -187,6 +181,16 @@ function addPost($details) {
   }
   $userCtrl->addPost($details);
 }
+function addComment($details) {
+  $userCtrl = new UserController();
+  if(isset($details['commentBy']) || !isset($details['postId'])) {
+    $userCtrl->respond(true, 'Invalid usage of API');
+  }
+  if(!isset($details['text'])) {
+    $userCtrl->respond(true, 'Please fill details of the post');
+  }
+  $userCtrl->addComment($details['postId'], ['text' => $details['text'], 'timestamp' => $details['timestamp']]);
+}
 function getPost($details) {
   $postCtrl = new PostController();
   if(!isset($details['_id'])) {
@@ -200,22 +204,5 @@ function getPostsOf($filters) {
   $postCtrl->retrieveAll($filters);
 }
 function deletePost($details) {
-
-}
-/*
-================
-  COMMENTS API  
-================
- */
-function createComment($details) {
-
-}
-function getComment($details) {
-
-}
-function updateComment($details) {
-
-}
-function deleteComment($details) {
 
 }

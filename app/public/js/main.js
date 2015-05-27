@@ -201,7 +201,16 @@ collnetApp.controller('MainCtrl', function (
       $scope.addPostMessage = result.message;
       postDetails = null;
     });
-  }
+  };
+  $scope.addComment = function(postId, commentDetails) {
+    commentDetails.timestamp = new Date();
+    commentDetails.postId = postId;
+    User.addComment(commentDetails).then(function(result) {
+      $scope.addCommentMessageType = result.error?'alert-danger':'alert-success'; 
+      $scope.addCommentMessage = result.message;
+      commentDetails = null;
+    });
+  };
   $scope.upvote = function(pid, uid) {
     // $http.post('...');
     for(var i = 0; i < $scope.groupPosts.length; i++) {

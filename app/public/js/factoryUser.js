@@ -31,6 +31,11 @@ collnetApp.factory("User", ['$http', function ($http) {
         return results.data;
       });
     },
+    addComment: function (details) {
+      return $http.post(serviceBase + "?action=addComment" , details).then(function (results) {
+        return results.data;
+      });
+    },
     addInstitute: function (details) {
       var obj = {
         username: details.username,

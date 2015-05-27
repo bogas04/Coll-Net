@@ -1,6 +1,9 @@
 /* GLOBALS */
+.toggle-checkbox {
+  display: none;
+}
 a:hover{
- text-decoration: none;
+  text-decoration: none;
 }
 #ng-view-wrapper {
   margin-top: 65px;
@@ -115,4 +118,40 @@ a:hover{
 }
 .social {
   text-transform: capitalize;
+}
+/* POSTS */
+.post-body {
+  font-size: 120%;
+  padding: 10px 5px;
+  border-bottom: 1px solid lightgrey;
+}
+.comments-wrapper {
+  margin-top: 10px;
+  min-height: 70px;
+  max-height: 250px;
+  overflow: auto;
+}
+.comments-wrapper textarea {
+  width: 82% !important;
+  height: 2em;
+}
+.comments-wrapper .btn {
+  vertical-align: bottom; 
+  margin-left: 10px;
+}
+.comment {
+  margin: 10px 5px;
+  border: 1px solid #DDD;
+  border-radius: 5px;
+}
+.comment-profile {
+  background-color: #F5F5F5;
+  padding: 10px 0px 10px 15px;
+}
+.comment-profile h5 {
+  margin: 0px;
+}
+.comment-body {
+  font-size: 120%;
+  padding-top: 5px;
 }
