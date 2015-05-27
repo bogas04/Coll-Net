@@ -39,13 +39,12 @@ a:hover{
 .banner-main .banner-body h1 {
   color: white;
   text-shadow: 0px 0px 2px black ;
-
 }
 
 /* BANNER PROFILE */
 .banner-profile {
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
   height: 40vh;
   margin-bottom: 20px;
 }
@@ -54,7 +53,7 @@ a:hover{
   padding: 20px 0px;
   background-color: rgba(255, 255, 255, 0.6);
 }
-.banner-profile .banner-body h1 {
+.banner-profile .banner-body h3 {
   color: black;
   text-shadow: 0px 0px 10px white;
 }

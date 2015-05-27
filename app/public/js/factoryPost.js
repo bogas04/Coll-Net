@@ -7,7 +7,7 @@ collnetApp.factory("Post", ['$http', function ($http) {
       });
     },
     getPostsOf: function(details) {
-      return $http.get(serviceBase + "?action=getPostsOf", { filter : details }).then(function (results) {
+      return $http.get(serviceBase + "?action=getPostsOf", { params : details }).then(function (results) {
         return results.data;
       });
     }

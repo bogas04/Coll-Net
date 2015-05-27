@@ -201,7 +201,7 @@ function getPost($details) {
 }
 function getPostsOf($filters) {
   $postCtrl = new PostController();
-  $postCtrl->retrieveAll($filters);
+  $postCtrl->retrieveAll($filters['filters']);
 }
 function deletePost($details) {
 

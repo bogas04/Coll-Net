@@ -1,0 +1,25 @@
+[
+  { 
+    "name" : "Netaji Subhas Institute Of Technology",
+    "email" : "director@nsit.ac.in",
+    "location" : { 
+      "state" : "New Delh",
+      "country" : "India",
+      "zip" : "110078" 
+    },
+    "website" : "http://nsit.ac.in",
+    "yearOfEstablishment" : "1983-08-01T00:00:00.000Z",
+    "image" : "assets/img/nsitimage.jpg",
+    "bannerImage" : "assets/img/nsitbanner.jpg",
+    "disciplines" : [
+      { "name" : "Computer Engineering", "value" : "COE", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Electronics and Communication Engineering", "value" : "COE", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Information and Technology", "value" : "IT", "sections" : [ 1,2 ] },
+      { "name" : "Instrumentation and Control Engineering", "value" : "ICE", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Manufacturing Processes and Automation Engineering", "value" : "MPAE", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Biology Technology", "value" : "BT", "sections" : [ 1 ] }
+    ],
+    "about" : "An Autonomous Institution under Govt. of NCT of Delhi and affiliated to University of Delhi, Netaji Subhas Institute of Technology is a seat of higher technical education in India. It was established in year 1983 as Delhi Institute of Technology with the objective to meet the growing demands of manpower in the emerging fields of engineering and technology with a close social and industrial interface. Over a period of time the Institute has carved a niche for itself, both nationally and internationally, for excellence in technical education and research. " 
+  }
+]
+

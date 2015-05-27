@@ -1,33 +1,17 @@
-<div class="container-fluid text-center banner banner-profile" style="
-background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}}) 50% / 100%;">
-  <div class="banner-body"> <h1>{{currentInstitute.name}}</h1> </div>
+<div class="container-fluid text-center banner banner-profile"
+style="background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}}) 50% / 100%;">
+  <div class="banner-body"> <h3>{{currentInstitute.name}}</h3> </div>
 </div>
 
 <div class="container-fluid">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li><a href="#profile/institute/{{currentInstitute._id}}/">About<span class="sr-only">(current)</span></a></li>
-          <li><a href="#profile/institute/{{currentInstitute._id}}/students">Students</a></li>
-          <li class="active"><a href="#profile/institute/{{currentInstitute._id}}/posts">Posts</a></li>
-          <li><a href="#">Societies</a></li>
-          <li><a href="#">Alumni</a></li>
-          <li><a href="#">Share</a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+      <ul class="nav navbar-nav">
+        <li><a href="#profile/institute/{{currentInstitute._id}}/">About<span class="sr-only">(current)</span></a></li>
+        <li ng-if="isLoggedIn && studiedHere(currentInstitute._id)"><a href="#profile/institute/{{currentInstitute._id}}/students">Students</a></li>
+        <li ng-if="isLoggedIn && studiedHere(currentInstitute._id)" class="active"><a href="#profile/institute/{{currentInstitute._id}}/posts">Posts</a></li>
+      </ul>
+    </div>
   </nav>
 
   <div class="container profile-body">
@@ -90,6 +74,10 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
         <button class="btn btn-primary" data-toggle="modal" data-target="#addInstituteToProfile">Add to profile</button>
       </div>
       <div>
+        <h5> Year of Establishment </h5>
+        {{stringifyDate(toDate(currentInstitute.yearOfEstablishment))}}
+      </div>
+      <div>
         <h5> Location </h5>
         {{currentInstitute.location.state}}, {{currentInstitute.location.country}}, {{currentInstitute.location.zip}}
       </div>
@@ -102,89 +90,6 @@ background: url({{currentInstitute.bannerImage || placeholder.instituteBanner}})
         <a target="_blank" href="{{currentInstitute.website}}"> {{currentInstitute.website}}</a>
       </div>
     </div> 
-  </div>
-  <!-- Modal -->
-  <div class="modal fade" id="addInstituteToProfile" tabindex="-1" role="dialog" aria-labelledby="addInstituteToProfileLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="addInstituteToProfileLabel">Add {{currentInstitute.name}} to your profile</h4>
-        </div>
-        <form class="form" ng-submit="addInstituteToProfile(addInstitute)">
-          <div class="modal-body">
-            <input type="text" ng-model="addInstitute._id" hidden/>
-            <h5> Course details </h5>
-            <div class="form-group form-inline">
-              <label>Discipline of Degree</label>
-              <select class="form-control" ng-model="addInstitute.discipline" 
-                                           ng-options="option.value as option.name for option in select.disciplines" required>
-                <option value="" ng-if="false"></option>
-              </select>
-              <label>Degree Type</label>
-              <select class="form-control" ng-model="addInstitute.degree" 
-                                           ng-options="opt.value as opt.name for opt in select.degrees" required>
-                <option value="" ng-if="false"></option>
-              </select> 
-            </div> 
-            <h5> Batch Details </h5>
-            <div class="form-group form-inline">
-              <label>Section</label>
-              <input class="form-control" type="text" ng-model="addInstitute.section" placeholder="Eg. 1, A, I etc" required/> 
-              <label>Joining Date</label>
-              <input class="form-control" type="text" ng-model="addInstitute.fromDate" placeholder="Joining date" required/>
-              <label>Leaving Date</label>
-              <input class="form-control" type="text" ng-model="addInstitute.toDate" placeholder="Leaving date"/>
-              <div class="help-block">Leave leaving date blank if you are still studying here.</div>
-              <div class="help-block"> Leave section blank if it is not applicable</div>
-            </div>
-            <h5> Description, extra comments </h5>
-            <div class="form-group">
-              <label>Description of your academics </label>
-              <textarea rows="5" class="form-control" ng-model="addInstitute.description" placeholder="Academic description"></textarea>
-            </div>
-            <div class="form-group has-warning has-feedback">
-              <label class="control-label" for="passwordRequired">Enter your password to make the changes</label>
-              <input class="form-control" id="passwordRequired" name="password" type="password" ng-model="addInstitute.password" required/>
-            </div>
-            <div class="alert {{updateProfileMessageType}} alert-dismissible message" role="alert" ng-if="updateProfileMessage">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              {{updateProfileMessage}}
-            </div>
-          </div>
-          <div class="modal-footer">
-            <a class="btn btn-default" data-dismiss="modal">Close</a>
-            <button class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="addPostModal" tabindex="-1" role="dialog" aria-labelledby="addPostModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="addPostModalLabel">Add new post</h4>
-        </div>
-        <form class="form" ng-submit="addPost(addThisPost)">
-          <div class="modal-body">
-            <div class="form-group">
-              <label> Add a new post </label>
-              <textarea class="form-control" ng-model="addThisPost.text" placeholder="Enter post contents"></textarea>
-            </div>
-            <div class="alert {{addPostMessageType}} alert-dismissible message" role="alert" ng-if="addPostMessage">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              {{addPostMessage}}
-            </div>
-          </div>
-          <div class="modal-footer">
-            <a class="btn btn-default" data-dismiss="modal">Close</a>
-            <button class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
   </div>
 </div>
 

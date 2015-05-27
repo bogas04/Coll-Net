@@ -155,14 +155,10 @@ class UserModel extends Model {
       }
     }  
   }
-  // crUd
   public function addCompany($details) {
     if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
     $this->hashed_password = $this->hash_password();
     $details->_id = MongoDBRef::create("companies",  $details->_id);
-    // TODO: Think of potential risks
-    // TODO: If nothing modified, throw exception
-    // TODO: Read API to see if modify returns what it has added
     $this->collection->findAndModify(['username' => $this->username], ['$push' => [ 'workHistory' => $details]]);
     $this->retrieve(true);
   }
@@ -170,25 +166,19 @@ class UserModel extends Model {
     if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
     $this->hashed_password = $this->hash_password();
     $details->_id = MongoDBRef::create("institutes",  $details->_id);
-    // TODO: Think of potential risks
-    // TODO: If nothing modified, throw exception
-    // TODO: Read API to see if modify returns what it has added
     $this->collection->findAndModify(['username' => $this->username], ['$push' => [ 'educationHistory' => $details]]);
     $this->retrieve(true);
   }
   public function update() {
     if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
     $this->hashed_password = $this->hash_password();
-    // TODO: Think of potential risks
-    // TODO: If nothing modified, throw exception
-    // TODO: Read API to see if modify returns what it has added
-    $this->collection->findAndModify(['username' => $this->username], $this->to_array2()); 
+    $data = $this->to_array2();
+    unset($data['_id']);
+    $this->collection->findAndModify(['username' => $this->username], $data); 
     $this->retrieve(true);
   }
-  // cruD
   public function delete() {
     if($this->hashed_password === null || !$this->exists()) { throw new Exception('Illegal operation'); }
-    // TODO: Very risky function
     $this->collection->remove(['username' => $this->username], ['justOne' => true]);
     $this->unsetAll();
   }

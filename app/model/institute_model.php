@@ -5,12 +5,14 @@ class InstituteModel extends Model {
   private $collection;
   private $name = null;
   private $email = null;
-  private $yoe = null; //year of establishment or 
+  private $yearOfEstablishment = null;
+  private $disciplines = [];
   private $website = null;
   private $location = null;
   private $image = null;
+  private $bannerImage = null;
   private $about = null;
-  private $social = null;//fb page linked in pa
+  private $social = [];//fb page linked in pa
   private $_id=null;//recieved from controller
   /*
    * Constructors
@@ -115,9 +117,11 @@ class InstituteModel extends Model {
 
   public function set($d) {
     $this->email = isset($d['email'])? $d['email'] : $this->email;
-    $this->yoe = isset($d['yoe'])? $d['yoe'] : $this->yoe;  
+    $this->yearOfEstablishment = isset($d['yearOfEstablishment'])? $d['yearOfEstablishment'] : $this->yearOfEstablishment;  
+    $this->disciplines = isset($d['disciplines'])? $d['disciplines'] : $this->disciplines;  
     $this->location = isset($d['location'])? $d['location'] : $this->location;
     $this->image = isset($d['image'])? $d['image'] : $this->image;
+    $this->bannerImage = isset($d['bannerImage'])? $d['bannerImage'] : $this->bannerImage;
     $this->name = isset($d['name'])? $d['name'] : $this->name; 
     $this->website = isset($d['website'])? $d['website'] : $this->website; 
     $this->about = isset($d['about'])? $d['about'] : $this->about;
@@ -126,9 +130,11 @@ class InstituteModel extends Model {
   }
   private function unsetAll() {
     $this->email = null;  
-    $this->yoe = null; 
+    $this->yearOfEstablishment = null; 
+    $this->disciplines = null; 
     $this->location = null; 
     $this->image = null; 
+    $this->bannerImage = null; 
     $this->website = null;
     $this->name = null; 
     $this->about = null;
@@ -141,9 +147,11 @@ class InstituteModel extends Model {
   public function to_array() {
     $data = [
       'email' => $this->email,
-      'yoe' => $this->yoe,
+      'yearOfEstablishment' => $this->yearOfEstablishment,
+      'disciplines' => $this->disciplines,
       'location' => $this->location,
       'image' => $this->image,
+      'bannerImage' => $this->bannerImage,
       'name' => $this->name,
       'website' => $this->website,
       'about' => $this->about,

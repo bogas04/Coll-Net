@@ -1,42 +1,16 @@
 <div class="container-fluid">
 <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <!--<ul class="nav navbar-nav">-->
-      <!--<li class="dropdown">-->
-      <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sort By <span class="caret"></span></a>-->
-      <!--<ul class="dropdown-menu" role="menu">-->
-      <!--<li><a href="#">location</a></li>-->
-      <!--<li><a href="#">popularity</a></li>-->
-      <!--</ul>-->
-      <!--</li>-->
-      <!--</ul>-->
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <label> Filter results </label>
-          <div class="input-group">
-            <span class="input-group-addon glyphicon glyphicon-search"></span>
-            <input type="text" style="width:300px" class="form-control" placeholder="Search institute/companies" ng-model="searchFilter">
-          </div>
-          <div class="form-group">
-            <label>
-              <input type="checkbox" ng-model="includeCompanies"/> Include companies?
-            </label>
-          </div>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <label> Filter results </label>
+        <div class="input-group">
+          <span class="input-group-addon glyphicon glyphicon-search"></span>
+          <input type="text" style="width:300px" class="form-control" placeholder="Search institute/companies" ng-model="searchFilter">
         </div>
-      </form>
-    </div><!-- /.navbar-collapse -->
+      </div>
+      <div class="form-group"> <label> <input type="checkbox" ng-model="includeCompanies"/> Include companies?  </label> </div>
+    </form>
   </div><!-- /.container-fluid -->
 </nav>
 </div>
@@ -46,11 +20,7 @@
     <h4> <span class="glyphicon glyphicon-education"></span> Institutes </h4>
     <div class="search-item panel panel-default" ng-repeat="i in institutes | filter: { 'name': searchFilter }">
       <div class="panel-heading">
-        <h5><img src="{{i.image || placeholder.instituteImage}}"/><a href="#profile/institute/{{i._id}}">{{i.name}}</a>
-          <button type="button" class="btn btn-default btn-lg pull-right">
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{i.rating}}
-          </button>
-        </h5>
+        <h5><img src="{{i.image || placeholder.instituteImage}}"/><a href="#profile/institute/{{i._id}}">{{i.name}}</a></h5>
       </div>
       <div class="panel-body">
         {{i.about}}
@@ -61,11 +31,7 @@
     <h4> <span class="glyphicon glyphicon-briefcase"></span> Companies </h4>
     <div class="search-item panel panel-default" ng-repeat="i in companies | filter: { 'name': searchFilter}">
       <div class="panel-heading">
-        <h5><img src="{{i.image || placeholder.companyImage}}"/><a href="#profile/company/{{i._id}}">{{i.name}}</a>
-          <button type="button" class="btn btn-default btn-lg pull-right">
-            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> {{i.rating}}
-          </button>
-        </h5>
+        <h5><img src="{{i.image || placeholder.companyImage}}"/><a href="#profile/company/{{i._id}}">{{i.name}}</a> </h5>
       </div>
       <div class="panel-body">
         {{i.about}}
