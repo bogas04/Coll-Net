@@ -1,32 +1,15 @@
 <div class="container-fluid text-center banner banner-profile"
-style="
-background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50% / 100%;">
-  <div class="banner-body">
-    <h1>{{currentCompany.name}}</h1>
-  </div>
+style="background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50% / 100%;">
+  <div class="banner-body"> <h3>{{currentCompany.name}}</h3> </div>
 </div>
 
 <div class="container-fluid">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-          <li><a href="#profile/company/{{currentCompany._id}}/">About<span class="sr-only">(current)</span></a></li>
-          <li class="active"><a href="#profile/company/{{currentCompany._id}}/employees">Employees</a></li>
-          <li><a href="#">Share</a></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
+      <ul class="nav navbar-nav">
+        <li><a href="#profile/company/{{currentCompany._id}}/">About<span class="sr-only">(current)</span></a></li>
+        <li ng-if="isLoggedIn && workedHere(currentCompany._id)" class="active"><a href="#profile/company/{{currentCompany._id}}/employees">Employees</a></li>
+      </ul>
     </div><!-- /.container-fluid -->
   </nav>
 
@@ -75,46 +58,5 @@ background: url({{currentCompany.bannerImage || placeholder.companyBanner}}) 50%
         <a target="_blank" href="{{currentCompany.website}}"> {{currentCompany.website}}</a>
       </div>  
     </div> 
-  </div>
-  <!-- Modal -->
-  <div class="modal fade" id="addCompanyToProfile" tabindex="-1" role="dialog" aria-labelledby="addCompanyToProfileLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="addCompanyToProfileLabel">Add {{currentCompany.name}} to your profile</h4>
-        </div>
-        <form class="form" ng-submit="addCompanyToProfile(addCompany)">
-          <div class="modal-body">
-            <input type="text" ng-model="addCompany._id" hidden/>
-            <div class="form-group">
-              <label>Title of designation</label>
-              <input class="form-control" type="text" ng-model="addCompany.title" placeholder="Title of designation" required/> 
-              <label>Description of your work </label>
-              <textarea rows="5" class="form-control" ng-model="addCompany.description" placeholder="Work description"></textarea>
-            </div>
-            <div class="form-group form-inline">
-              <label>Joining Date</label>
-              <input class="form-control" type="text" ng-model="addCompany.fromDate" placeholder="Joining date" required/>
-              <label>Leaving Date</label>
-              <input class="form-control" type="text" ng-model="addCompany.toDate" placeholder="Leaving date"/>
-              <div class="help-block">Leave leaving date blank if you are still working here.</div>
-            </div>
-            <div class="form-group has-warning has-feedback">
-              <label class="control-label" for="passwordRequired">Enter your password to make the changes</label>
-              <input class="form-control" id="passwordRequired" name="password" type="password" ng-model="addCompany.password" required/>
-            </div>
-            <div class="alert {{updateProfileMessageType}} alert-dismissible message" role="alert" ng-if="updateProfileMessage">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              {{updateProfileMessage}}
-            </div>
-          </div>
-          <div class="modal-footer">
-            <a class="btn btn-default" data-dismiss="modal">Close</a>
-            <button class="btn btn-primary">Save changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
   </div>
 </div>

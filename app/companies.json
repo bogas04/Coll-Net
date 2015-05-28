@@ -1,0 +1,24 @@
+[
+  { 
+    "name" : "Refiral", 
+    "email" : "hello@refiral.com", 
+    "image" : "assets/img/refiralimage.jpg",
+    "location" : { 
+      "state" : "Noida", 
+      "country" : "India" 
+    }, 
+    "website" : "http://refiral.com", 
+    "about" : "Refiral helps online businesses boost sales. With Refiral, run personalized, fully automated social viral referral marketing campaigns, start FREE!" 
+  },
+  {
+    "name" : "Adobe", 
+    "email" : "careers@adobe.com", 
+    "image" : "assets/img/adobeimage.jpg",
+    "location" : { 
+      "state" : "Noida", 
+      "country" : "India" 
+    }, 
+    "website" : "http://adobe.com", 
+    "about" : "At Adobe, we provide flexible, comprehensive benefits and competitive compensation so employees can afford to take good care of themselves and their families. Here is an overview of our benefit and compensation programs for employees working in India." 
+  }
+]

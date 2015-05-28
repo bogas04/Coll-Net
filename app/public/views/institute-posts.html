@@ -124,7 +124,7 @@ style="background: url({{currentInstitute.bannerImage || placeholder.instituteBa
               </select>
               <div class="form-group">
                 <label> Add a new post </label>
-                <textarea class="form-control" ng-model="addThisPost.text" placeholder="Enter post contents"></textarea>
+                <textarea class="form-control" ng-model="addThisPost.text" placeholder="Enter post contents" required></textarea>
               </div>
               <div class="alert {{addPostMessageType}} alert-dismissible message" role="alert" ng-if="addPostMessage">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

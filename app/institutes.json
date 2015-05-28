@@ -3,7 +3,7 @@
     "name" : "Netaji Subhas Institute Of Technology",
     "email" : "director@nsit.ac.in",
     "location" : { 
-      "state" : "New Delh",
+      "state" : "New Delhi",
       "country" : "India",
       "zip" : "110078" 
     },
@@ -13,13 +13,53 @@
     "bannerImage" : "assets/img/nsitbanner.jpg",
     "disciplines" : [
       { "name" : "Computer Engineering", "value" : "COE", "sections" : [ 1, 2, 3 ] },
-      { "name" : "Electronics and Communication Engineering", "value" : "COE", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Electronics and Communication Engineering", "value" : "ECE", "sections" : [ 1, 2, 3 ] },
       { "name" : "Information and Technology", "value" : "IT", "sections" : [ 1,2 ] },
       { "name" : "Instrumentation and Control Engineering", "value" : "ICE", "sections" : [ 1, 2, 3 ] },
       { "name" : "Manufacturing Processes and Automation Engineering", "value" : "MPAE", "sections" : [ 1, 2, 3 ] },
       { "name" : "Biology Technology", "value" : "BT", "sections" : [ 1 ] }
     ],
     "about" : "An Autonomous Institution under Govt. of NCT of Delhi and affiliated to University of Delhi, Netaji Subhas Institute of Technology is a seat of higher technical education in India. It was established in year 1983 as Delhi Institute of Technology with the objective to meet the growing demands of manpower in the emerging fields of engineering and technology with a close social and industrial interface. Over a period of time the Institute has carved a niche for itself, both nationally and internationally, for excellence in technical education and research. " 
+  },
+  { 
+    "name" : "Delhi Technological University",
+    "email" : "info@dtu.ac.in",
+    "location" : { 
+      "state" : "New Delhi",
+      "country" : "India",
+      "zip" : "110039" 
+    },
+    "website" : "http://dtu.ac.in",
+    "yearOfEstablishment" : "1941-08-01T00:00:00.000Z",
+    "image" : "assets/img/dtuimage.jpg",
+    "bannerImage" : "assets/img/dtubanner.jpg",
+    "disciplines" : [
+      { "name" : "Computer Engineering", "value" : "COE", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Electronics and Communication Engineering", "value" : "ECE", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Information and Technology", "value" : "IT", "sections" : [ 1,2 ] },
+      { "name" : "Civil Engineering", "value" : "CE", "sections" : [ 1,2 ] },
+      { "name" : "Eletrical Engineering", "value" : "EE", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Mechanical Engineering", "value" : "ME", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Biology Technology", "value" : "BT", "sections" : [ 1 ] }
+    ],
+    "about" : "DTU to be a leading world class technology university playing its role as a key node in national and global knowledge network thus empowering india with the wings of knowledge and power of innovations" 
+  },
+  { 
+    "name" : "International Institute of Information and Technology, Hyderabad",
+    "email" : "query@iiit.ac.in",
+    "location" : { 
+      "state" : "Hyderabad",
+      "country" : "India",
+      "zip" : "500032" 
+    },
+    "website" : "http://iiit.ac.in",
+    "yearOfEstablishment" : "1997-08-01T00:00:00.000Z",
+    "image" : "assets/img/iiithimage.jpg",
+    "bannerImage" : "assets/img/iiithbanner.jpg",
+    "disciplines" : [
+      { "name" : "Computer Science And Engineering", "value" : "CSE", "sections" : [ 1, 2, 3 ] },
+      { "name" : "Electronics and Communication Engineering", "value" : "ECE", "sections" : [ 1, 2, 3 ] }
+    ],
+    "about" : "The International Institute of Information Technology, Hyderabad (IIIT Hyderabad) is an autonomous private university in Hyderabad, Telangana, India. It was established in 1997, and is one of the top Computer Science institutes in the country. It emphasizes research from the undergraduate level. It has been a consistent performer from India in ACM International Collegiate Programming Contest (ICPC) and finished at #18 in 2012. Raj Reddy, the only Indian to win the Turing Award, is chairman of the board of governors. Vint Cerf, popularly known as the father of the internet also a Turing Awardee joined the board of governors in February, 2015 to guide in IIIT Hyderabad's long term vision and research." 
   }
 ]
-
